@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "FTorch-workshop"
+version = "1.0.0"
+description = "ICCS FTorch workshop."
+authors = [
+  { name="Jack Atkinson", email="jwa34@cam.ac.uk" },
+]
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.9.10"
+classifiers = [
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "torch>=2.0",
+    # "torchvision>=0.13",
+]
+
+[project.optional-dependencies]
+lint = [
+    "ruff>=0.3.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Cambridge-ICCS/FTorch-workshop"
+"Bug Tracker" = "https://github.com/Cambridge-ICCS/FTorch-workshop/issues"
+
+[tool.setuptools]
+package-dir = {}
+
+
+
+[tool.setuptools.packages.find]
+where = ["."]  # list of folders that contain the packages (["."] by default)
+namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
+
+
+[tool.ruff]
+# Run linting and formatting on notebooks
+extend-include = ["*.ipynb"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+# See https://docs.astral.sh/ruff/rules for full details of each ruleset.
+
+# Enable:  D: `pydocstyle`, PL: `pylint`, I: `isort`, W: `pycodestyle whitespace`
+#          NPY: `numpy`, FLY: `flynt`, RUF: `ruff`
+#          From flake8: "ARG", "SLF", "S", "BLE", "B", "A", "C4", "EM", "ICN",
+#                       "PIE", "Q", "RSE", "SIM", "TID"
+select = ["D", "PL", "I", "E", "W", "NPY", "FLY", "RUF",
+          "ARG", "SLF", "S", "BLE","B", "A", "C4", "EM", "ICN", "PIE", "Q", "RSE",
+          "SIM", "TID"]
+
+# Enable D417 (Missing argument description) on top of the NumPy convention.
+extend-select = ["D417"]
+
+# Ignore SIM108 (use ternary instead of if-else) as I think it can obscure intent.
+# Ignore RUF002 (ambiguous characters) as it does not allow apostrophes in strings.
+# Ignore PLR2004 (magic values) as we use them sensibly in science
+ignore = ["SIM108", "RUF002", "PLR2004"]
+
+[tool.ruff.lint.pydocstyle]
+# Use NumPy convention for checking docstrings
+convention = "numpy"
