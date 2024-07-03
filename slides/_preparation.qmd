@@ -1,0 +1,135 @@
+# Preparation
+
+## Exercise 0 -- getting on the same page
+
+Before we start I want to be sure everyone has a working system.
+
+As we move through the following exercise if you experience any issues please ask for
+help and we will aim to sort you out before the main exercises.
+
+\
+
+:::{.fragment}
+In terminal navigate to to the workshop directory, set up a python virtual environment
+as you prefer, and install the workshop dependencies:
+
+```default
+python3 -m venv .venv
+source .venv/bin/activate
+pip install ./
+```
+:::
+
+\
+
+:::{.fragment}
+Navigate to `exercises/exercise_00/` where you will see a python and
+fortran code.
+:::
+
+## Python
+
+`pytorchnet.py` defines a net `SimpleNet` that takes an input vector of length 5
+and multiplies it by 2.
+
+Note:
+
+  - the `nn.Module` class
+  - the `forward()` method
+
+Running:
+```default
+python pytorch_net.py
+```
+
+should produce the output:
+```default
+Input is  tensor([0., 1., 2., 3., 4.]).
+Output is tensor([0., 2., 4., 6., 8.]).
+```
+
+
+## Compilers and CMake
+
+First we will check that we have Fortran, C and C++ compilers installed:
+
+Running:
+```default
+gfortran --version
+gcc --version
+g++ --version
+```
+::::{.columns}
+:::{.column width=60%}
+Should produce output similar to:
+```default
+GNU Fortran (Homebrew GCC 14.1.0_1) 14.1.0
+Copyright (C) 2024 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.
+```
+:::
+:::{.column width=40%}
+and not:
+```default
+bash: command not found: gfortran
+```
+:::
+::::
+
+\
+
+:::{.fragment}
+::::{.columns}
+:::{.column width=60%}
+Later on we will also need CMake.
+:::
+:::{.column width=40%}
+To check this is installed run:
+```default
+cmake --version
+```
+and verify it is >= 3.1.
+:::
+::::
+:::
+
+
+## Fortran
+
+The file `hello_fortran.f90` contains a program to take an input array and call a
+subroutine to multiply it by two before printing the result.
+
+The subroutine is contained in a separate module `math_mod.f90`, however.
+
+:::{.fragment}
+We can compile both of these to produce `.o` object files and a `.mod` module files using:
+```default
+gfortran -c math_mod.f90 hello_fortran.f90
+```
+:::
+
+:::{.fragment}
+We then link these together into an executable `ftn_prog` using:
+```default
+gfortran -o ftn_prog hello_fortran.o math_mod.o
+```
+:::
+
+:::{.fragment}
+Running this as:
+```default
+./ftn_prog
+```
+should produce the output
+```default
+ Hello, World!
+ Input:     0.00000000        1.00000000        2.00000000        3.00000000        4.00000000
+ Output:    0.00000000        2.00000000        4.00000000        6.00000000        8.00000000
+```
+:::
+
+:::{.aside}
+object files contain code run by the machine, and module files contain interfaces to modules.
+:::
