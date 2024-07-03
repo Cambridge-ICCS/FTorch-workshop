@@ -82,25 +82,38 @@ any formal concepts.
 
 ### Fortran
 
-The course uses some elements of Python and assumes some basic knowledge of the ecosystem.
-This includes:
-- use of a python virtual environment,
-
-
-
-
-
+The key objective of this course is to call PyTorch code from within Fortran.
+However, expert knowledge is not a prerequisite.
+Rather, we will assume that you are comfortable reading Fortran code and familiar with
+the basic concepts of the language (variables, subroutines, modules etc.)
+To this end Fortran-Lang provide an [excellent quickstart tutorial](https://fortran-lang.org/learn/quickstart/).
 
 
 ### Preparation
 In preparation for the course please ensure that your computer contains the following:
-- A text editor - e.g. vim/[neovim](https://neovim.io/), [gedit](https://gedit.en.softonic.com/), [vscode](https://code.visualstudio.com/), [sublimetext](https://www.sublimetext.com/) etc. to open and edit code files
-- A terminal emulator - e.g. [GNOME Terminal](https://help.gnome.org/users/gnome-terminal/stable/), [wezterm](https://wezfurlong.org/wezterm/index.html), [Windows Terminal (windows only)](https://learn.microsoft.com/en-us/windows/terminal/), [iTerm (mac only)](https://iterm2.com/)
-- python virtual environment (see [Installation and setup](#installation-and-setup))
+- A text editor
+  e.g. vim/[neovim](https://neovim.io/), [gedit](https://gedit.en.softonic.com/), [vscode](https://code.visualstudio.com/), [sublimetext](https://www.sublimetext.com/) etc. to open and edit code files
+- A terminal emulator
+  e.g. [GNOME Terminal](https://help.gnome.org/users/gnome-terminal/stable/), [wezterm](https://wezfurlong.org/wezterm/index.html), [Windows Terminal (windows only)](https://learn.microsoft.com/en-us/windows/terminal/), [iTerm (mac only)](https://iterm2.com/)
+- python virtual environment
+  see [Installation and setup](#installation-and-setup)
+- Fortran, C, and C++ compilers
+  Unless you are familiar with other options we suggest using the [Gnu Compiler Collection (GCC)](https://gcc.gnu.org)
+  This is freely available, and comes as standard on many systems or is available through
+  all good package managers.
+- CMake
+  The [CMake build system](https://cmake.org/) is used for building FTorch. Similarly it is available
+  online or through all good package managers.
 
-Note for Windows users: _We have linked suitable applications for windows in the above lists.
-However, you may wish to refer to [Windows' getting-started with python information](https://learn.microsoft.com/en-us/windows/python/beginners)
-for a complete guide to getting set up on a Windows system._
+Note for Windows users: _We strongly advise using the
+[Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/)
+for this workshop.
+If you wish to proceed on native Windows please follow the specific
+[FTorch guidance for Windows Users](https://cambridge-iccs.github.io/FTorch/page/troubleshooting.html#windows)
+to prepare a system.\
+We have linked suitable applications for Windows in the above lists, though you may wish
+to refer to [Windows' getting-started with python information](https://learn.microsoft.com/en-us/windows/python/beginners)
+for a complete guide to getting set up._
 
 If you require assistance or further information with any of these please reach out to
 us before a training session.
