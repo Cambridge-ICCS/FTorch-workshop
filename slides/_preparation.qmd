@@ -95,6 +95,9 @@ and verify it is >= 3.1.
 ::::
 :::
 
+:::{.aside}
+Check that gcc version is >= 9
+:::
 
 ## Fortran
 
