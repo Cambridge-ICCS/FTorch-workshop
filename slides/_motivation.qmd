@@ -1,0 +1,127 @@
+# Motivation
+
+<!--
+## Climate Models
+
+Climate models are large, complex, many-part systems.\
+
+![]( images/Climate_Models.svg )
+-->
+
+## Machine Learning in Science {auto-animate=true}
+
+We typically think of Deep Learning as an end-to-end process;  
+a black box with an input and an output^[And some models like GraphCast, FourCastNet, and Pangu operate on this principle].
+
+![]( images/neural_net_3b1b.jpeg ){style="border-radius: 50%;" .absolute top=39% left=35% width=30% height=32%}
+
+![]( images/pikachu.png ){.absolute top=37.5% left=5.5% width=25%}
+[Who's that Pokémon?]{.absolute top=32.5% left=4% width=25% style="text-align:center;"}
+
+[$$\begin{bmatrix}\vdots\\a_{23}\\a_{24}\\a_{25}\\a_{26}\\a_{27}\\\vdots\\\end{bmatrix}=\begin{bmatrix}\vdots\\0\\0\\1\\0\\0\\\vdots\\\end{bmatrix}$$]{.absolute top=30% right=8.5% width=25%}
+[It's Pikachu!]{.absolute top=27.5% right=8.5% width=25% style="text-align:center;"}
+
+::: {.attribution}
+Neural Net by [3Blue1Brown]( https://www.3blue1brown.com/topics/neural-networks ) under [*fair dealing*](https://www.gov.uk/guidance/exceptions-to-copyright).  
+Pikachu &#169; *The Pokemon Company*, used under [*fair dealing*]( https://www.gov.uk/guidance/exceptions-to-copyright ).
+:::
+
+
+## Machine Learning in Science {auto-animate=true}
+
+![]( images/Climate_Models.svg )
+
+![]( images/neural_net_3b1b.jpeg ){style="border-radius: 50%;" .absolute bottom=7% left=56% width=25% height=21%}
+
+::: {.attribution}
+Neural Net by [3Blue1Brown]( https://www.3blue1brown.com/topics/neural-networks ) under [*fair dealing*](https://www.gov.uk/guidance/exceptions-to-copyright).  
+Pikachu &#169; *The Pokemon Company*, used under [*fair dealing*]( https://www.gov.uk/guidance/exceptions-to-copyright ).
+:::
+
+
+## Challenges
+
+- Reproducibility
+  - Ensure net functions the same in-situ
+- Re-usability
+  - Make ML parameterisations available to many models
+  - Facilitate easy re-training/adaptation
+- Language Interoperation
+
+
+## Language interoperation
+
+Many large scientific models are written in Fortran (or C, or C++).  
+Much machine learning is conducted in Python.
+
+![]( https://upload.wikimedia.org/wikipedia/commons/5/55/Mathematical_Bridge_tangents.jpg ){style="border-radius: 50%;" .absolute top=27% left=30% width=40%}
+
+
+![]( https://www.python.org/static/community_logos/python-logo-generic.svg){.absolute top=40% left=0 width=30%}
+
+![]( https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png ){style="background-image: radial-gradient(gray 0%, #03334E 75%);" .absolute top=55% left=5% width=20%}
+
+![]( https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/TensorFlowLogo.svg/696px-TensorFlowLogo.svg.png?20180105010857 ){.absolute top=65% left=7.5% width=15%}
+
+
+
+![]( https://raw.githubusercontent.com/fortran-lang/fortran-lang.org/bbdc33ec7bfc06fa6111093ae9712a7f7837b555/assets/img/fortran-logo.svg ){.absolute top=40% right=10% width=10%}
+
+![]( https://www.metoffice.gov.uk/binaries/content/gallery/metofficegovuk/images/about-us/website/mo_master_for_dark_backg_rbg.png ){.absolute top=55% right=0% height=10%}
+
+![]( https://climate.copernicus.eu/sites/default/files/custom-uploads/branding/ECMWF_Master_Logo_RGB_nostrap.png){.absolute top=64.5% left=70% height=5%}
+
+![]( images/ICON.png ){style="border-radius: 5%;" .absolute bottom=14.5% right=0 width=10%}
+
+![]( images/DWD.jpg ){style="border-radius: 20%;" .absolute bottom=19.5% right=2% width=6%}
+
+![]( https://www2.mmm.ucar.edu/wrf/users/images/wrf_logo.jpg ){.absolute bottom=14.5% right=12.75% width=7%}
+
+![]( https://avatars.githubusercontent.com/u/33552285?s=200&v=4 ){.absolute bottom=14.5% left=70% width=7%}
+
+<!--
+::: {.fragment .fade-in-then-out}
+![]( ../images/Fortran_TIOBE.jpg ){.absolute top=25% width=100%}
+:::
+-->
+
+::: {.attribution}
+[Mathematical Bridge](https://en.wikipedia.org/wiki/Mathematical_Bridge)
+by [cmglee](https://commons.wikimedia.org/wiki/User:Cmglee)
+used under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.en)  
+PyTorch, the PyTorch logo and any related marks are [trademarks of The Linux Foundation](https://www.linuxfoundation.org/legal/trademark-usage).”  
+TensorFlow, the TensorFlow logo and any related marks are trademarks of Google Inc.
+:::
+
+
+## Efficiency {auto-animate=true, .smaller}
+
+We consider 2 types:
+
+:::: {.columns}
+::: {.column width="50%"}
+Computational
+
+  ![]( https://www.svgrepo.com/show/521584/cpu.svg ){style="filter: invert(100%)" width=15%}
+  ![]( https://www.svgrepo.com/show/42898/ram-memory.svg ){style="filter: invert(100%)" width=15%}
+  ![]( https://www.svgrepo.com/show/325133/electronics-transister.svg ){style="filter: invert(100%)" width=15%}
+  ![]( https://www.svgrepo.com/show/479706/stopwatch.svg ){style="filter: invert(100%)" width=15%}
+:::
+::: {.column}
+Developer
+
+  ![]( https://www.svgrepo.com/show/308093/software-developer-work-on-computer-programmer-coder.svg ){style="filter: invert(100%)" width=15%}
+  ![]( https://www.svgrepo.com/show/67720/brain-speech-bubble.svg ){style="filter: invert(100%)" width=15%}
+  ![]( https://www.svgrepo.com/show/490654/coffee-maker.svg ){style="filter: invert(100%)" width=15%}
+  ![]( https://www.svgrepo.com/show/479706/stopwatch.svg ){style="filter: invert(100%)" width=15%}
+:::
+::::
+
+At the academic end of research both have an equal effect on 'time-to-science'.
+
+- Don't re-writing nets after you have already trained them
+- Scientists are not all not computer scientists
+  - Should be simple to learn and deploy
+  - May not have access to extensive software support
+- HPC environments want minimal additional dependencies
+- Needs to be as efficient as possible
