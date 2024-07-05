@@ -1,0 +1,93 @@
+# Case Studies
+
+# Applications and Case Studies
+
+
+## MiMA - proof of concept
+
+- The origins of FTorch
+  - Emulation of existing parameterisation
+  - Coupled to an atmospheric model using `forpy` in @espinosa2022machine^[Originally written in TensorFlow...]
+  - Prohibitively slow and hard to implement
+  - Asked for a faster, user-friendly implementation that can be used in future studies.
+
+\
+
+- Follow up paper using FTorch: *Uncertainty Quantification of a Machine Learning Subgrid-Scale Parameterization for Atmospheric Gravity Waves* [@mansfield2024uncertainty]
+  - "Identical" offline networks have very different behaviours when deployed online.
+
+::: aside
+Model of an idealised Moist Atmosphere online at [{{< fa brands github >}}/DataWaveProject/MiMA-machine-learning](https://github.com/DataWaveProject/MiMA-machine-learning)
+:::
+
+
+## ICON
+
+- Icosahedral Nonhydrostatic Weather and Climate Model
+  - Developed by DKRZ (Deutsches Klimarechenzentrum)
+  - Used by the DWD and Meteo-Swiss
+
+::::{.columns}
+:::{.column width=75%}
+- *Interpretable multiscale Machine Learning-Based Parameterizations of Convection for ICON* [@heuer2023interpretable]^[Work without direct involvement of ICCS - success on 'ease of use' of FTorch]
+  - Train U-Net convection scheme on high-res simulation
+  - Deploy in ICON via FTorch coupling
+  - Evaluate physical realism (causality) using SHAP values
+  - Online stability improved when non-causal relations are eliminated from the net
+:::
+::::
+![]( images/parameterisation/Heuer_SHAP.jpg ){.absolute top=45% right=0 width=27%}
+
+![]( images/logos/ICON.png ){style="border-radius: 5%;" .absolute top=15% right=0 width=27%}
+
+::: aside
+Running on JUWELS at the Jülich Supercomputing Centre;
+ICON Model is now available at [gitlab.dkrz.de/icon/icon-model](https://gitlab.dkrz.de/icon/icon-model)\
+:::
+
+
+## CESM - Bias Correction
+
+:::: {.columns}
+::: {.column width=50%}
+ Work by Will Chapman of NCAR/M2LInES
+
+- As representations of physics models have inherent, sometimes systematic, biases.
+
+- Run CESM for 9 years relaxing hourly to ERA5 observation (data assimilation)
+- Train CNN to predict anomaly increment at each level
+  - targeting just the MJO region
+  - targeting globally
+- Apply online as part of predictive runs
+
+:::
+::: {.column}
+
+![]( images/parameterisation/Will_Champan_CNN_SLP_bias.jpg ){width=80% fig-align="center"}
+
+![]( images/parameterisation/Will_Champan_CNN_precip_bias.jpg ){width=80% fig-align="center"}
+
+:::
+::::
+
+
+## CESM coupling
+
+- The Community Earth System Model
+- Part of [CMIP](https://wcrp-cmip.org/) (Coupled Model Intercomparison Project)
+- Make it easy for users
+  - FTorch integrated into the build system (CIME)
+    - [{{< fa brands github >}}/Cambridge-ICCS/cime_je](https://github.com/Cambridge-ICCS/cime_je)
+  - `libtorch` is included on the software stack on Derecho
+    - Improves reproducibility
+
+![]( https://www.hpcwire.com/wp-content/uploads/2022/03/derecho-ncar-render.png ){.absolute top=15% right=0% height=20%}
+
+:::{.aside}
+Work done with Will Chapman and Jim Edwards of NCAR.\
+CIME with FTorch is available with instructions [{{< fa brands github >}}/Cambridge-ICCS/cime_je](https://github.com/Cambridge-ICCS/cime_je)
+:::
+
+:::{.attribution}
+Derecho by NCAR
+:::
