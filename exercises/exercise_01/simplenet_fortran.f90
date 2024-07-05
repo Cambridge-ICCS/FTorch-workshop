@@ -10,9 +10,6 @@ program inference
    ! Set working precision for reals
    integer, parameter :: wp = sp
    
-   integer :: num_args, ix
-   character(len=128), dimension(:), allocatable :: args
-
    ! Set up Fortran data structures
    real(wp), dimension(5), target :: in_data
    real(wp), dimension(5), target :: out_data
