@@ -1,0 +1,144 @@
+# Basic coupling
+
+## Exercise 1
+
+Now that we have FTorch installed on the system we can move to writing code that uses
+it, needing only to link to our installation at compile and runtime.
+
+\
+
+We will start of with a basic example showing how to couple code in Exercise 1:
+
+1. Design and train a PyTorch model.
+2. Save PyTorch model to TorchScript
+3. Write Fortran using FTorch to call saved model
+4. Compile and run code, linking to FTorch
+
+
+## PyTorch
+
+Examine `exercises/exercise_01/simplenet.py`.
+
+\
+
+This contains a contrived PyTorch model with a single `nn.Linear` layer that will
+multiply the input by two.
+
+\
+
+With our virtual environment active we can test this by running the code with^[This will run the `if __name__ == "__main__":` section at the bottom of the file.]:
+
+```default
+python3 simplenet.py
+```
+```
+Input:  tensor([0., 1., 2., 3., 4.])
+Output: tensor([0., 2., 4., 6., 8.])
+```
+
+
+## Saving to TorchScript
+
+To use the net from Fortran we need to save it to TorchScript.
+
+\
+
+FTorch comes with a handy utility `pt2ts.py` to help with this located at\
+`FTorch/utils/pt2ts.py`.
+
+\
+
+We will now copy this across to `exercise_01/`, modify it, and run it to save our code to
+TorchScript.
+
+
+## Saving to TorchScript
+
+Notes:
+
+- there are handy `TODO` comments where you need to adapt the code
+- `pt2ts.py` expects an `nn.Module` subclass with a `forward()` method
+- there are two options to save:
+  - [tracing](https://pytorch.org/docs/stable/generated/torch.jit.trace.html) using `torch.jit.trace()`\
+    This passes a dummy tensor throgh the model recording operations.\
+    It is the simplest approach.
+  - [scripting](https://pytorch.org/docs/stable/generated/torch.jit.script.html) using `torch.jit.script()`\
+    This converts Python code directly to TorchScript.\
+    It is more complicated, but neccessary for advanced features and/or control operations.
+- A summary of the TorchScript model can be printed from Python
+
+:::{.aside}
+See [TorchScript reference](https://pytorch.org/docs/stable/jit_language_reference.html#language-reference) for feature compatibility.
+:::
+
+
+## Calling from Fortran
+
+We are now in a state to use our saved TorchScript model from within Fortran.
+
+`exercises/exercise_01/simplenet_fortran.f90` contains a skeleton code with a Fortran arrays
+to hold input data for the net, and the results returned.
+
+\
+
+We will modify it to create the neccessary data structures and load and call the net.
+
+- import the `ftorch` module
+- create `torch_tensors` and a `torch_model` to hold the data and net
+- map Fortran data from arrays to the `torch_tensors`
+- call `torch_model_forward` to run the net
+- clean up
+
+
+## Calling from Fortran
+
+Notes:
+
+- See the solution file `simplenet_fortran_sol.f90` for an ideal code.
+- 
+- for more information on the subroutines and API see the
+  [online API documentation](https://cambridge-iccs.github.io/FTorch/lists/procedures.html)
+
+
+## Building the code
+
+Once we have modified the Fortran we need to compile the code and link it to FTorch.
+
+This is done in exactly the same way as you would compile and link to any other library,
+for example NetCDF.
+
+By hand this can be done with:
+```default
+gfortran -I<path/to-ftorch>/include/ftorch -L<path/to-ftorch>/lib -lftorch -c simplenet_fortran.f90
+gfortran -I<path/to-ftorch>/include/ftorch -o simplenet_fortran simplenet_fortran.o -L<path/to-ftorch>/lib -lftorch
+```
+
+\
+
+In reality, however, we would use a `Makefile` or CMake.
+examples of both of these are included.
+
+::::{.columns}
+:::{.column width=50%}
+Make:
+
+- Modify the makefile to set location of ftorch
+- run `make`
+:::
+:::{.column}
+CMake:
+
+- create a build directory and cuild using CMake similarly to the main library
+:::
+::::
+
+
+## Running the code
+
+To run the code we can use the generated executable:
+```default
+./simplenet_fortran
+```
+```
+   0.00000000       2.00000000       4.00000000       6.00000000       8.00000000
+```
