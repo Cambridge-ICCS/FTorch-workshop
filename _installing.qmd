@@ -1,0 +1,138 @@
+# Installing FTorch
+
+
+## Clone the git repository
+
+::::{.columns}
+:::{.column width=50%}
+FTorch is available from GitHub:\
+[github.com/Cambridge-ICCS/FTorch](https://github.com/Cambridge-ICCS/FTorch)
+
+::: {style="text-align: center"}
+{{< qrcode https://github.com/Cambridge-ICCS/FTorch qrjeyf6490 width=200 height=200 >}}
+:::
+
+:::
+:::{.column width=50%}
+With supporting documentation at:\
+[cambridge-iccs.github.io/FTorch/](https://cambridge-iccs.github.io/FTorch/)
+
+::: {style="text-align: center"}
+{{< qrcode https://cambridge-iccs.github.io/FTorch/ qrr6f94nhd width=200 height=200 >}}
+:::
+
+:::
+::::
+
+To get a copy of FTorch on your system run:
+```default
+git clone https://github.com/Cambridge-ICCS/FTorch.git
+```
+which will create a directory `FTorch/` with the contents.
+
+
+## Get Libtorch (optional)
+
+Libtorch is available from the [PyTorch homepage](https://pytorch.org/):
+
+![](images/libtorch.jpg){width=75%}
+
+We _can_ use the version of libtorch that comes with pip-installed PyTorch (see docs).\
+Standalone libtorch removes Python and aids reproducibility, especially
+on HPC systems.
+
+:::{.aside}
+Notes: Need GCC>9 and GLIBC 2.29 for CXX11.\
+Whilst most features should be compatible between PyTorch and libtorch versions, keep this in mind if issues occur.
+:::
+
+
+## Build the code
+
+The source code for FTorch is contained in the `src/` directory.
+This contains:
+
+- `ctorch.cpp` - Bindings to the libtorch C++ API
+- `ctorch.h` - header file to bind to from Fortran
+- `ftorch.f90` - the Fortran routines we will be calling
+
+\
+
+These are compiled, joined together, and installed using CMake.
+
+- tool to simplify build process for users
+- accomodate different machines and setups
+- controlled by the `CMakeLists.txt` file
+
+
+## Build the code
+
+To keep things clean we will do all of our building from a self-contained `build/` directory.
+```default
+cd FTorch/src/
+mkdir build
+cd build
+```
+
+We can now execute CMake to build here using the code in the above directory:
+```default
+cmake .. -DCMAKE_BUILD_TYPE=Release
+```
+
+
+## Build the code
+
+In reality we often need to specify a number of additional options:
+
+```default
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+>        -DCMAKE_Fortran_COMPILER=gfortran \
+>        -DCMAKE_C_COMPILER=gcc \
+>        -DCMAKE_CXX_COMPILER=g++ \
+>        -DCMAKE_PREFIX_PATH=<path/to/libtorch/> \
+>        -DCMAKE_INSTALL_PREFIX=<path/to/install/ftorch/>
+```
+
+\
+
+Notes:
+
+- The Fortran compiler should match that being used to build your code.
+- We need gcc >= 9
+- If debugging set build type to `Debug` for `-g`
+- Prefix path is wherever libtorch is on your system
+- Install prefix can be set to anywhere. Defaults may require root/admin access
+
+
+## Build the code
+
+Assuming everything proceeds successfully CMake will generate a `Makefile` for us.
+
+\
+
+We can run this locally using^[Alternatively, or for CMake<3.15 we can use the system `make` command.]:
+```default
+cmake --build .
+```
+If we specified a particular location to install FTorch we can do this
+by running^[Alternatively, or for CMake<3.15 we can use the system `make install` command.]:
+```default
+cmake --install .
+```
+
+\
+
+The above two commands can be combined into a single option using:
+```default
+cmake --build . --target install
+```
+
+
+## The FTorch installation
+
+Installation will place files in `CMAKE_INSTALL_PREFIX/`:
+
+- `include/` contains header and mod files
+- `lib/` contains cmake and library files
+  - this could be called `lib64/` on some systems
+  - UNIX will use `.so` files whilst Windows has `.dll` files

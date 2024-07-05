@@ -1,0 +1,170 @@
+---
+output-file: index
+title: "Coupling Machine Learning to Fortran using the FTorch Library"
+format:
+  revealjs:
+    embed-resources: false
+    slide-number: false
+    chalkboard: false
+    preview-links: auto
+    history: false
+    highlight-style: a11y
+    code-overflow: wrap
+    code-line-numbers: false
+    logo: https://iccs.cam.ac.uk/sites/iccs.cam.ac.uk/files/iccs_ucam_combined_reverse_colour.png
+    theme: [dark, custom.scss]
+    smaller: true
+revealjs-plugins:
+  - attribution
+authors:
+  - name: Jack Atkinson
+    orcid: 0000-0001-5001-4812
+    affiliations: Senior Research Software Engineer <br> ICCS - University of Cambridge
+  - name: The ICCS Team and Collaborators (see end)
+date: "2024-07"
+bibliography: references.bib
+---
+
+## Precursors {.smaller .nostretch}
+
+:::: {.columns}
+::: {.column width="50%"}
+#### Slides and Materials
+
+To access links or follow on your own device these slides can be found at:  
+[jackatkinson.net/slides](https://jackatkinson.net/slides)
+
+::: {style="text-align: center"}
+{{< qrcode https://jackatkinson.net/slides qr7dekity9 width=200 height=200 >}}
+:::
+
+:::
+::: {.column width="50%"}
+#### Licensing
+
+Except where otherwise noted, these presentation materials are licensed under the Creative Commons
+[Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/legalcode) ([CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)) License.
+
+![]( https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc.eu.svg ){width=40% fig-align="center"}
+
+Vectors and icons by [SVG Repo](https://www.svgrepo.com)
+under [CC0(1.0)](https://creativecommons.org/publicdomain/zero/1.0/deed.en) or
+[FontAwesome](https://fontawesome.com/) under [SIL OFL 1.1](http://scripts.sil.org/OFL)
+:::
+::::
+
+<!-- =============================================================================== -->
+
+{{< include _preparation.qmd >}}
+
+<!-- =============================================================================== -->
+
+{{< include _motivation.qmd >}}
+
+<!-- =============================================================================== -->
+
+{{< include _installing.qmd >}}
+
+<!-- =============================================================================== -->
+
+{{< include _basic_coupling.qmd >}}
+
+<!-- =============================================================================== -->
+
+{{< include _case_studies.qmd >}}
+
+## Thanks {.smaller}
+
+::: {style="font-size: 0.65em"}
+
+:::: {.columns}
+
+::: {.column width="33%"}
+
+ICCS Research Software Engineers:
+
+- Chris Edsall - Director
+- Marion Weinzierl - Senior
+- Jack Atkinson - Senior
+- Matt Archer - Senior
+- Tom Meltzer - Senior
+- Surbhi Ghoel
+- Tianzhang Cai
+- Joe Wallwork
+- Amy Pike
+- James Emberton
+- Dominic Orchard - Director/Computer Science
+
+Previous Members:
+
+- Paul Richmond - Sheffield
+- Jim Denholm - AstraZeneca
+
+:::
+
+::: {.column width="33%"}
+
+FTorch:
+
+- Jack Atkinson
+- Simon Clifford - Cambridge RSE
+- Athena Elafrou - Cambridge RSE, now NVIDIA
+- Elliott Kasoar - STFC
+- Joe Wallwork
+- Tom Meltzer
+
+:::
+::: {.column width="33%"}
+
+MiMA
+
+- Minah Yang - NYU, DataWave
+- Dave Conelly - NYU, DataWave
+
+CESM
+
+- Will Chapman - NCAR/M2LInES
+- Jim Edwards - NCAR
+- Paul O'Gorman - MIT, M2LInES
+- Judith Berner - NCAR, M2LInES
+- Qiang Sun - U Chicago, DataWave
+- Pedram Hassanzadeh - U Chicago, DataWave
+- Joan Alexander - NWRA, DataWave
+
+:::
+::::
+:::
+
+
+## Thanks for Listening {.smaller}
+
+:::: {.columns}
+
+::: {.column width="20%"}
+Get in touch:
+:::
+::: {.column width="80%"}
+{{< fa pencil >}} \ Jack Atkinson
+
+{{< fa solid globe >}} \ [jackatkinson.net](https://jackatkinson.net)
+
+{{< fa solid envelope >}} \ [jwa34[AT]cam.ac.uk](mailto:jwa34@cam.ac.uk)
+
+{{< fa brands github >}} \ [jatkinson1000](https://github.com/jatkinson1000)
+
+{{< fa brands mastodon >}} \ [\@jatkinson1000\@fosstodon.org](https://fosstodon.org/@jatkinson1000)
+:::
+::::
+
+![](https://iccs.cam.ac.uk/sites/iccs.cam.ac.uk/files/logo2_2.png){style="width: 20%; height: 30%; object-fit: cover; object-position: 0 0;" .absolute top=15% right=0%}
+
+<!-- TODO: Add logo -->
+The ICCS received support from ![]( ../images/logos/schmidt_science.png ){height=2.4em style="margin: 0; vertical-align: -2%"}
+
+
+## References
+
+::: {#refs}
+:::
+
+
