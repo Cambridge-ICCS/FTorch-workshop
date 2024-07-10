@@ -95,7 +95,6 @@ We will modify it to create the neccessary data structures and load and call the
 Notes:
 
 - See the solution file `simplenet_fortran_sol.f90` for an ideal code.
-- 
 - for more information on the subroutines and API see the
   [online API documentation](https://cambridge-iccs.github.io/FTorch/lists/procedures.html)
 
