@@ -11,9 +11,9 @@
 <script src="ftorch_workshop_slides_files/libs/quarto-contrib/qrcodejs-v1.0.0/qrcode.js"></script>
 <link href="ftorch_workshop_slides_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="ftorch_workshop_slides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.5.53">
+  <meta name="generator" content="quarto-1.5.54">
 
-  <meta name="dcterms.date" content="2024-07-01">
+  <meta name="dcterms.date" content="2024-07-10">
   <title>Coupling Machine Learning to Fortran using the FTorch Library</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -433,7 +433,7 @@ The ICCS Team and Collaborators (see end)
 </div>
 </div>
 
-  <p class="date">2024-07-01</p>
+  <p class="date">2024-07-10</p>
 </section>
 <section id="precursors" class="slide level2 smaller nostretch">
 <h2>Precursors</h2>
@@ -445,7 +445,7 @@ The ICCS Team and Collaborators (see end)
 <div style="text-align: center">
 <div id="qr7dekity9" class="qrcode"></div>
 <script type="text/javascript">
-var qrcode = new QRCode("qr7dekity9", {"colorLight":"#ffffff","text":"https://jackatkinson.net/slides","colorDark":"#000000","height":"200","width":"200"});
+var qrcode = new QRCode("qr7dekity9", {"width":"200","colorLight":"#ffffff","text":"https://jackatkinson.net/slides","height":"200","colorDark":"#000000"});
 </script>
     
 </div>
@@ -656,6 +656,88 @@ TensorFlow, the TensorFlow logo and any related marks are trademarks of Google I
 <!-- =============================================================================== -->
 </section></section>
 <section>
+<section id="how-it-works" class="title-slide slide level1 center">
+<h1>How it Works</h1>
+
+</section>
+<section id="pytorch" class="slide level2">
+<h2>(Py)Torch</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="torch">Torch</h4>
+<ul>
+<li>an open-source deep learning framework</li>
+<li>developed at EPFL in Switzerland</li>
+<li>written in C with a LUA interface</li>
+</ul>
+<p><img data-src="images/Torch_logo.png"></p>
+</div><div class="column" style="width:50%;">
+<h4 id="pytorch-1">PyTorch</h4>
+<ul>
+<li>an open-source deep-learning framework</li>
+<li>developed by Meta AI, now part of the Linux Foundation</li>
+<li>written in C++ with a Python interface</li>
+<li>port of Torch (ATen), but also includes Caffe2 etc.</li>
+</ul>
+<p><img data-src="https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png" style="background-image: radial-gradient(gray 0%, #03334E 75%);"></p>
+</div></div>
+<div class="attribution">
+<p>Torch and PyTorch logos under Creative Commons</p>
+</div>
+<!--
+## (Py)Torch
+
+#### Automatic Differentiation
+
+- Symbolic Differentiation
+- Numerical Differentiation
+- Automatic Differentiation
+-->
+<!--
+## TorchScript and libtorch
+
+PyTorch provides a (pythonic-ish) C++ interface to the underlying C++ codes.
+
+This is accessible through libtorch
+-->
+</section>
+<section id="ftorch" class="slide level2">
+<h2>FTorch</h2>
+<p><img data-src="https://raw.githubusercontent.com/fortran-lang/fortran-lang.org/bbdc33ec7bfc06fa6111093ae9712a7f7837b555/assets/img/fortran-logo.svg" class="absolute" style="top: 10%; right: 12.5%; width: 15%; "></p>
+<p><img data-src="https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png" class="absolute" style="top: 20%; right: 30%; width: 35%; height: 20%; "></p>
+<p><img data-src="https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png" class="absolute" style="top: 40%; left: 30%; height: 20%; "></p>
+<p><img data-src="https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png" class="absolute" style="transform: rotate(270deg);top: 70%; left: 30%; width: 18%; height: 10%; "></p>
+<p><img data-src="https://www.pngall.com/wp-content/uploads/5/Open-Box-PNG-Clipart.png" class="absolute" style="top: 18%; left: 0%; height: 22%; "></p>
+<p><img data-src="https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png" class="absolute" style="transform: rotate(270deg);top: 33%; left: 14%; width: 10%; height: 25%; "></p>
+<div class="absolute" style="text-align: center; color: black;top: 27%; left: 6.5%; ">
+<p>Python<br>
+env</p>
+</div>
+<div class="absolute" style="text-align: center;top: 44%; left: 44%; ">
+<p>Python<br>
+runtime</p>
+</div>
+<p><img data-src="https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png" class="absolute" style="background-image: radial-gradient(gray 0%, #03334E 75%);bottom: 10.5%; right: 6%; height: 13%; "></p>
+<div class="fragment fade-in-then-semi-out">
+<p><img data-src="https://imgs.xkcd.com/comics/python_environment_2x.png" class="absolute" style="left: 0%; bottom: 13%; height: 70%; "></p>
+</div>
+<div class="attribution">
+<p><a href="https://xkcd.com/1987/">xkcd #1987</a> by Randall Munroe, used under <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5</a></p>
+</div>
+<div class="fragment fade-in">
+<p><img data-src="https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png" class="absolute" style="transform: scaleY(-1) rotate(130deg); filter:hue-rotate(150deg);top: 37%; left: 78%; width: 35%; height: 20%; "></p>
+</div>
+</section>
+<section id="libtorch-and-ftorch" class="slide level2">
+<h2>libtorch and FTorch</h2>
+<ul>
+<li>libtorch is a C++ library providing an interface into the underlying PyTorch</li>
+<li>FTorch binds to this using the <code>iso_c_bindings</code> adding Fortranic features</li>
+<li>We utilise shared memory (on cpu) reducing data transfer overheads</li>
+</ul>
+<!-- =============================================================================== -->
+</section></section>
+<section>
 <section id="installing-ftorch" class="title-slide slide level1 center">
 <h1>Installing FTorch</h1>
 
@@ -669,7 +751,7 @@ TensorFlow, the TensorFlow logo and any related marks are trademarks of Google I
 <div style="text-align: center">
 <div id="qrjeyf6490" class="qrcode"></div>
 <script type="text/javascript">
-var qrcode = new QRCode("qrjeyf6490", {"colorLight":"#ffffff","text":"https://github.com/Cambridge-ICCS/FTorch","colorDark":"#000000","height":"200","width":"200"});
+var qrcode = new QRCode("qrjeyf6490", {"width":"200","colorLight":"#ffffff","text":"https://github.com/Cambridge-ICCS/FTorch","height":"200","colorDark":"#000000"});
 </script>
     
 </div>
@@ -679,7 +761,7 @@ var qrcode = new QRCode("qrjeyf6490", {"colorLight":"#ffffff","text":"https://gi
 <div style="text-align: center">
 <div id="qrr6f94nhd" class="qrcode"></div>
 <script type="text/javascript">
-var qrcode = new QRCode("qrr6f94nhd", {"colorLight":"#ffffff","text":"https://cambridge-iccs.github.io/FTorch/","colorDark":"#000000","height":"200","width":"200"});
+var qrcode = new QRCode("qrr6f94nhd", {"width":"200","colorLight":"#ffffff","text":"https://cambridge-iccs.github.io/FTorch/","height":"200","colorDark":"#000000"});
 </script>
     
 </div>
@@ -790,7 +872,7 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <li>Compile and run code, linking to FTorch</li>
 </ol>
 </section>
-<section id="pytorch" class="slide level2">
+<section id="pytorch-2" class="slide level2">
 <h2>PyTorch</h2>
 <p>Examine <code>exercises/exercise_01/simplenet.py</code>.</p>
 <p><br>
@@ -891,6 +973,91 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <!-- =============================================================================== -->
 </section></section>
 <section>
+<section id="further-details" class="title-slide slide level1 center">
+<h1>Further Details</h1>
+
+</section>
+<section id="exercise-2-larger-code-considerations" class="slide level2">
+<h2>Exercise 2: Larger code considerations</h2>
+<p>What we have considered so far is a simple contrived example designed to teach the basics.</p>
+<p>However, in reality the codes we will be using are more complex, and full of terrors.</p>
+<ul>
+<li>We will be calling the net repeatedly over the course of many iterations</li>
+<li>Reading in the net and weights from file is expensive
+<ul>
+<li>Don’t do this at every step!</li>
+</ul></li>
+</ul>
+</section>
+<section id="exercise-2-larger-code-considerations-1" class="slide level2">
+<h2>Exercise 2: Larger code considerations</h2>
+<p>In exercise 2 we will look at an example of how to ideally structure a slightly more complex code setup. For those familiar with climate models this may be nothing new. We make use of the traditional separation into:</p>
+<ul>
+<li>initialisation,</li>
+<li>update, and</li>
+<li>finalise subroutines.</li>
+</ul>
+</section>
+<section id="exercise-2" class="slide level2">
+<h2>Exercise 2</h2>
+<p>Navigate to the <code>exercises/exercise_02/</code> directory.</p>
+<p>Here you will see 2 code directories, <code>good/</code> and <code>bad/</code>.</p>
+<p>Both perform the same operation:</p>
+<ul>
+<li>running the simplenet from example 1 10,000 times</li>
+<li>increment the input vector at each step</li>
+<li>accumulate the sum of the output vector</li>
+</ul>
+</section>
+<section id="exercise-2-1" class="slide level2">
+<h2>Exercise 2</h2>
+<p>The exercise is the same for both folders:</p>
+<ul>
+<li>run the pre-prepared <code>pt2ts.py</code> script to save the net.</li>
+<li>inspect the code to see how it works:
+<ul>
+<li>both have a main program in <code>simplenet_fortran.f90</code></li>
+<li>both have FTorch code extracted to a module <code>fortran_ml_mod.f90</code>
+<ul>
+<li>bad is in a single routine</li>
+<li>good is split into init, iter, and finalise</li>
+</ul></li>
+</ul></li>
+<li>modify the Makefile to link to FTorch and build the codes</li>
+<li>time the codes and observe the difference</li>
+</ul>
+</section>
+<section id="multiple-inputs-and-outputs" class="slide level2">
+<h2>Multiple inputs and outputs</h2>
+<p>Supply as an array of tensors, innit.</p>
+<ul>
+<li>For more details see:
+<ul>
+<li>the <a href="https://cambridge-iccs.github.io/FTorch/page/gpu.html">online documentation</a></li>
+<li>the <a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples">MultiIO Example</a>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="gpu-acceleration" class="slide level2">
+<h2>GPU Acceleration</h2>
+<ul>
+<li>FTorch automatically has access to GPU acceleration through the PyTorch backend</li>
+<li>When running <code>pt2ts.py</code> save model on GPU
+<ul>
+<li>Guidance provided in the file</li>
+</ul></li>
+<li>When creating <code>torch_tensor</code>s set the device to <code>torch_kCUDA</code> instead of <code>torch_kCPU</code><sup>1</sup></li>
+<li>To target a specific device supply the <code>device_index</code> argument</li>
+<li>CPU-GPU cannot avoid data transfer. Use <code>MPI_GATHER()</code> to reduce</li>
+<li>For more details see:
+<ul>
+<li>the <a href="https://cambridge-iccs.github.io/FTorch/page/gpu.html">online documentation</a></li>
+<li>the <a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples">GPU Example</a></li>
+</ul></li>
+</ul>
+<!-- =============================================================================== -->
+<aside><ol class="aside-footnotes"><li id="fn5"><p>We can also use MPS, and are investigating AMD and XPU.</p></li></ol></aside></section></section>
+<section>
 <section id="applications-and-case-studies" class="title-slide slide level1 center">
 <h1>Applications and Case Studies</h1>
 
@@ -917,7 +1084,7 @@ It is more complicated, but neccessary for advanced features and/or control oper
 
 <aside><div>
 <p>Model of an idealised Moist Atmosphere online at <a href="https://github.com/DataWaveProject/MiMA-machine-learning"><i class="fa-brands fa-github" aria-label="github"></i>/DataWaveProject/MiMA-machine-learning</a></p>
-</div><ol class="aside-footnotes"><li id="fn5"><p>Originally written in TensorFlow…</p></li></ol></aside></section>
+</div><ol class="aside-footnotes"><li id="fn6"><p>Originally written in TensorFlow…</p></li></ol></aside></section>
 <section id="icon" class="slide level2">
 <h2>ICON</h2>
 <ul>
@@ -945,7 +1112,7 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <aside><div>
 <p>Running on JUWELS at the Jülich Supercomputing Centre; ICON Model is now available at <a href="https://gitlab.dkrz.de/icon/icon-model">gitlab.dkrz.de/icon/icon-model</a><br>
 </p>
-</div><ol class="aside-footnotes"><li id="fn6"><p>Work without direct involvement of ICCS - success on ‘ease of use’ of FTorch</p></li></ol></aside></section>
+</div><ol class="aside-footnotes"><li id="fn7"><p>Work without direct involvement of ICCS - success on ‘ease of use’ of FTorch</p></li></ol></aside></section>
 <section id="cesm---bias-correction" class="slide level2">
 <h2>CESM - Bias Correction</h2>
 <div class="columns">
@@ -996,10 +1163,60 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <div class="attribution">
 <p>Derecho by NCAR</p>
 </div>
+<!--
+## Summary {.smaller}
+
+- Use of ML within traditional numerical models
+  - A growing area that presents challenges
+- Language interoperation
+  - FTorch provides a solution for scientists looking to implement torch models in Fortran
+  - Designed with both computational and developer efficiency in mind
+  - Has helped deliver science in climate research and beyond\
+    (@heuer2023interpretable, @mansfield2024uncertainty)
+  - Built into CESM to allow the userbase access
+- Coupling design
+  - Careful thought can help when coupling ML and numerics
+  - Adopt nested design with pure-ML core
+
+## Future Work {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
+### FTorch
+
+- MPS and XPU support
+- Online training and differentiable models
+- C documentation?
+- Benchmarking against other solutions
+  - Benchmarking "ease of use" is hard
+
+:::
+::: {.column}
+### Parameterisation design
+
+- Findability and accessibility
+  - Distribution via HuggingFace
+- Reuseability
+  - Guidance on constructing a pipeline
+- Net architectures for ML components
+  - Make normalisation part of the net?
+
+:::
+::::
+-->
 <aside><div>
 <p>Work done with Will Chapman and Jim Edwards of NCAR.<br>
 CIME with FTorch is available with instructions <a href="https://github.com/Cambridge-ICCS/cime_je"><i class="fa-brands fa-github" aria-label="github"></i>/Cambridge-ICCS/cime_je</a></p>
 </div></aside></section>
+<section id="future-work" class="slide level2 smaller">
+<h2>Future Work</h2>
+<ul>
+<li>Online learning</li>
+<li>Automatic differentiation via <code>torch.autograd</code></li>
+<li>MPS, XPU, and other GPU device support</li>
+</ul>
+<!-- =============================================================================== -->
+</section>
 <section id="thanks" class="slide level2 smaller">
 <h2>Thanks</h2>
 <div style="font-size: 0.65em">
@@ -1055,6 +1272,7 @@ CIME with FTorch is available with instructions <a href="https://github.com/Camb
 </section>
 <section id="thanks-for-listening" class="slide level2 smaller">
 <h2>Thanks for Listening</h2>
+<p>For more information please book an ICCS code clinic, speak to me afterwards, or drop me a message.</p>
 <div class="columns">
 <div class="column" style="width:20%;">
 <p>Get in touch:</p>
@@ -1065,9 +1283,9 @@ CIME with FTorch is available with instructions <a href="https://github.com/Camb
 <p><i class="fa-brands fa-github" aria-label="github"></i> &nbsp;<a href="https://github.com/jatkinson1000">jatkinson1000</a></p>
 <p><i class="fa-brands fa-mastodon" aria-label="mastodon"></i> &nbsp;<a href="https://fosstodon.org/@jatkinson1000">@jatkinson1000@fosstodon.org</a></p>
 </div></div>
-<p><img data-src="https://iccs.cam.ac.uk/sites/iccs.cam.ac.uk/files/logo2_2.png" class="absolute" style="width: 20%; height: 30%; object-fit: cover; object-position: 0 0;top: 15%; right: 0%; "></p>
+<p><img data-src="https://iccs.cam.ac.uk/sites/iccs.cam.ac.uk/files/logo2_2.png" class="absolute" style="width: 20%; height: 30%; object-fit: cover; object-position: 0 0;top: 25%; right: 0%; "></p>
 <!-- TODO: Add logo -->
-<p>The ICCS received support from <img data-src="../images/logos/schmidt_science.png" style="margin: 0; vertical-align: -2%;height:2.4em"></p>
+<p>The ICCS received support from <img data-src="images/schmidt_science.png" style="margin: 0; vertical-align: -2%;height:2.4em"></p>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>

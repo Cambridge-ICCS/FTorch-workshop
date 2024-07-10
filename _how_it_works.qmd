@@ -1,0 +1,99 @@
+# How it Works
+
+
+## (Py)Torch
+
+::::{.columns}
+:::{.column width=50%}
+#### Torch
+
+- an open-source deep learning framework
+- developed at EPFL in Switzerland
+- written in C with a LUA interface
+
+![](images/Torch_logo.png)
+
+:::
+:::{.column width=50%}
+#### PyTorch
+
+- an open-source deep-learning framework
+- developed by Meta AI, now part of the Linux Foundation
+- written in C++ with a Python interface
+- port of Torch (ATen), but also includes Caffe2 etc.
+
+![]( https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png ){style="background-image: radial-gradient(gray 0%, #03334E 75%);"}
+:::
+::::
+
+:::{.attribution}
+Torch and PyTorch logos under Creative Commons
+:::
+
+<!--
+## (Py)Torch
+
+#### Automatic Differentiation
+
+- Symbolic Differentiation
+- Numerical Differentiation
+- Automatic Differentiation
+-->
+
+<!--
+## TorchScript and libtorch
+
+PyTorch provides a (pythonic-ish) C++ interface to the underlying C++ codes.
+
+This is accessible through libtorch
+-->
+
+
+## FTorch
+
+![]( https://raw.githubusercontent.com/fortran-lang/fortran-lang.org/bbdc33ec7bfc06fa6111093ae9712a7f7837b555/assets/img/fortran-logo.svg ){.absolute top=10% right=12.5% width=15%}
+
+
+![](https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png){.absolute top=20% right=30% width="35%" height="20%"}
+
+![](https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png){.absolute top=40% left=30% height="20%"}
+
+![](https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png){style="transform: rotate(270deg);" .absolute top=70% left=30% width="18%" height="10%"}
+
+![](https://www.pngall.com/wp-content/uploads/5/Open-Box-PNG-Clipart.png){.absolute top=18% left=0% height="22%"}
+
+![](https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png){style="transform: rotate(270deg);" .absolute top=33% left=14% width="10%" height="25%"}
+
+:::{style="text-align: center; color: black;" .absolute top="27%" left="6.5%"}
+Python  
+env
+:::
+
+:::{style="text-align: center;" .absolute top="44%" left="44%"}
+Python  
+runtime
+:::
+
+![]( https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png ){style="background-image: radial-gradient(gray 0%, #03334E 75%);" .absolute bottom=10.5% right=6% height=13%}
+
+
+::: {.fragment .fade-in-then-semi-out}
+![](https://imgs.xkcd.com/comics/python_environment_2x.png){.absolute bottom=13% left=0% height=70%}
+:::
+
+::: {.attribution}
+[xkcd #1987](https://xkcd.com/1987/)
+by Randall Munroe,
+used under [CC BY-NC 2.5](https://creativecommons.org/licenses/by-nc/2.5/)
+:::
+
+::: {.fragment .fade-in}
+![](https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png){style="transform: scaleY(-1) rotate(130deg); filter:hue-rotate(150deg);" .absolute top=37% left=78% width="35%" height="20%"}
+:::
+
+
+## libtorch and FTorch
+
+- libtorch is a C++ library providing an interface into the underlying PyTorch 
+- FTorch binds to this using the `iso_c_bindings` adding Fortranic features
+- We utilise shared memory (on cpu) reducing data transfer overheads

@@ -21,7 +21,7 @@ authors:
     orcid: 0000-0001-5001-4812
     affiliations: Senior Research Software Engineer <br> ICCS - University of Cambridge
   - name: The ICCS Team and Collaborators (see end)
-date: "2024-07"
+date: "2024-07-10"
 bibliography: references.bib
 ---
 
@@ -63,6 +63,10 @@ under [CC0(1.0)](https://creativecommons.org/publicdomain/zero/1.0/deed.en) or
 
 <!-- =============================================================================== -->
 
+{{< include _how_it_works.qmd >}}
+
+<!-- =============================================================================== -->
+
 {{< include _installing.qmd >}}
 
 <!-- =============================================================================== -->
@@ -71,7 +75,64 @@ under [CC0(1.0)](https://creativecommons.org/publicdomain/zero/1.0/deed.en) or
 
 <!-- =============================================================================== -->
 
+{{< include _further_details.qmd >}}
+
+<!-- =============================================================================== -->
+
 {{< include _case_studies.qmd >}}
+
+
+<!--
+## Summary {.smaller}
+
+- Use of ML within traditional numerical models
+  - A growing area that presents challenges
+- Language interoperation
+  - FTorch provides a solution for scientists looking to implement torch models in Fortran
+  - Designed with both computational and developer efficiency in mind
+  - Has helped deliver science in climate research and beyond\
+    (@heuer2023interpretable, @mansfield2024uncertainty)
+  - Built into CESM to allow the userbase access
+- Coupling design
+  - Careful thought can help when coupling ML and numerics
+  - Adopt nested design with pure-ML core
+
+## Future Work {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
+### FTorch
+
+- MPS and XPU support
+- Online training and differentiable models
+- C documentation?
+- Benchmarking against other solutions
+  - Benchmarking "ease of use" is hard
+
+:::
+::: {.column}
+### Parameterisation design
+
+- Findability and accessibility
+  - Distribution via HuggingFace
+- Reuseability
+  - Guidance on constructing a pipeline
+- Net architectures for ML components
+  - Make normalisation part of the net?
+
+:::
+::::
+-->
+
+## Future Work {.smaller}
+
+- Online learning
+- Automatic differentiation via `torch.autograd`
+- MPS, XPU, and other GPU device support
+
+
+<!-- =============================================================================== -->
+
 
 ## Thanks {.smaller}
 
@@ -138,6 +199,9 @@ CESM
 
 ## Thanks for Listening {.smaller}
 
+For more information please book an ICCS code clinic, speak to me afterwards,
+or drop me a message.
+
 :::: {.columns}
 
 ::: {.column width="20%"}
@@ -156,10 +220,10 @@ Get in touch:
 :::
 ::::
 
-![](https://iccs.cam.ac.uk/sites/iccs.cam.ac.uk/files/logo2_2.png){style="width: 20%; height: 30%; object-fit: cover; object-position: 0 0;" .absolute top=15% right=0%}
+![](https://iccs.cam.ac.uk/sites/iccs.cam.ac.uk/files/logo2_2.png){style="width: 20%; height: 30%; object-fit: cover; object-position: 0 0;" .absolute top=25% right=0%}
 
 <!-- TODO: Add logo -->
-The ICCS received support from ![]( ../images/logos/schmidt_science.png ){height=2.4em style="margin: 0; vertical-align: -2%"}
+The ICCS received support from ![]( images/schmidt_science.png ){height=2.4em style="margin: 0; vertical-align: -2%"}
 
 
 ## References
