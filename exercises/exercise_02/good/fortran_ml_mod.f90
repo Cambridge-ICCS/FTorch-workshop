@@ -50,9 +50,9 @@ module ml_mod
 
   subroutine ml_final()
     ! Cleanup
-    call torch_tensor_delete(input_tensors(1))
-    call torch_tensor_delete(output_tensors(1))
-    call torch_model_delete(torch_net)
+    call torch_delete(input_tensors)
+    call torch_delete(output_tensors)
+    call torch_delete(torch_net)
 
   end subroutine ml_final
 
