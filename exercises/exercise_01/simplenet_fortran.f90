@@ -3,7 +3,7 @@ program inference
    ! Import precision info from iso
    use, intrinsic :: iso_fortran_env, only : sp => real32
 
-   ! Import our library for interfacing with PyTorch
+   ! TODO: Import our library for interfacing with PyTorch
 
    implicit none
   
@@ -14,23 +14,24 @@ program inference
    real(wp), dimension(5), target :: in_data
    real(wp), dimension(5), target :: out_data
 
-   ! Set up Torch data structures
+   ! TODO: Set up Torch data structures
    ! The net, a vector of input tensors (in this case we only have one), and the output tensor
 
-   ! Get TorchScript model file
+   ! TODO: Get TorchScript model file
 
    ! Initialise data
    in_data = [0.0, 1.0, 2.0, 3.0, 4.0]
 
-   ! Create Torch input/output tensors from the above arrays
+   ! TODO: Create Torch input/output tensors from the above arrays
 
-   ! Load ML model
+   ! TODO: Load ML model
 
-   ! Infer
+   ! TODO: Infer
 
    ! Write out the result of calling the net
+   ! Note: data immediately available in Fortran - no need to 'map'
    write (*,*) out_data(:)
 
-   ! Cleanup
+   ! TODO: Cleanup
 
 end program inference
