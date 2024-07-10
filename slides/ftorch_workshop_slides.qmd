@@ -75,6 +75,10 @@ under [CC0(1.0)](https://creativecommons.org/publicdomain/zero/1.0/deed.en) or
 
 <!-- =============================================================================== -->
 
+{{< include _further_details.qmd >}}
+
+<!-- =============================================================================== -->
+
 {{< include _case_studies.qmd >}}
 
 ## Thanks {.smaller}
