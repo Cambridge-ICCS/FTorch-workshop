@@ -1,6 +1,6 @@
-<img src="https://iccs.cam.ac.uk/sites/iccs.cam.ac.uk/files/logo2_1.png"  width="355" align="left">
+<img src="slides/ICCS_logo.png"  width="355" align="left">
 
-<br><br><br><br><br>
+<br><br><br><br><br><br><br>
 
 # FTorch Workshop
 
