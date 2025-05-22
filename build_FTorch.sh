@@ -35,4 +35,4 @@ cmake --build . --target install
 export LD_LIBRARY_PATH=$LIBTORCH_PATH/torch/lib
 
 # Return user to the root of the workshop, leaving the venv activated
-cd ../
+cd
