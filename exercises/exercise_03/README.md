@@ -2,13 +2,13 @@
 
 ## Description
 
-A Python demo is copied from the PyTorch documentation as `autograd.py`, which
-shows how to compute the gradient of an arithmetic combination of Torch Tensors.
+A Python demo is modified based on the one found in the PyTorch documentation as
+`autograd.py`, which shows how to compute the gradient of an arithmetic
+combination of Torch Tensors. There are several exercises to check that the
+values are computed correctly.
 
-The demo will be replicated in Fortran as `autograd.f90`, to show how to do the
-same thing using FTorch. This demo is currently unfinished and simply
-demonstrates how to use the `torch_tensor_to_array` subroutine to extract a
-Fortran array from a `torch_tensor`.
+The demo is replicated in Fortran as `autograd.f90`, to show how to do the same
+thing using FTorch.
 
 ## Running
 
@@ -25,13 +25,6 @@ Run the Python version of the demo with
 ```
 python3 autograd.py
 ```
-This performs some arithmetic on two input tensors [2.0, 3.0] and [6.0, 4.0] to
-produce the result:
-```
-tensor([-12., 65.], grad_fn=<SubBackward0>)
-```
-where `<SubBackward0>` refers to the method used for computing the gradient.
-
 
 To run the Fortran version of the demo we need to compile with (for example)
 ```
@@ -47,10 +40,4 @@ and should match the compiler that was used to locally build FTorch.)
 To run the compiled code, simply use
 ```
 ./autograd
-```
-Currently, the example simply constructs a Torch Tensor from the array and then
-extracts it again. As such, running the above should print the same values as
-the input:
-```
-   2.00000000       3.00000000
 ```
