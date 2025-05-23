@@ -5,7 +5,7 @@ program hello_fortran
 
   implicit none
 
-  real(wp) :: input(5) = (/ 0.0, 1.0, 2.0, 3.0, 4.0 /)
+  real(wp) :: input(5) = [ 0.0, 1.0, 2.0, 3.0, 4.0 ]
   real(wp) :: output(5)
 
   call multiply_by_two(input, output)

@@ -14,6 +14,6 @@ module math_mod
     real(wp), dimension(:), intent(inout) :: output
 
     output = input * 2.0
-  end subroutine
+  end subroutine multiply_by_two
 
 end module math_mod
