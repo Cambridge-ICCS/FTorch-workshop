@@ -19,12 +19,15 @@ All materials are available such that individuals can cover the course in their 
 
 ## Contents
 
-- [Learning Objectives](#learning-objectives)
+- [Learning objectives](#learning-objectives)
 - [Teaching material](#teaching-material)
-- [Preparation and prerequisites](#preparation-and-prerequisites)
+- [Prerequisites](#prerequisites)
+- [Preparation](#preparation)
+    - [GitHub codespaces](#using-github-codespaces)
+    - [Local install](#non-codespace-local-install)
 - [Installation and setup](#installation-and-setup)
 - [License information](#license)
-- [Contribution Guidelines and Support](#contribution-guidelines-and-support)
+- [Contribution guidelines and support](#contribution-guidelines-and-support)
 
 
 ## Learning Objectives
@@ -127,7 +130,7 @@ repository cloned.
 > Firefox users with enhanced tracking protection will need to disable this for
 > the codespace.
 
-### Non-codespace participants
+### Non-codespace local install
 
 If you wish to follow this workshop on your own machine rather than using GitHub
 codespaces please follow the instructions below.
