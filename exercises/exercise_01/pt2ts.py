@@ -1,14 +1,13 @@
 """Load a PyTorch model and convert it to TorchScript."""
 
 import os
-import sys
 from typing import Optional
-import torch
 
 # FPTLIB-TODO
 # Add a module import with your model here:
 # This example assumes the model architecture is in an adjacent module `my_ml_model.py`
 import my_ml_model
+import torch
 
 
 def script_to_torchscript(
@@ -24,6 +23,7 @@ def script_to_torchscript(
     filename : str
         name of file to save to
     """
+    # FIXME: torch.jit.optimize_for_inference() when PyTorch issue #81085 is resolved
     scripted_model = torch.jit.script(model)
     # print(scripted_model.code)
     scripted_model.save(filename)
@@ -46,10 +46,12 @@ def trace_to_torchscript(
     filename : str
         name of file to save to
     """
+    # FIXME: torch.jit.optimize_for_inference() when PyTorch issue #81085 is resolved
     traced_model = torch.jit.trace(model, dummy_input)
+    # traced_model.save(filename)
     frozen_model = torch.jit.freeze(traced_model)
-    # print(frozen_model.graph)
-    # print(frozen_model.code)
+    ## print(frozen_model.graph)
+    ## print(frozen_model.code)
     frozen_model.save(filename)
 
 
@@ -68,6 +70,28 @@ def load_torchscript(filename: Optional[str] = "saved_model.pt") -> torch.nn.Mod
 
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "--device_type",
+        help="Device type to run the inference on",
+        type=str,
+        choices=["cpu", "cuda", "xpu", "mps"],
+        default="cpu",
+    )
+    parser.add_argument(
+        "--filepath",
+        help="Path to the file containing the PyTorch model",
+        type=str,
+        default=os.path.dirname(__file__),
+    )
+    parsed_args = parser.parse_args()
+    device_type = parsed_args.device_type
+    filepath = parsed_args.filepath
+
     # =====================================================
     # Load model and prepare for saving
     # =====================================================
@@ -77,7 +101,7 @@ if __name__ == "__main__":
     # Insert code here to load your model as `trained_model`.
     # This example assumes my_ml_model has a method `initialize` to load
     # architecture, weights, and place in inference mode
-    trained_model = my_ml_model.setup()
+    trained_model = my_ml_model.initialize()
 
     # Switch off specific layers/parts of the model that behave
     # differently during training and inference.
@@ -93,12 +117,12 @@ if __name__ == "__main__":
     # This example assumes two inputs of size (512x40) and (512x1)
     trained_model_dummy_input = torch.ones((512, 40), dtype=torch.float64)
 
-    # FPTLIB-TODO
-    # Uncomment the following lines to save for inference on GPU (rather than CPU):
-    # device = torch.device('cuda')
-    # trained_model = trained_model.to(device)
-    # trained_model.eval()
-    # trained_model_dummy_input = trained_model_dummy_input.to(device)
+    # Transfer the model and inputs to GPU device, if appropriate
+    if device_type != "cpu":
+        device = torch.device(device_type)
+        trained_model = trained_model.to(device)
+        trained_model.eval()
+        trained_model_dummy_input = trained_model_dummy_input.to(device)
 
     # FPTLIB-TODO
     # Run model for dummy inputs
@@ -113,12 +137,12 @@ if __name__ == "__main__":
 
     # FPTLIB-TODO
     # Set the name of the file you want to save the torchscript model to:
-    saved_ts_filename = "saved_model.pt"
+    saved_ts_filename = f"saved_model_{device_type}.pt"
     # A filepath may also be provided. To do this, pass the filepath as an argument to
-    # this script when it is run from the command line, i.e., `./pt2ts.py path/to/model`.
+    # this script when it is run from the command line, i.e. `./pt2ts.py path/to/model`.
 
     # FPTLIB-TODO
-    # Save the PyTorch model using either scripting (recommended where possible) or tracing
+    # Save the PyTorch model using either scripting (recommended if possible) or tracing
     # -----------
     # Scripting
     # -----------
@@ -127,15 +151,15 @@ if __name__ == "__main__":
     # -----------
     # Tracing
     # -----------
-    # trace_to_torchscript(trained_model, trained_model_dummy_input, filename=saved_ts_filename)
+    # trace_to_torchscript(
+    #     trained_model, trained_model_dummy_input, filename=saved_ts_filename
+    # )
 
     # =====================================================
     # Check model saved OK
     # =====================================================
 
-    # Load torchscript and run model as a test
-    # FPTLIB-TODO
-    # Scale inputs as above and, if required, move inputs and mode to GPU
+    # Load torchscript and run model as a test, scaling inputs as above
     trained_model_dummy_input = 2.0 * trained_model_dummy_input
     trained_model_testing_outputs = trained_model(
         trained_model_dummy_input,
@@ -154,11 +178,16 @@ if __name__ == "__main__":
             print("Saved TorchScript model working as expected in a basic test.")
             print("Users should perform further validation as appropriate.")
         else:
-            raise RuntimeError(
+            model_error = (
                 "Saved Torchscript model is not performing as expected.\n"
                 "Consider using scripting if you used tracing, or investigate further."
             )
+            raise RuntimeError(model_error)
 
     # Check that the model file is created
-    filepath = os.path.dirname(__file__) if len(sys.argv) == 1 else sys.argv[1]
-    assert os.path.exists(os.path.join(filepath, saved_ts_filename))
+    if not os.path.exists(os.path.join(filepath, saved_ts_filename)):
+        torchscript_file_error = (
+            f"Saved TorchScript file {os.path.join(filepath, saved_ts_filename)} "
+            "cannot be found."
+        )
+        raise FileNotFoundError(torchscript_file_error)

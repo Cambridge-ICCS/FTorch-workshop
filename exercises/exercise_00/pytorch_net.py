@@ -45,10 +45,10 @@ if __name__ == "__main__":
     model = SimpleNet()
     model.eval()
 
-    input = torch.Tensor([0.0, 1.0, 2.0, 3.0, 4.0])
+    tensor_in = torch.Tensor([0.0, 1.0, 2.0, 3.0, 4.0])
 
     with torch.no_grad():
-        output = model.forward(input)
+        output = model.forward(tensor_in)
 
-    print(f"Input is  {input}.")
+    print(f"Input is  {tensor_in}.")
     print(f"Output is {output}.")
