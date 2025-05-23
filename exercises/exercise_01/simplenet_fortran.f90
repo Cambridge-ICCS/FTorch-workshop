@@ -6,10 +6,10 @@ program inference
    ! TODO: Import our library for interfacing with PyTorch
 
    implicit none
-  
+
    ! Set working precision for reals
    integer, parameter :: wp = sp
-   
+
    ! Set up Fortran data structures
    real(wp), dimension(5), target :: in_data
    real(wp), dimension(5), target :: out_data
