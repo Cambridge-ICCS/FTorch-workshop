@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Load a PyTorch model and convert it to TorchScript."""
 
 import os
