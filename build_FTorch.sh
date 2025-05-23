@@ -9,6 +9,7 @@
 python3 -m venv .venv
 source .venv/bin/activate
 pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install numpy
 
 # Clone FTorch and move to the directory
 git clone https://github.com/Cambridge-ICCS/FTorch.git

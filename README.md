@@ -35,7 +35,8 @@ However, more specifically we aim to:
 
 * provide a deeper understanding of Torch models and the libtorch library,
 * introduce FTorch and it's aims and benefits,
-* teach users the full pipeline of taking a PyTorch model and coupling it to a Fortran code, and
+* teach users the full pipeline of taking a PyTorch model and coupling it to a Fortran code,
+* introduce the automatic differentiation aspects of FTorch, and
 * highlight best practices and efficient use when doing the above.
 
 
@@ -50,10 +51,22 @@ The slides are generated from markdown using quarto.
 The raw markdown and html files can be found in the [slides](slides/) directory.
 
 ### Exercises
-The exercises for the course can be found in the [exercises](exercises/) directory.  
+The exercises for the course can be found in the [exercises](exercises/) directory.
+
+They consist of:
+
+* Exercise 0: An introduction to Fortran and PyTorch to get up to speed
+* Exercise 1: A walkthrough of how to take your net from PyTorch and use it in Fortran
+* Exercise 2: A comparison of efficient and inefficient approaches to using FTorch as part
+  of a larger numerical code
+* Exercise 3: A demonstration of some of the automatic differentiation features of FTorch
+
+Between exercises 0 and 1 we will also walk through building and installing FTorch,
+details for which can be found in the slides and in the [`build_FTorch.sh`](build_FTorch.sh)
+script.
 
 
-## Preparation and prerequisites
+## Prerequisites
 
 To get the most out of the session we assume a basic understanding in a few areas and 
 for you to do some preparation in advance.
@@ -89,7 +102,36 @@ the basic concepts of the language (variables, subroutines, modules etc.)
 To this end Fortran-Lang provide an [excellent quickstart tutorial](https://fortran-lang.org/learn/quickstart/).
 
 
-### Preparation
+## Preparation
+
+### Using GitHub Codespaces
+
+We suggest that participants follow along with the workshop by using a
+[GitHub Codespace](https://github.com/features/codespaces) (GitHub login required).
+This allows you to work in a VSCode Web session running code on from a container in
+the cloud.
+All GitHub users have a certain number of hours of credit for using codespaces.
+This can be extended if you have GitHub Education.
+
+To launch a codespace for the workshop navigate to the
+[repository on Github](https://github.com/Cambridge-ICCS/FTorch-workshop) and click
+the down arrow on the 'code button'.
+Select 'Codespaces' and then 'Create codespace on main'.
+This will open a new window and start up an interactive VSCode session.
+
+Once the container is set up you will be dropped into a VSCode session with
+dependencies (Python, gfortran, and CMake) installed, and a copy of the workshop
+repository cloned.
+
+> [!NOTE]  
+> Firefox users with enhanced tracking protection will need to disable this for
+> the codespace.
+
+### Non-codespace participants
+
+If you wish to follow this workshop on your own machine rather than using GitHub
+codespaces please follow the instructions below.
+
 In preparation for the course please ensure that your computer contains the following:
 - A text editor
   e.g. vim/[neovim](https://neovim.io/), [gedit](https://gedit.en.softonic.com/), [vscode](https://code.visualstudio.com/), [sublimetext](https://www.sublimetext.com/) etc. to open and edit code files
@@ -105,21 +147,19 @@ In preparation for the course please ensure that your computer contains the foll
   The [CMake build system](https://cmake.org/) is used for building FTorch. Similarly it is available
   online or through all good package managers.
 
-Note for Windows users: _We strongly advise using the
-[Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/)
-for this workshop.
-If you wish to proceed on native Windows please follow the specific
-[FTorch guidance for Windows Users](https://cambridge-iccs.github.io/FTorch/page/troubleshooting.html#windows)
-to prepare a system.\
-We have linked suitable applications for Windows in the above lists, though you may wish
-to refer to [Windows' getting-started with python information](https://learn.microsoft.com/en-us/windows/python/beginners)
-for a complete guide to getting set up._
+> [!NOTE]  
+> Note for Windows users: _We strongly advise using the
+> [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/)
+> for this workshop.
+> If you wish to proceed on native Windows please follow the specific
+> [FTorch guidance for Windows Users](https://cambridge-iccs.github.io/FTorch/page/troubleshooting.html#windows)
+> to prepare a system.\
+> We have linked suitable applications for Windows in the above lists, though you may wish
+> to refer to [Windows' getting-started with python information](https://learn.microsoft.com/en-us/windows/python/beginners)
+> for a complete guide to getting set up._
 
 If you require assistance or further information with any of these please reach out to
 us before a training session.
-
-
-## Installation and setup
 
 #### 1. Clone or fork the repository
 Navigate to the location you want to install this repository on your system and clone
@@ -139,17 +179,13 @@ fork for future reference.
 Before installing any Python packages it is important to first create a Python virtual environment.
 This provides an insulated environment inside which we can install Python packages 
 without polluting the operating system's Python environment.
-
-If you have never done this before don't worry: it is *very* good practise, especially 
-when you are working on multiple projects, and easy to do.
-
 ```
-python3 -m venv venv
+python3 -m venv .venv
 ```
-This will create a directory called `venv/` containing software for the virtual environment.
+This will create a directory called `.venv/` containing software for the virtual environment.
 To activate the environment run:
 ```
-source venv/bin/activate
+source .venv/bin/activate
 ```
 You can now work on python from within this isolated environment, installing packages
 as you wish without disturbing your base system environment.
