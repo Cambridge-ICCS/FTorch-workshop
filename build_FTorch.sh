@@ -4,7 +4,7 @@
 # It should be run from the top of the repository.
 # ---
 
-# Set up a virtual environment an install neccessary Python dependencies
+# Set up a virtual environment an install necessary Python dependencies
 #   We will specify the cpu-only version of PyTorch to match the codespace hardware
 python3 -m venv .venv
 source .venv/bin/activate
@@ -32,7 +32,7 @@ cmake .. \
 cmake --build . --target install
 
 # Add LibTorch libraries to the paths to be searched for dynamic linking at runtime
-export LD_LIBRARY_PATH=$LIBTORCH_PATH/torch/lib
+export LD_LIBRARY_PATH=$PYTHON_PATH/torch/lib
 
 # Return user to the root of the workshop, leaving the venv activated
 cd
