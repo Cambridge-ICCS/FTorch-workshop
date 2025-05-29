@@ -41,3 +41,20 @@ To run the compiled code, simply use
 ```
 ./autograd
 ```
+
+## Solutions
+
+### Task 1
+
+```fortran
+  ! TODO: Initialise the tensor Q from the first array used for output with torch_tensor_from_array
+```
+
+<details>
+
+```fortran
+  ! Initialise Q from the first array used for output
+  call torch_tensor_from_array(Q, out_data1, torch_kCPU)
+```
+
+</details>

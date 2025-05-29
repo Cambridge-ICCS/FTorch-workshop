@@ -1,4 +1,4 @@
-program example
+program autograd_demo
   use, intrinsic :: iso_fortran_env, only : sp => real32
   use ftorch, only : torch_tensor, torch_tensor_from_array, torch_kCPU, torch_tensor_backward, &
        torch_tensor_get_gradient
@@ -20,7 +20,7 @@ program example
   call torch_tensor_from_array(a, [2.0_wp, 3.0_wp], torch_kCPU, requires_grad=.true.)
   call torch_tensor_from_array(b, [6.0_wp, 4.0_wp], torch_kCPU, requires_grad=.true.)
 
-  ! TODO: Initialise the tensor Q from the array used for output with torch_tensor_from_array
+  ! TODO: Initialise the tensor Q from the first array used for output with torch_tensor_from_array
 
   ! Scalar multiplication and division are not currently implemented in FTorch. However, you can
   ! achieve the same thing by defining a rank-1 tensor with a single entry, as follows:
@@ -39,4 +39,4 @@ program example
   ! TODO: Retrieve the gradient values with torch_tensor_get_gradient and print the corresponding
   !       arrays to screen. Do they give the expected values?
 
-end program example
+end program autograd_demo
