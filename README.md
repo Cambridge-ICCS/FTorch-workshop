@@ -158,7 +158,7 @@ In preparation for the course please ensure that your computer contains the foll
 > [FTorch guidance for Windows Users](https://cambridge-iccs.github.io/FTorch/page/troubleshooting.html#windows)
 > to prepare a system.\
 > We have linked suitable applications for Windows in the above lists, though you may wish
-> to refer to [Windows' getting-started with python information](https://learn.microsoft.com/en-us/windows/python/beginners)
+> to refer to [Windows' getting-started with Python information](https://learn.microsoft.com/en-us/windows/python/beginners)
 > for a complete guide to getting set up._
 
 If you require assistance or further information with any of these please reach out to
