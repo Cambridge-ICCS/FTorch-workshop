@@ -24,3 +24,14 @@ with:
 ```
 ```
 Check that the output that it prints to screen is what you expect.
+
+### Hello PyTorch
+
+Take a look at the `hello_pytorch.py` file and read through the comments in the
+code, making sure that you understand what it does.
+
+Then run the code as follows.
+```sh
+python hello_pytorch.py
+```
+Check that the output that it prints to screen is what you expect.
