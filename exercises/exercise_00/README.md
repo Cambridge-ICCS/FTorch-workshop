@@ -22,7 +22,6 @@ with:
 ```sh
 ./a.out
 ```
-```
 Check that the output that it prints to screen is what you expect.
 
 ### Hello PyTorch
