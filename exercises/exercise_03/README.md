@@ -71,3 +71,45 @@ Q = 3 * (a^3 - b*b/3) = 3*a^3 - b^2 =   -12.0000000       65.0000000
 ```
 
 </details>
+
+### Task 3
+
+```fortran
+  ! TODO: Create tensors dQda and dQdb based off output arrays for the gradients with
+  !       torch_tensor_from_array.
+```
+
+<details>
+
+```fortran
+  ! Create tensors dQda and dQdb based off output arrays for the gradients
+  call torch_tensor_from_array(dQda, out_data2, torch_kCPU)
+  call torch_tensor_from_array(dQdb, out_data3, torch_kCPU)
+```
+
+</details>
+
+### Task 4
+
+```fortran
+  ! TODO: Retrieve the gradient values with torch_tensor_get_gradient and print the corresponding
+  !       arrays to screen. Do they give the expected values?
+```
+
+<details>
+
+```fortran
+  ! Retrieve the gradient values and print the corresponding arrays to screen
+  call torch_tensor_get_gradient(dQda, a)
+  call torch_tensor_get_gradient(dQdb, b)
+  write(*,*) "dQda = 9*a^2 = ", out_data2
+  write(*,*) "dQdb = - 2*b = ", out_data3
+```
+
+The output should be
+```
+dQda = 9*a^2 =    36.0000000       81.0000000
+dQdb = - 2*b =   -12.0000000      -8.00000000
+```
+
+</details>
