@@ -20,8 +20,11 @@ authors:
   - name: Jack Atkinson
     orcid: 0000-0001-5001-4812
     affiliations: Senior Research Software Engineer <br> ICCS - University of Cambridge
+  - name: Joe Wallwork
+    orcid: 0000-0002-3646-091X
+    affiliations: Research Software Engineer <br> ICCS - University of Cambridge
   - name: The ICCS Team and Collaborators (see end)
-date: "2024-07-10"
+date: "2025-06-02"
 bibliography: references.bib
 ---
 
@@ -31,7 +34,9 @@ bibliography: references.bib
 ::: {.column width="50%"}
 #### Slides and Materials
 
-To access links or follow on your own device these slides can be found at:  
+<!-- TODO: Update link to slides -->
+
+To access links or follow on your own device these slides can be found at:
 [jackatkinson.net/slides](https://jackatkinson.net/slides)
 
 ::: {style="text-align: center"}
