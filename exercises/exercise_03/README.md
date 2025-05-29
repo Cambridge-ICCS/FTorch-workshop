@@ -33,7 +33,7 @@ To run the compiled code, simply use
 ./autograd
 ```
 
-## Solutions
+## Fortran solutions
 
 ### Task 1
 
@@ -46,6 +46,28 @@ To run the compiled code, simply use
 ```fortran
   ! Initialise Q from the first array used for output
   call torch_tensor_from_array(Q, out_data1, torch_kCPU)
+```
+
+</details>
+
+### Task 2
+
+```fortran
+  ! TODO: Compute the same mathematical expression as in the Python example and print it to screen.
+  !       Does it give the expected value?
+```
+
+<details>
+
+```fortran
+  ! Compute the same mathematical expression as in the Python example and print it to screen.
+  Q = multiplier * (a**3 - b * b / divisor)
+  write (*,*) "Q = 3 * (a^3 - b*b/3) = 3*a^3 - b^2 = ", out_data1(:)
+```
+
+The output should be
+```
+Q = 3 * (a^3 - b*b/3) = 3*a^3 - b^2 =   -12.0000000       65.0000000
 ```
 
 </details>
