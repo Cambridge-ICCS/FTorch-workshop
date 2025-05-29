@@ -22,6 +22,7 @@ module math_mod
       ! Specify that the first argument is a rank-1 64-bit real array with unspecified length.
       ! The intent(in) specifies that this is input only and cannot be modified.
       real(wp), dimension(:), intent(in) :: input
+
       ! Specify that the second argument is a rank-1 64-bit real array with unspecified length.
       ! The intent(out) specifies that this is for input only and any initial values are ignored.
       real(wp), dimension(:), intent(out) :: output
