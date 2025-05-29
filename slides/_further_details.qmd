@@ -63,7 +63,7 @@ Supply as an array of tensors, innit.
 - FTorch automatically has access to GPU acceleration through the PyTorch backend
 - When running `pt2ts.py` save model on GPU
   - Guidance provided in the file
-- When creating `torch_tensor`s set the device to `torch_kCUDA` instead of `torch_kCPU`^[We can also use MPS, and are investigating AMD and XPU.]
+- When creating `torch_tensor`s set the device to `torch_kCUDA` instead of `torch_kCPU`^[We can also use Intel XPU and AppleSilicon MPS, and are investigating AMD.]
 - To target a specific device supply the `device_index` argument
 - CPU-GPU cannot avoid data transfer. Use `MPI_GATHER()` to reduce
 - For more details see:

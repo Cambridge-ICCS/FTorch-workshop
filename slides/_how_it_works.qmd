@@ -95,5 +95,5 @@ used under [CC BY-NC 2.5](https://creativecommons.org/licenses/by-nc/2.5/)
 ## libtorch and FTorch
 
 - libtorch is a C++ library providing an interface into the underlying PyTorch 
-- FTorch binds to this using the `iso_c_bindings` adding Fortranic features
-- We utilise shared memory (on cpu) reducing data transfer overheads
+- FTorch binds to this using the `iso_c_binding` module (intrinsic since 2003).
+- We utilise shared memory (on CPU) reducing data transfer overheads
