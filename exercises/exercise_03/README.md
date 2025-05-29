@@ -42,6 +42,61 @@ To run the compiled code, simply use
 ./autograd
 ```
 
+## Python solutions
+
+### Task 1
+
+```python
+# TODO: Calculate the value of Q by hand to provide expected values
+# Q_expected =
+```
+
+<details>
+
+We have
+$$Q = 3 (a^3 - b^2/3) = 3a^3 - b^2$$
+Now
+$$a=[2, 3] \implies a^3 = [8, 27]$$
+and
+$$b=[6, 4] \implies b^2 = [36, 16]$$
+so
+$$Q = 3 [8, 27] - [36, 16] = [24, 81] - [36, 16] = [-12, 65]$$
+
+```python
+# Calculate the value of Q by hand to provide expected values
+Q_expected = torch.tensor([-12.0, 65.0])
+```
+
+</details>
+
+### Task 2
+
+```python
+# TODO: Calculate the directional derivatives of Q with respect to a and b by hand to
+#       provide expected values
+# dQda_expected =
+# dQdb_expected =
+```
+
+<details>
+
+We have
+$$Q = 3 (a^3 - b^2/3) = 3a^3 - b^2$$
+so
+$$\frac{\partial Q}{\partial a} = 9a^2$$
+and
+$$\frac{\partial Q}{\partial b} = -2b$$
+
+In code:
+```python
+# Calculate the directional derivatives of Q with respect to a and b by hand to
+# provide expected values
+dQda_expected = 9 * a**2
+dQdb_expected = -2 * b
+```
+
+</details>
+
 ## Fortran solutions
 
 ### Task 1
