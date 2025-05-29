@@ -28,7 +28,7 @@ pip install ./
 
 :::{.fragment}
 Navigate to `exercises/exercise_00/` where you will see both Python and
-Fortran scripts.
+Fortran files.
 :::
 
 ## Python
