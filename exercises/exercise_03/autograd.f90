@@ -1,4 +1,4 @@
-program autograd_demo
+program autograd
   use, intrinsic :: iso_fortran_env, only : sp => real32
   use ftorch, only : torch_tensor, torch_tensor_from_array, torch_kCPU, torch_tensor_backward, &
        torch_tensor_get_gradient
@@ -39,4 +39,4 @@ program autograd_demo
   ! TODO: Retrieve the gradient values with torch_tensor_get_gradient and print the corresponding
   !       arrays to screen. Do they give the expected values?
 
-end program autograd_demo
+end program autograd
