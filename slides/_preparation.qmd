@@ -1,16 +1,16 @@
 # Preparation
 
-## Exercise 0 -- getting on the same page
+## Exercise 0 -- Hello Fortran and PyTorch!
 
-Before we start I want to be sure everyone has a working system.
+Before we start, we should make sure everyone has a working system.
 
 As we move through the following exercise if you experience any issues please ask for
-help and we will aim to sort you out before the main exercises.
+help and we'll aim to sort you out before the main exercises.
 
 \
 
 :::{.fragment}
-In terminal navigate to to the workshop directory, set up a python virtual environment
+In terminal navigate to to the workshop directory, set up a Python virtual environment
 as you prefer, and install the workshop dependencies:
 
 ```default
@@ -23,13 +23,13 @@ pip install ./
 \
 
 :::{.fragment}
-Navigate to `exercises/exercise_00/` where you will see a python and
-fortran code.
+Navigate to `exercises/exercise_00/` where you will see both Python and
+Fortran scripts.
 :::
 
 ## Python
 
-`pytorchnet.py` defines a net `SimpleNet` that takes an input vector of length 5
+`pytorch_net.py` defines a net `SimpleNet` that takes an input vector of length 5
 and multiplies it by 2.
 
 Note:
