@@ -40,7 +40,7 @@ bibliography: references.bib
 <!-- TODO: Update link to slides -->
 
 To access links or follow on your own device these slides can be found at:
-[jackatkinson.net/slides](https://jackatkinson.net/slides)
+[cambridge-iccs.github.io/FTorch-workshop](https://cambridge-iccs.github.io/FTorch-workshop)
 
 ::: {style="text-align: center"}
 {{< qrcode https://jackatkinson.net/slides qr7dekity9 width=200 height=200 >}}
