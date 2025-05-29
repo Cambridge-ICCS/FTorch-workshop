@@ -42,11 +42,18 @@ class SimpleNet(nn.Module):
 
 
 if __name__ == "__main__":
+    # Construct a SimpleNet instance and specify that it will be used for evaluation
+    # (as opposed to training)
     model = SimpleNet()
     model.eval()
 
+    # Define an arbitrary input tensor
+    input = torch.Tensor([0.0, 1.0, 2.0, 3.0, 4.0])
     tensor_in = torch.Tensor([0.0, 1.0, 2.0, 3.0, 4.0])
 
+    # Run inference to obtain an output tensor
+    # The torch.no_grad() context specifies that gradient computations should not be
+    # performed when executing the indented code.
     with torch.no_grad():
         output = model.forward(tensor_in)
 
