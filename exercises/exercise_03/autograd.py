@@ -10,7 +10,7 @@ b = torch.tensor([6.0, 4.0], requires_grad=True)
 Q = 3 * (a**3 - b * b / 3)
 
 # TODO: Calculate the value of Q by hand to provide expected values
-# Q_expected = 
+# Q_expected =
 print(f"Q: expected {Q_expected}, got {Q}")
 
 # Call backpropagation with an external gradient tensor filled with ones
