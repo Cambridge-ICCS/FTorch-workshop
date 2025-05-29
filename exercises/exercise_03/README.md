@@ -42,7 +42,7 @@ To run the compiled code, simply use
 ./autograd
 ```
 
-## Python solutions
+## Python tasks
 
 ### Task 1
 
@@ -50,6 +50,8 @@ To run the compiled code, simply use
 # TODO: Calculate the value of Q by hand to provide expected values
 # Q_expected =
 ```
+
+#### Solution
 
 <details>
 
@@ -78,6 +80,8 @@ Q_expected = torch.tensor([-12.0, 65.0])
 # dQdb_expected =
 ```
 
+#### Solution
+
 <details>
 
 We have
@@ -97,13 +101,15 @@ dQdb_expected = -2 * b
 
 </details>
 
-## Fortran solutions
+## Fortran tasks
 
 ### Task 1
 
 ```fortran
   ! TODO: Initialise the tensor Q from the first array used for output with torch_tensor_from_array
 ```
+
+#### Solution
 
 <details>
 
@@ -120,6 +126,8 @@ dQdb_expected = -2 * b
   ! TODO: Compute the same mathematical expression as in the Python example and print it to screen.
   !       Does it give the expected value?
 ```
+
+#### Solution
 
 <details>
 
@@ -143,6 +151,8 @@ Q = 3 * (a^3 - b*b/3) = 3*a^3 - b^2 =   -12.0000000       65.0000000
   !       torch_tensor_from_array.
 ```
 
+#### Solution
+
 <details>
 
 ```fortran
@@ -159,6 +169,8 @@ Q = 3 * (a^3 - b*b/3) = 3*a^3 - b^2 =   -12.0000000       65.0000000
   ! TODO: Retrieve the gradient values with torch_tensor_get_gradient and print the corresponding
   !       arrays to screen. Do they give the expected values?
 ```
+
+#### Solution
 
 <details>
 
