@@ -145,21 +145,26 @@ under [CC0(1.0)](https://creativecommons.org/publicdomain/zero/1.0/deed.en) or
 ICCS Research Software Engineers:
 
 - Chris Edsall - Director
+- Omar Jamil - Team Lead
 - Marion Weinzierl - Senior
 - Jack Atkinson - Senior
 - Matt Archer - Senior
 - Tom Meltzer - Senior
-- Surbhi Ghoel
-- Tianzhang Cai
+- Surbhi Goel
 - Joe Wallwork
-- Amy Pike
-- James Emberton
+- Adeleke Bankole
+- Isaac Akanho
+- Sam Avis
+- Nirav Shah
 - Dominic Orchard - Director/Computer Science
 
 Previous Members:
 
 - Paul Richmond - Sheffield
 - Jim Denholm - AstraZeneca
+- Tianzhang Cai
+- Amy Pike
+- James Emberton
 
 :::
 
@@ -168,11 +173,14 @@ Previous Members:
 FTorch:
 
 - Jack Atkinson
+- Joe Wallwork
+- Tom Meltzer
+- Matt Archer
+- Dominic Orchard
+- Niccolo Zanotti - University of Bologna
 - Simon Clifford - Cambridge RSE
 - Athena Elafrou - Cambridge RSE, now NVIDIA
 - Elliott Kasoar - STFC
-- Joe Wallwork
-- Tom Meltzer
 
 :::
 ::: {.column width="33%"}
@@ -199,26 +207,7 @@ CESM
 
 ## Thanks for Listening {.smaller}
 
-For more information please book an ICCS code clinic, speak to me afterwards,
-or drop me a message.
-
-:::: {.columns}
-
-::: {.column width="20%"}
-Get in touch:
-:::
-::: {.column width="80%"}
-{{< fa pencil >}} \ Jack Atkinson
-
-{{< fa solid globe >}} \ [jackatkinson.net](https://jackatkinson.net)
-
-{{< fa solid envelope >}} \ [jwa34[AT]cam.ac.uk](mailto:jwa34@cam.ac.uk)
-
-{{< fa brands github >}} \ [jatkinson1000](https://github.com/jatkinson1000)
-
-{{< fa brands mastodon >}} \ [\@jatkinson1000\@fosstodon.org](https://fosstodon.org/@jatkinson1000)
-:::
-::::
+For more information please speak to us afterwards, or drop us a message.
 
 ![](https://iccs.cam.ac.uk/sites/iccs.cam.ac.uk/files/logo2_2.png){style="width: 20%; height: 30%; object-fit: cover; object-position: 0 0;" .absolute top=25% right=0%}
 
