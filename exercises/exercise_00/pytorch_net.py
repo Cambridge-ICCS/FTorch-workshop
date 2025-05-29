@@ -49,12 +49,13 @@ if __name__ == "__main__":
 
     # Define an arbitrary input tensor
     input = torch.Tensor([0.0, 1.0, 2.0, 3.0, 4.0])
+    tensor_in = torch.Tensor([0.0, 1.0, 2.0, 3.0, 4.0])
 
     # Run inference to obtain an output tensor
     # The torch.no_grad() context specifies that gradient computations should not be
     # performed when executing the indented code.
     with torch.no_grad():
-        output = model.forward(input)
+        output = model.forward(tensor_in)
 
-    print(f"Input is  {input}.")
+    print(f"Input is  {tensor_in}.")
     print(f"Output is {output}.")

@@ -4,13 +4,14 @@ program inference
    use, intrinsic :: iso_fortran_env, only : sp => real32
 
    ! Import our library for interfacing with PyTorch
-   use ftorch
+   use ftorch, only : torch_tensor, torch_model, torch_tensor_from_array, torch_delete, &
+                      torch_model_load, torch_model_forward
 
    implicit none
-  
+
    ! Set working precision for reals
    integer, parameter :: wp = sp
-   
+
    ! Set up Fortran data structures
    real(wp), dimension(5), target :: in_data
    real(wp), dimension(5), target :: out_data

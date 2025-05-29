@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-#policy CMP0076 - target_sources source files are relative to file where target_sources is run
+# CMP0076 - target source files relative to where target_sources is run
 cmake_policy (SET CMP0076 NEW)
 
 set(PROJECT_NAME SimpleNetExample)

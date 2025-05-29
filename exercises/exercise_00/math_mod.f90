@@ -29,6 +29,6 @@ module math_mod
 
       ! Multiply *each entry* of the input by two. (There is an implicit loop here.)
       output(:) = input * 2.0
-    end subroutine
+    end subroutine multiply_by_two
 
 end module math_mod

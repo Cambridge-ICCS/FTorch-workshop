@@ -10,7 +10,7 @@ program hello_fortran
   implicit none
 
   ! Declare a 64-bit real array with 5 entries and set the values
-  real(wp) :: input(5) = (/ 0.0, 1.0, 2.0, 3.0, 4.0 /)
+  real(wp) :: input(5) = [ 0.0, 1.0, 2.0, 3.0, 4.0 ]
 
   ! Declare a 64-bit real array with 5 entries but do not set any values
   real(wp) :: output(5)
