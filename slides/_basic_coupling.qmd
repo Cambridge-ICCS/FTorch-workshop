@@ -71,6 +71,9 @@ Notes:
 See [TorchScript reference](https://pytorch.org/docs/stable/jit_language_reference.html#language-reference) for feature compatibility.
 :::
 
+## Offline training with FTorch
+
+![](https://cambridge-iccs.github.io/FTorch/page/offline.png){width=50%}
 
 ## Calling from Fortran
 
