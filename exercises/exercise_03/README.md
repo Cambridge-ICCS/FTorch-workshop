@@ -1,4 +1,4 @@
-# Example 6 - Autograd
+# Exercise 3 - Autograd
 
 ## Description
 
@@ -11,15 +11,6 @@ The demo is replicated in Fortran as `autograd.f90`, to show how to do the same
 thing using FTorch.
 
 ## Running
-
-To run this example install FTorch as described in the main documentation.
-Then from this directory create a virtual environment and install the necessary
-Python modules:
-```
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
 
 Run the Python version of the demo with
 ```
