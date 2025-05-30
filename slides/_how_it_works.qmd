@@ -1,6 +1,7 @@
 # How it Works
 
 
+<!--
 ## (Py)Torch
 
 ::::{.columns}
@@ -29,6 +30,7 @@
 :::{.attribution}
 Torch and PyTorch logos under Creative Commons
 :::
+-->
 
 <!--
 ## (Py)Torch

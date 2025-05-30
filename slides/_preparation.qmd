@@ -4,24 +4,13 @@
 
 **Question:** What are people's experience levels with and use cases of Fortran and PyTorch?
 
+\
+
 :::{.fragment}
 Before we start, we should make sure everyone has a working setup.
 
 As we move through the following exercise if you experience any issues please ask for
 help and we'll aim to sort you out before the main exercises.
-:::
-
-\
-
-:::{.fragment}
-In terminal navigate to to the workshop directory, set up a Python virtual environment
-as you prefer, and install the workshop dependencies:
-
-```default
-python3 -m venv .venv
-source .venv/bin/activate
-pip install ./
-```
 :::
 
 \
