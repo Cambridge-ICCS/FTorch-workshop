@@ -1,4 +1,4 @@
-# Basic coupling
+# Exercises
 
 ## Exercise 1
 
@@ -103,33 +103,7 @@ Notes:
 
 Once we have modified the Fortran we need to compile the code and link it to FTorch.
 
-This is done in exactly the same way as you would compile and link to any other library,
-for example NetCDF.
-
-By hand this can be done with:
-```default
-gfortran -I<path/to-ftorch>/include/ftorch -L<path/to-ftorch>/lib -lftorch -c simplenet_fortran.f90
-gfortran -I<path/to-ftorch>/include/ftorch -o simplenet_fortran simplenet_fortran.o -L<path/to-ftorch>/lib -lftorch
-```
-
-\
-
-In reality, however, we would use a `Makefile` or CMake.
-examples of both of these are included.
-
-::::{.columns}
-:::{.column width=50%}
-Make:
-
-- Modify the makefile to set location of ftorch
-- run `make`
-:::
-:::{.column}
-CMake:
-
-- create a build directory and cuild using CMake similarly to the main library
-:::
-::::
+For convenience, this can be done in the codespace by simply running `make` in the `exercise_01/` subdirectory.
 
 
 ## Running the code

@@ -12,7 +12,7 @@
 <link href="ftorch_workshop_slides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.31">
 
-  <meta name="dcterms.date" content="2024-07-10">
+  <meta name="dcterms.date" content="2025-06-02">
   <title>Coupling Machine Learning to Fortran using the FTorch Library</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -230,20 +230,36 @@ Jack Atkinson <a href="https://orcid.org/0000-0001-5001-4812" class="quarto-titl
     </div>
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-The ICCS Team and Collaborators (see end) 
+Joe Wallwork <a href="https://orcid.org/0000-0002-3646-091X" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
+</div>
+        <p class="quarto-title-affiliation">
+            Research Software Engineer <br> ICCS - University of Cambridge
+          </p>
+    </div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Tom Meltzer <a href="https://orcid.org/0000-0003-1740-9550" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
+</div>
+        <p class="quarto-title-affiliation">
+            Senior Research Software Engineer <br> ICCS - University of Cambridge
+          </p>
+    </div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+The ICCS Team and Collaborators 
 </div>
 </div>
 </div>
 
-  <p class="date">2024-07-10</p>
+  <p class="date">2025-06-02</p>
 </section>
 <section id="precursors" class="slide level2 smaller nostretch">
 <h2>Precursors</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <h4 id="slides-and-materials">Slides and Materials</h4>
-<p>To access links or follow on your own device these slides can be found at:<br>
-<a href="https://jackatkinson.net/slides">jackatkinson.net/slides</a></p>
+<!-- TODO: Update link to slides -->
+<p>To access links or follow on your own device these slides can be found at: <a href="https://cambridge-iccs.github.io/FTorch-workshop">cambridge-iccs.github.io/FTorch-workshop</a></p>
 <div style="text-align: center">
 <div id="qr7dekity9" class="qrcode"></div>
 <script type="text/javascript">
@@ -268,56 +284,53 @@ var qrcode = new QRCode("qr7dekity9", {"colorDark":"#000000","colorLight":"#ffff
 <h1>Preparation</h1>
 
 </section>
-<section id="exercise-0-getting-on-the-same-page" class="slide level2">
-<h2>Exercise 0 – getting on the same page</h2>
-<p>Before we start I want to be sure everyone has a working system.</p>
-<p>As we move through the following exercise if you experience any issues please ask for help and we will aim to sort you out before the main exercises.</p>
+<section id="exercise-0-hello-fortran-and-pytorch" class="slide level2">
+<h2>Exercise 0 – Hello Fortran and PyTorch!</h2>
+<p><strong>Question:</strong> What are people’s experience levels with and use cases of Fortran and PyTorch?</p>
 <p><br>
 </p>
 <div class="fragment">
-<p>In terminal navigate to to the workshop directory, set up a python virtual environment as you prefer, and install the workshop dependencies:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>python3 -m venv .venv</span>
-<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a>source .venv/bin/activate</span>
-<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a>pip install ./</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Before we start, we should make sure everyone has a working setup.</p>
+<p>As we move through the following exercise if you experience any issues please ask for help and we’ll aim to sort you out before the main exercises.</p>
 </div>
 <p><br>
 </p>
 <div class="fragment">
-<p>Navigate to <code>exercises/exercise_00/</code> where you will see a python and fortran code.</p>
+<p>Navigate to <code>exercises/exercise_00/</code> where you will see both Python and Fortran files.</p>
 </div>
 </section>
 <section id="python" class="slide level2">
 <h2>Python</h2>
-<p><code>pytorchnet.py</code> defines a net <code>SimpleNet</code> that takes an input vector of length 5 and multiplies it by 2.</p>
+<p><code>pytorch_net.py</code> defines a net <code>SimpleNet</code> that takes an input vector of length 5 and multiplies it by 2.</p>
 <p>Note:</p>
 <ul>
 <li>the <code>nn.Module</code> class</li>
 <li>the <code>forward()</code> method</li>
 </ul>
 <p>Running:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>python pytorch_net.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>python pytorch_net.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>should produce the output:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>Input is  tensor([0., 1., 2., 3., 4.]).</span>
-<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>Output is tensor([0., 2., 4., 6., 8.]).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>Input is  tensor([0., 1., 2., 3., 4.]).</span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>Output is tensor([0., 2., 4., 6., 8.]).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="compilers-and-cmake" class="slide level2">
 <h2>Compilers and CMake</h2>
 <p>First we will check that we have Fortran, C and C++ compilers installed:</p>
 <p>Running:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>gfortran --version</span>
-<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>gcc --version</span>
-<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>g++ --version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>gfortran --version</span>
+<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>gcc --version</span>
+<span id="cb3-3"><a href="" aria-hidden="true" tabindex="-1"></a>g++ --version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="columns">
 <div class="column" style="width:60%;">
 <p>Should produce output similar to:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a>GNU Fortran (Homebrew GCC 14.1.0_1) 14.1.0</span>
-<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a>Copyright (C) 2024 Free Software Foundation, Inc.</span>
-<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a>This is free software; see the source for copying conditions.</span>
-<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a>There is NO warranty; not even for MERCHANTABILITY or</span>
-<span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a>FITNESS FOR A PARTICULAR PURPOSE.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>GNU Fortran (Homebrew GCC 14.1.0_1) 14.1.0</span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>Copyright (C) 2024 Free Software Foundation, Inc.</span>
+<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>This is free software; see the source for copying conditions.</span>
+<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>There is NO warranty; not even for MERCHANTABILITY or</span>
+<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a>FITNESS FOR A PARTICULAR PURPOSE.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:40%;">
 <p>and not:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>bash: command not found: gfortran</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a>bash: command not found: gfortran</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <p><br>
 </p>
@@ -327,7 +340,7 @@ var qrcode = new QRCode("qr7dekity9", {"colorDark":"#000000","colorLight":"#ffff
 <p>Later on we will also need CMake.</p>
 </div><div class="column" style="width:40%;">
 <p>To check this is installed run:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and verify it is &gt;= 3.1.</p>
 </div></div>
 </div>
@@ -341,19 +354,19 @@ var qrcode = new QRCode("qr7dekity9", {"colorDark":"#000000","colorLight":"#ffff
 <p>The subroutine is contained in a separate module <code>math_mod.f90</code>, however.</p>
 <div class="fragment">
 <p>We can compile both of these to produce <code>.o</code> object files and a <code>.mod</code> module files using:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>gfortran -c math_mod.f90 hello_fortran.f90</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a>gfortran -c math_mod.f90 hello_fortran.f90</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>We then link these together into an executable <code>ftn_prog</code> using:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a>gfortran -o ftn_prog hello_fortran.o math_mod.o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>gfortran -o ftn_prog hello_fortran.o math_mod.o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>Running this as:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>./ftn_prog</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a>./ftn_prog</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>should produce the output</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a> Hello, World!</span>
-<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a> Input:     0.00000000        1.00000000        2.00000000        3.00000000        4.00000000</span>
-<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a> Output:    0.00000000        2.00000000        4.00000000        6.00000000        8.00000000</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a> Hello, World!</span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a> Input:     0.00000000        1.00000000        2.00000000        3.00000000        4.00000000</span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a> Output:    0.00000000        2.00000000        4.00000000        6.00000000        8.00000000</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <!-- =============================================================================== -->
@@ -460,32 +473,36 @@ TensorFlow, the TensorFlow logo and any related marks are trademarks of Google I
 <section>
 <section id="how-it-works" class="title-slide slide level1 center">
 <h1>How it Works</h1>
+<!--
+## (Py)Torch
 
-</section>
-<section id="pytorch" class="slide level2">
-<h2>(Py)Torch</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<h4 id="torch">Torch</h4>
-<ul>
-<li>an open-source deep learning framework</li>
-<li>developed at EPFL in Switzerland</li>
-<li>written in C with a LUA interface</li>
-</ul>
-<p><img data-src="images/Torch_logo.png"></p>
-</div><div class="column" style="width:50%;">
-<h4 id="pytorch-1">PyTorch</h4>
-<ul>
-<li>an open-source deep-learning framework</li>
-<li>developed by Meta AI, now part of the Linux Foundation</li>
-<li>written in C++ with a Python interface</li>
-<li>port of Torch (ATen), but also includes Caffe2 etc.</li>
-</ul>
-<p><img data-src="https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png" style="background-image: radial-gradient(gray 0%, #03334E 75%);"></p>
-</div></div>
-<div class="attribution">
-<p>Torch and PyTorch logos under Creative Commons</p>
-</div>
+::::{.columns}
+:::{.column width=50%}
+#### Torch
+
+- an open-source deep learning framework
+- developed at EPFL in Switzerland
+- written in C with a LUA interface
+
+![](images/Torch_logo.png)
+
+:::
+:::{.column width=50%}
+#### PyTorch
+
+- an open-source deep-learning framework
+- developed by Meta AI, now part of the Linux Foundation
+- written in C++ with a Python interface
+- port of Torch (ATen), but also includes Caffe2 etc.
+
+![]( https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png ){style="background-image: radial-gradient(gray 0%, #03334E 75%);"}
+:::
+::::
+
+:::{.attribution}
+Torch and PyTorch logos under Creative Commons
+:::
+-->
 <!--
 ## (Py)Torch
 
@@ -534,90 +551,101 @@ runtime</p>
 <h2>libtorch and FTorch</h2>
 <ul>
 <li>libtorch is a C++ library providing an interface into the underlying PyTorch</li>
-<li>FTorch binds to this using the <code>iso_c_bindings</code> adding Fortranic features</li>
-<li>We utilise shared memory (on cpu) reducing data transfer overheads</li>
+<li>FTorch binds to this using the <code>iso_c_binding</code> module (intrinsic since 2003).</li>
+<li>We utilise shared memory (on CPU) reducing data transfer overheads</li>
 </ul>
 <!-- =============================================================================== -->
 </section></section>
 <section>
 <section id="installing-ftorch" class="title-slide slide level1 center">
 <h1>Installing FTorch</h1>
+<!--
 
-</section>
-<section id="clone-the-git-repository" class="slide level2">
-<h2>Clone the git repository</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>FTorch is available from GitHub:<br>
-<a href="https://github.com/Cambridge-ICCS/FTorch">github.com/Cambridge-ICCS/FTorch</a></p>
-<div style="text-align: center">
-<div id="qrjeyf6490" class="qrcode"></div>
-<script type="text/javascript">
-var qrcode = new QRCode("qrjeyf6490", {"colorDark":"#000000","colorLight":"#ffffff","height":"200","text":"https://github.com/Cambridge-ICCS/FTorch","width":"200"});
-</script>
-    
-</div>
-</div><div class="column" style="width:50%;">
-<p>With supporting documentation at:<br>
-<a href="https://cambridge-iccs.github.io/FTorch/">cambridge-iccs.github.io/FTorch/</a></p>
-<div style="text-align: center">
-<div id="qrr6f94nhd" class="qrcode"></div>
-<script type="text/javascript">
-var qrcode = new QRCode("qrr6f94nhd", {"colorDark":"#000000","colorLight":"#ffffff","height":"200","text":"https://cambridge-iccs.github.io/FTorch/","width":"200"});
-</script>
-    
-</div>
-</div></div>
-<p>To get a copy of FTorch on your system run:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>git clone https://github.com/Cambridge-ICCS/FTorch.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>which will create a directory <code>FTorch/</code> with the contents.</p>
-</section>
-<section id="get-libtorch-optional" class="slide level2">
-<h2>Get Libtorch (optional)</h2>
-<p>Libtorch is available from the <a href="https://pytorch.org/">PyTorch homepage</a>:</p>
-<p><img data-src="images/libtorch.jpg" style="width:75.0%"></p>
-<p>We <em>can</em> use the version of libtorch that comes with pip-installed PyTorch (see docs).<br>
-Standalone libtorch removes Python and aids reproducibility, especially on HPC systems.</p>
+## Clone the git repository
 
-<aside><div>
-<p>Notes: Need GCC&gt;9 and GLIBC 2.29 for CXX11.<br>
-Whilst most features should be compatible between PyTorch and libtorch versions, keep this in mind if issues occur.</p>
-</div></aside></section>
-<section id="build-the-code" class="slide level2">
-<h2>Build the code</h2>
+::::{.columns}
+:::{.column width=50%}
+FTorch is available from GitHub:\
+[github.com/Cambridge-ICCS/FTorch](https://github.com/Cambridge-ICCS/FTorch)
+
+::: {style="text-align: center"}
+
+:::
+
+:::
+:::{.column width=50%}
+With supporting documentation at:\
+[cambridge-iccs.github.io/FTorch/](https://cambridge-iccs.github.io/FTorch/)
+
+::: {style="text-align: center"}
+
+:::
+
+:::
+::::
+
+To get a copy of FTorch on your system run:
+```default
+git clone https://github.com/Cambridge-ICCS/FTorch.git
+```
+which will create a directory `FTorch/` with the contents.
+
+
+## Get Libtorch (optional)
+
+Libtorch is available from the [PyTorch homepage](https://pytorch.org/):
+
+![](images/libtorch.jpg){width=75%}
+
+We _can_ use the version of libtorch that comes with pip-installed PyTorch (see docs).\
+Standalone libtorch removes Python and aids reproducibility, especially
+on HPC systems.
+
+:::{.aside}
+Notes: Need GCC>9 and GLIBC 2.29 for CXX11.\
+Whilst most features should be compatible between PyTorch and libtorch versions, keep this in mind if issues occur.
+:::
+
+-->
+</section>
+<section id="ftorch-source-code" class="slide level2">
+<h2>FTorch source code</h2>
 <p>The source code for FTorch is contained in the <code>src/</code> directory. This contains:</p>
 <ul>
 <li><code>ctorch.cpp</code> - Bindings to the libtorch C++ API</li>
 <li><code>ctorch.h</code> - header file to bind to from Fortran</li>
-<li><code>ftorch.f90</code> - the Fortran routines we will be calling</li>
+<li><code>ftorch.F90</code> - the Fortran routines we will be calling</li>
 </ul>
 <p><br>
 </p>
-<p>These are compiled, joined together, and installed using CMake.</p>
+<p>These are compiled, linked together, and installed using CMake.</p>
 <ul>
 <li>tool to simplify build process for users</li>
 <li>accomodate different machines and setups</li>
 <li>controlled by the <code>CMakeLists.txt</code> file</li>
 </ul>
 </section>
-<section id="build-the-code-1" class="slide level2">
-<h2>Build the code</h2>
+<section id="build-ftorch" class="slide level2">
+<h2>Build FTorch</h2>
+<p>This is all handled by the <code>build_FTorch.sh</code> script.</p>
+<p><br>
+</p>
 <p>To keep things clean we will do all of our building from a self-contained <code>build/</code> directory.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a>cd FTorch/src/</span>
-<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a>mkdir build</span>
-<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a>cd build</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a>cd FTorch/src/</span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a>mkdir build</span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a>cd build</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We can now execute CMake to build here using the code in the above directory:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake .. -DCMAKE_BUILD_TYPE=Release</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake .. -DCMAKE_BUILD_TYPE=Release</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="build-the-code-2" class="slide level2">
+<section id="build-the-code" class="slide level2">
 <h2>Build the code</h2>
 <p>In reality we often need to specify a number of additional options:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake .. -DCMAKE_BUILD_TYPE=Release \</span>
-<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_Fortran_COMPILER=gfortran \</span>
-<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_C_COMPILER=gcc \</span>
-<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_CXX_COMPILER=g++ \</span>
-<span id="cb15-5"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_PREFIX_PATH=&lt;path/to/libtorch/&gt; \</span>
-<span id="cb15-6"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_INSTALL_PREFIX=&lt;path/to/install/ftorch/&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake .. -DCMAKE_BUILD_TYPE=Release \</span>
+<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_Fortran_COMPILER=gfortran \</span>
+<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_C_COMPILER=gcc \</span>
+<span id="cb13-4"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_CXX_COMPILER=g++ \</span>
+<span id="cb13-5"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_PREFIX_PATH=&lt;path/to/libtorch/&gt; \</span>
+<span id="cb13-6"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_INSTALL_PREFIX=&lt;path/to/install/ftorch/&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br>
 </p>
 <p>Notes:</p>
@@ -629,19 +657,19 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <li>Install prefix can be set to anywhere. Defaults may require root/admin access</li>
 </ul>
 </section>
-<section id="build-the-code-3" class="slide level2">
+<section id="build-the-code-1" class="slide level2">
 <h2>Build the code</h2>
 <p>Assuming everything proceeds successfully CMake will generate a <code>Makefile</code> for us.</p>
 <p><br>
 </p>
 <p>We can run this locally using<sup>1</sup>:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --build .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --build .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If we specified a particular location to install FTorch we can do this by running<sup>2</sup>:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --install .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --install .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br>
 </p>
 <p>The above two commands can be combined into a single option using:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --build . --target install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --build . --target install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside><ol class="aside-footnotes"><li id="fn2"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make</code> command.</p></li><li id="fn3"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make install</code> command.</p></li></ol></aside></section>
 <section id="the-ftorch-installation" class="slide level2">
 <h2>The FTorch installation</h2>
@@ -657,8 +685,8 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <!-- =============================================================================== -->
 </section></section>
 <section>
-<section id="basic-coupling" class="title-slide slide level1 center">
-<h1>Basic coupling</h1>
+<section id="exercises" class="title-slide slide level1 center">
+<h1>Exercises</h1>
 
 </section>
 <section id="exercise-1" class="slide level2">
@@ -674,7 +702,7 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <li>Compile and run code, linking to FTorch</li>
 </ol>
 </section>
-<section id="pytorch-2" class="slide level2">
+<section id="pytorch" class="slide level2">
 <h2>PyTorch</h2>
 <p>Examine <code>exercises/exercise_01/simplenet.py</code>.</p>
 <p><br>
@@ -683,7 +711,7 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <p><br>
 </p>
 <p>With our virtual environment active we can test this by running the code with<sup>1</sup>:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a>python3 simplenet.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a>python3 simplenet.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>Input:  tensor([0., 1., 2., 3., 4.])
 Output: tensor([0., 2., 4., 6., 8.])</code></pre>
 <aside><ol class="aside-footnotes"><li id="fn4"><p>This will run the <code>if __name__ == "__main__":</code> section at the bottom of the file.</p></li></ol></aside></section>
@@ -745,38 +773,14 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <section id="building-the-code" class="slide level2">
 <h2>Building the code</h2>
 <p>Once we have modified the Fortran we need to compile the code and link it to FTorch.</p>
-<p>This is done in exactly the same way as you would compile and link to any other library, for example NetCDF.</p>
-<p>By hand this can be done with:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a>gfortran -I&lt;path/to-ftorch&gt;/include/ftorch -L&lt;path/to-ftorch&gt;/lib -lftorch -c simplenet_fortran.f90</span>
-<span id="cb21-2"><a href="" aria-hidden="true" tabindex="-1"></a>gfortran -I&lt;path/to-ftorch&gt;/include/ftorch -o simplenet_fortran simplenet_fortran.o -L&lt;path/to-ftorch&gt;/lib -lftorch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><br>
-</p>
-<p>In reality, however, we would use a <code>Makefile</code> or CMake. examples of both of these are included.</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Make:</p>
-<ul>
-<li>Modify the makefile to set location of ftorch</li>
-<li>run <code>make</code></li>
-</ul>
-</div><div class="column">
-<p>CMake:</p>
-<ul>
-<li>create a build directory and cuild using CMake similarly to the main library</li>
-</ul>
-</div></div>
+<p>For convenience, this can be done in the codespace by simply running <code>make</code> in the <code>exercise_01/</code> subdirectory.</p>
 </section>
 <section id="running-the-code" class="slide level2">
 <h2>Running the code</h2>
 <p>To run the code we can use the generated executable:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a>./simplenet_fortran</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a>./simplenet_fortran</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>   0.00000000       2.00000000       4.00000000       6.00000000       8.00000000</code></pre>
 <!-- =============================================================================== -->
-</section></section>
-<section>
-<section id="further-details" class="title-slide slide level1 center">
-<h1>Further Details</h1>
-
 </section>
 <section id="exercise-2-larger-code-considerations" class="slide level2">
 <h2>Exercise 2: Larger code considerations</h2>
@@ -828,15 +832,15 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <li>time the codes and observe the difference</li>
 </ul>
 </section>
+<section id="exercise-3" class="slide level2">
+<h2>Exercise 3</h2>
+<p><em>To do</em></p>
+</section>
 <section id="multiple-inputs-and-outputs" class="slide level2">
 <h2>Multiple inputs and outputs</h2>
 <p>Supply as an array of tensors, innit.</p>
 <ul>
-<li>For more details see:
-<ul>
-<li>the <a href="https://cambridge-iccs.github.io/FTorch/page/gpu.html">online documentation</a></li>
-<li>the <a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples">MultiIO Example</a>.</li>
-</ul></li>
+<li>For more details see the <a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/6_MultiIO">MultiIO Example</a>.</li>
 </ul>
 </section>
 <section id="gpu-acceleration" class="slide level2">
@@ -853,11 +857,11 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <li>For more details see:
 <ul>
 <li>the <a href="https://cambridge-iccs.github.io/FTorch/page/gpu.html">online documentation</a></li>
-<li>the <a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples">GPU Example</a></li>
+<li>the <a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/6_MultiGPU">GPU Example</a></li>
 </ul></li>
 </ul>
 <!-- =============================================================================== -->
-<aside><ol class="aside-footnotes"><li id="fn5"><p>We can also use MPS, and are investigating AMD and XPU.</p></li></ol></aside></section></section>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>We can also use Intel XPU and AppleSilicon MPS, and are investigating AMD.</p></li></ol></aside></section></section>
 <section>
 <section id="applications-and-case-studies" class="title-slide slide level1 center">
 <h1>Applications and Case Studies</h1>
@@ -964,128 +968,26 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <div class="attribution">
 <p>Derecho by NCAR</p>
 </div>
-<!--
-## Summary {.smaller}
-
-- Use of ML within traditional numerical models
-  - A growing area that presents challenges
-- Language interoperation
-  - FTorch provides a solution for scientists looking to implement torch models in Fortran
-  - Designed with both computational and developer efficiency in mind
-  - Has helped deliver science in climate research and beyond\
-    (@heuer2023interpretable, @mansfield2024uncertainty)
-  - Built into CESM to allow the userbase access
-- Coupling design
-  - Careful thought can help when coupling ML and numerics
-  - Adopt nested design with pure-ML core
-
-## Future Work {.smaller}
-
-:::: {.columns}
-::: {.column width="50%"}
-### FTorch
-
-- MPS and XPU support
-- Online training and differentiable models
-- C documentation?
-- Benchmarking against other solutions
-  - Benchmarking "ease of use" is hard
-
-:::
-::: {.column}
-### Parameterisation design
-
-- Findability and accessibility
-  - Distribution via HuggingFace
-- Reuseability
-  - Guidance on constructing a pipeline
-- Net architectures for ML components
-  - Make normalisation part of the net?
-
-:::
-::::
--->
 <aside><div>
 <p>Work done with Will Chapman and Jim Edwards of NCAR.<br>
 CIME with FTorch is available with instructions <a href="https://github.com/Cambridge-ICCS/cime_je"><i class="fa-brands fa-github" aria-label="github"></i>/Cambridge-ICCS/cime_je</a></p>
 </div></aside></section>
-<section id="future-work" class="slide level2 smaller">
-<h2>Future Work</h2>
+<section id="ongoing-and-future-work" class="slide level2 smaller">
+<h2>Ongoing and future Work</h2>
 <ul>
-<li>Online learning</li>
-<li>Automatic differentiation via <code>torch.autograd</code></li>
-<li>MPS, XPU, and other GPU device support</li>
+<li>Online training</li>
+<li>AMD GPU device support</li>
+<li>Benchmarking against other solutions
+<ul>
+<li>Benchmarking “ease of use” is hard</li>
+</ul></li>
 </ul>
 <!-- =============================================================================== -->
 </section>
-<section id="thanks" class="slide level2 smaller">
-<h2>Thanks</h2>
-<div style="font-size: 0.65em">
-<div class="columns">
-<div class="column" style="width:33%;">
-<p>ICCS Research Software Engineers:</p>
-<ul>
-<li>Chris Edsall - Director</li>
-<li>Marion Weinzierl - Senior</li>
-<li>Jack Atkinson - Senior</li>
-<li>Matt Archer - Senior</li>
-<li>Tom Meltzer - Senior</li>
-<li>Surbhi Ghoel</li>
-<li>Tianzhang Cai</li>
-<li>Joe Wallwork</li>
-<li>Amy Pike</li>
-<li>James Emberton</li>
-<li>Dominic Orchard - Director/Computer Science</li>
-</ul>
-<p>Previous Members:</p>
-<ul>
-<li>Paul Richmond - Sheffield</li>
-<li>Jim Denholm - AstraZeneca</li>
-</ul>
-</div><div class="column" style="width:33%;">
-<p>FTorch:</p>
-<ul>
-<li>Jack Atkinson</li>
-<li>Simon Clifford - Cambridge RSE</li>
-<li>Athena Elafrou - Cambridge RSE, now NVIDIA</li>
-<li>Elliott Kasoar - STFC</li>
-<li>Joe Wallwork</li>
-<li>Tom Meltzer</li>
-</ul>
-</div><div class="column" style="width:33%;">
-<p>MiMA</p>
-<ul>
-<li>Minah Yang - NYU, DataWave</li>
-<li>Dave Conelly - NYU, DataWave</li>
-</ul>
-<p>CESM</p>
-<ul>
-<li>Will Chapman - NCAR/M2LInES</li>
-<li>Jim Edwards - NCAR</li>
-<li>Paul O’Gorman - MIT, M2LInES</li>
-<li>Judith Berner - NCAR, M2LInES</li>
-<li>Qiang Sun - U Chicago, DataWave</li>
-<li>Pedram Hassanzadeh - U Chicago, DataWave</li>
-<li>Joan Alexander - NWRA, DataWave</li>
-</ul>
-</div></div>
-</div>
-</section>
 <section id="thanks-for-listening" class="slide level2 smaller">
 <h2>Thanks for Listening</h2>
-<p>For more information please book an ICCS code clinic, speak to me afterwards, or drop me a message.</p>
-<div class="columns">
-<div class="column" style="width:20%;">
-<p>Get in touch:</p>
-</div><div class="column" style="width:80%;">
-<p><i class="fa-solid fa-pencil" aria-label="pencil"></i> &nbsp;Jack Atkinson</p>
-<p><i class="fa-solid fa-globe" aria-label="globe"></i> &nbsp;<a href="https://jackatkinson.net">jackatkinson.net</a></p>
-<p><i class="fa-solid fa-envelope" aria-label="envelope"></i> &nbsp;<a href="mailto:jwa34@cam.ac.uk">jwa34[AT]cam.ac.uk</a></p>
-<p><i class="fa-brands fa-github" aria-label="github"></i> &nbsp;<a href="https://github.com/jatkinson1000">jatkinson1000</a></p>
-<p><i class="fa-brands fa-mastodon" aria-label="mastodon"></i> &nbsp;<a href="https://fosstodon.org/@jatkinson1000">@jatkinson1000@fosstodon.org</a></p>
-</div></div>
-<p><img data-src="https://iccs.cam.ac.uk/sites/iccs.cam.ac.uk/files/logo2_2.png" class="absolute" style="width: 20%; height: 30%; object-fit: cover; object-position: 0 0;top: 25%; right: 0%; "></p>
-<!-- TODO: Add logo -->
+<p>For more information please speak to us afterwards, or drop us a message.</p>
+<p><img data-src="https://iccs.cam.ac.uk/sites/default/files/logo2_2.png" class="absolute" style="width: 20%; height: 30%; object-fit: cover; object-position: 0 0;top: 25%; right: 0%; "></p>
 <p>The ICCS received support from <img data-src="images/schmidt_science.png" style="margin: 0; vertical-align: -2%;height:2.4em"></p>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
