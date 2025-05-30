@@ -1,5 +1,6 @@
 # Installing FTorch
 
+<!--
 
 ## Clone the git repository
 
@@ -46,26 +47,31 @@ Notes: Need GCC>9 and GLIBC 2.29 for CXX11.\
 Whilst most features should be compatible between PyTorch and libtorch versions, keep this in mind if issues occur.
 :::
 
+-->
 
-## Build the code
+## FTorch source code
 
 The source code for FTorch is contained in the `src/` directory.
 This contains:
 
 - `ctorch.cpp` - Bindings to the libtorch C++ API
 - `ctorch.h` - header file to bind to from Fortran
-- `ftorch.f90` - the Fortran routines we will be calling
+- `ftorch.F90` - the Fortran routines we will be calling
 
 \
 
-These are compiled, joined together, and installed using CMake.
+These are compiled, linked together, and installed using CMake.
 
 - tool to simplify build process for users
 - accomodate different machines and setups
 - controlled by the `CMakeLists.txt` file
 
 
-## Build the code
+## Build FTorch
+
+This is all handled by the `build_FTorch.sh` script.
+
+\
 
 To keep things clean we will do all of our building from a self-contained `build/` directory.
 ```default
