@@ -46,9 +46,21 @@ The exercise is the same for both folders:
 - modify the Makefile to link to FTorch and build the codes
 - time the codes and observe the difference
 
-## Exercise 3
+## Exercise 3: automatic differentiation
 
-*To do*
+PyTorch has a powerful automatic differentiation engine called `autograd` that
+can be used to compute derivatives of expressions involving tensors.
+
+\
+
+We recently exposed this functionality in FTorch, allowing you to do this in
+Fortran, too. This is a key step facilitating online training in FTorch.
+
+\
+
+In this exercise, we walk through differentiating the mathematical expression
+$$Q = 3 (a^3 - b^2/3)$$
+using both PyTorch and FTorch.
 
 ## Multiple inputs and outputs
 
