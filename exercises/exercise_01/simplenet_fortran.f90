@@ -26,7 +26,7 @@ program inference
 
    ! TODO: Load ML model
 
-   ! TODO: Infer
+   ! TODO: Run inference on the model using `torch_model_forward`
 
    ! Write out the result of calling the net
    ! Note: data immediately available in Fortran - no need to 'map'
