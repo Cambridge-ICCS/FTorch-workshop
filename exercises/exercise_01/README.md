@@ -21,7 +21,7 @@ python3 simplenet.py
 ```
 This defines the net and runs it with an input tensor [0.0, 1.0, 2.0, 3.0, 4.0] to produce the result:
 ```
-tensor([[0, 2, 4, 6, 8]])
+tensor([0., 2., 4., 6., 8.])
 ```
 
 To save the SimpleNet model to TorchScript we will first need to modify the
