@@ -117,11 +117,11 @@ Developer
 :::
 ::::
 
-At the academic end of research both have an equal effect on 'time-to-science'.
+Both affect 'time-to-science'.
 
-- Don't re-writing nets after you have already trained them
-- Scientists are not all not computer scientists
-  - Should be simple to learn and deploy
-  - May not have access to extensive software support
-- HPC environments want minimal additional dependencies
-- Needs to be as efficient as possible
+- Don't rewrite nets after you have already trained them.
+- Not all scientists are computer scientists.
+  - Software should be simple to learn and deploy.
+  - May not have access to extensive software support.
+- HPC environments want minimal additional dependencies.
+- Needs to be as efficient as possible.

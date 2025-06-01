@@ -1,18 +1,30 @@
 # Preparation
 
-## Exercise 0 -- Hello Fortran and PyTorch!
+## Codespaces
 
-**Question:** What are people's experience levels with and use cases of Fortran and PyTorch?
-
-\
+In this tutorial, we will be using GitHub Codespaces to run the exercises.
+If you are not familiar with Codespaces, please refer to the
+[Codespaces documentation](https://docs.github.com/en/codespaces) for more information.
 
 :::{.fragment}
-Before we start, we should make sure everyone has a working setup.
-
-As we move through the following exercise if you experience any issues please ask for
-help and we'll aim to sort you out before the main exercises.
+1. Navigate to the
+   [FTorch-workshop repo page](https://github.com/Cambridge-ICCS/FTorch-workshop)
+   repository and click on the green "Code" button.
+2. Select "Codespaces" and then "Create codespace on main".
+3. Wait for the codespace to be created and opened in your browser. You will be put in a
+   VSCode environment with a terminal at the bottom.
 :::
 
+:::{.fragment}
+Note that we have set up the codespace to have a Python virtual environment set up and
+activated for you.
+:::
+
+## Exercise 0 -- Hello Fortran and PyTorch!
+
+:::{.fragment}
+**Question:** What are people's experience levels with and use cases of Fortran and PyTorch?
+:::
 \
 
 :::{.fragment}
