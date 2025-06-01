@@ -3,8 +3,8 @@ module ml_mod
   use, intrinsic :: iso_fortran_env, only : sp=>real32
 
   ! Import our library for interfacing with PyTorch
-   use ftorch, only : torch_tensor, torch_model, torch_tensor_from_array, torch_delete, &
-                      torch_model_load, torch_model_forward
+   use ftorch, only : torch_tensor, torch_model, torch_kCPU, torch_tensor_from_array, &
+                      torch_model_load, torch_model_forward, torch_delete
 
   implicit none
 
@@ -37,8 +37,8 @@ module ml_mod
     call torch_tensor_from_array(output_tensors(1), out_data, tensor_layout, torch_kCPU)
 
     ! Load ML model
-    model_torchscript_file = 'saved_model.pt'
-    call torch_model_load(torch_net, model_torchscript_file)
+    model_torchscript_file = 'saved_model_cpu.pt'
+    call torch_model_load(torch_net, model_torchscript_file, torch_kCPU)
 
     ! Infer
     call torch_model_forward(torch_net, input_tensors, output_tensors)
