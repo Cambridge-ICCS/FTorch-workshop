@@ -4,8 +4,8 @@ What we have considered so far is a simple contrived example designed to teach t
 
 However, in reality the codes we will be using are more complex, and full of terrors.
 
-- We will be calling the net repeatedly over the course of many iterations
-- Reading in the net and weights from file is expensive
+- We will be calling the net repeatedly over the course of many iterations.
+- Reading in the net and weights from file is expensive.
   - Don't do this at every step!
 
 
@@ -14,37 +14,42 @@ However, in reality the codes we will be using are more complex, and full of ter
 In exercise 2 we will look at an example of how to ideally structure a slightly more
 complex code setup.
 For those familiar with climate models this may be nothing new.
-We make use of the traditional separation into:
+We make use of the traditional separation into subroutines for:
 
-- initialisation,
-- update, and
-- finalise subroutines.
+1. Initialisation
+2. Updating
+3. Finalisation
 
 
 ## Exercise 2
 
 Navigate to the `exercises/exercise_02/` directory.
 
-Here you will see 2 code directories, `good/` and `bad/`.
+Here you will see two code directories, `good/` and `bad/`.
 
 Both perform the same operation:
 
-- running the simplenet from example 1 10,000 times
-- increment the input vector at each step
-- accumulate the sum of the output vector
+- Running the simplenet from example 1 10,000 times.
+- Increment the input vector at each step.
+- Accumulate the sum of the output vector.
 
 ## Exercise 2
 
 The exercise is the same for both folders:
 
-- run the pre-prepared `pt2ts.py` script to save the net.
-- inspect the code to see how it works:
-  - both have a main program in `simplenet_fortran.f90`
-  - both have FTorch code extracted to a module `fortran_ml_mod.f90`
-    - bad is in a single routine
-    - good is split into init, iter, and finalise
-- modify the Makefile to link to FTorch and build the codes
-- time the codes and observe the difference
+- Run the pre-prepared `pt2ts.py` script to save the net.
+- Inspect the code to see how it works:
+  - Both have a main program in `simplenet_fortran.f90`.
+  - Both have FTorch code extracted to a module `fortran_ml_mod.f90`.
+    - `bad` is in a single routine.
+    - `good` is split into init, iter, and finalise.
+- Modify the Makefile to link to FTorch and build the codes.
+- Time the codes and observe the difference.
+
+## Exercise 2 - solution
+
+For a complete version of the example, see the
+[Looping example](https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/5_Looping).
 
 ## Exercise 3: automatic differentiation
 
@@ -71,12 +76,13 @@ Supply as an array of tensors, innit.
 
 ## GPU Acceleration
 
-- FTorch automatically has access to GPU acceleration through the PyTorch backend
-- When running `pt2ts.py` save model on GPU
-  - Guidance provided in the file
-- When creating `torch_tensor`s set the device to `torch_kCUDA` instead of `torch_kCPU`^[We can also use Intel XPU and AppleSilicon MPS, and are investigating AMD.]
-- To target a specific device supply the `device_index` argument
-- CPU-GPU cannot avoid data transfer. Use `MPI_GATHER()` to reduce
+- FTorch automatically has access to GPU acceleration through the PyTorch backend.
+- When running `pt2ts.py`, save the model on GPU.
+  - Guidance provided in the file.
+- When creating `torch_tensor`s set the device to `torch_kCUDA` instead of `torch_kCPU`.^[We can also use Intel XPU and AppleSilicon MPS, and are investigating AMD.]
+- To target a specific device supply the `device_index` argument.
+- CPU-GPU cannot avoid data transfer. Use `MPI_GATHER()` to reduce.
+* Use `torch_tensor_to` to transfer tensors between devices (and data types).
 - For more details see:
   - the [online documentation](https://cambridge-iccs.github.io/FTorch/page/gpu.html)
   - the [GPU Example](https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/6_MultiGPU)
