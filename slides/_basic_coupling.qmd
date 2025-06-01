@@ -10,9 +10,9 @@ it, needing only to link to our installation at compile and runtime.
 We will start of with a basic example showing how to couple code in Exercise 1:
 
 1. Design and train a PyTorch model.
-2. Save PyTorch model to TorchScript
-3. Write Fortran using FTorch to call saved model
-4. Compile and run code, linking to FTorch
+2. Save PyTorch model to TorchScript.
+3. Write Fortran using FTorch to call saved model.
+4. Compile and run code, linking to FTorch.
 
 
 ## PyTorch
@@ -60,8 +60,8 @@ TorchScript.
 
 Notes:
 
-- there are handy `TODO` comments where you need to adapt the code
-- `pt2ts.py` expects an `nn.Module` subclass with a `forward()` method
+- There are handy `TODO` comments where you need to adapt the code.
+- `pt2ts.py` expects an `nn.Module` subclass with a `forward()` method.
 - there are two options to save:
   - [tracing](https://pytorch.org/docs/stable/generated/torch.jit.trace.html) using `torch.jit.trace()`\
     This passes a dummy tensor throgh the model recording operations.\
@@ -69,7 +69,7 @@ Notes:
   - [scripting](https://pytorch.org/docs/stable/generated/torch.jit.script.html) using `torch.jit.script()`\
     This converts Python code directly to TorchScript.\
     It is more complicated, but neccessary for advanced features and/or control operations.
-- A summary of the TorchScript model can be printed from Python
+- A summary of the TorchScript model can be printed from Python.
 
 :::{.aside}
 See [TorchScript reference](https://pytorch.org/docs/stable/jit_language_reference.html#language-reference) for feature compatibility.
