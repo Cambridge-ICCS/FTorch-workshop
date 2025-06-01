@@ -8,6 +8,7 @@
 #   We will specify the cpu-only version of PyTorch to match the codespace hardware
 python3 -m venv .venv
 source .venv/bin/activate
+echo "source $(pwd)/.venv/bin/activate" >> $HOME/.bashrc
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install numpy
 
@@ -34,6 +35,11 @@ cmake --build . --target install
 
 # Add LibTorch libraries to the paths to be searched for dynamic linking at runtime
 export LD_LIBRARY_PATH=$PYTHON_PATH/torch/lib
+
+# Add these commands to the .bashrc for future use
+echo "export LD_LIBRARY_PATH=$PYTHON_PATH/torch/lib" >> $HOME/.bashrc
+echo "run the following command to setup your environment:"
+echo "source \$HOME/.bashrc"
 
 # Return user to the root of the workshop, leaving the venv activated
 cd
