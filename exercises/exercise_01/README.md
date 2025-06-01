@@ -87,6 +87,7 @@ import simplenet
 # FPTLIB-TODO
 # Load a pre-trained PyTorch model
 # Insert code here to load your model as `trained_model`.
+# trained_model = ...
 ```
 
 #### Solution
@@ -106,6 +107,7 @@ trained_model = simplenet.SimpleNet()
 ```python
 # FPTLIB-TODO
 # Generate a dummy input Tensor `dummy_input` to the model of appropriate size.
+# trained_model_dummy_input = torch.ones(...)
 ```
 
 #### Solution
@@ -146,6 +148,7 @@ trained_model_dummy_outputs = trained_model(
 ```python
 # FPTLIB-TODO
 # Set the name of the file you want to save the torchscript model to:
+# saved_ts_filename = "..."
 ```
 
 #### Solution
@@ -164,7 +167,8 @@ saved_ts_filename = "saved_model.pt"
 
 ```python
 # FPTLIB-TODO
-# Scripting
+# Save the PyTorch model using either scripting (recommended if possible) or tracing
+# script_to_torchscript(...)
 ```
 
 #### Solution
