@@ -284,14 +284,24 @@ var qrcode = new QRCode("qr7dekity9", {"colorDark":"#000000","colorLight":"#ffff
 <h1>Preparation</h1>
 
 </section>
+<section id="codespaces" class="slide level2">
+<h2>Codespaces</h2>
+<p>In this tutorial, we will be using GitHub Codespaces to run the exercises. If you are not familiar with Codespaces, please refer to the <a href="https://docs.github.com/en/codespaces">Codespaces documentation</a> for more information.</p>
+<div class="fragment">
+<ol type="1">
+<li>Navigate to the <a href="https://github.com/Cambridge-ICCS/FTorch-workshop">FTorch-workshop repo page</a> repository and click on the green “Code” button.</li>
+<li>Select “Codespaces” and then “Create codespace on main”.</li>
+<li>Wait for the codespace to be created and opened in your browser. You will be put in a VSCode environment with a terminal at the bottom.</li>
+</ol>
+</div>
+<div class="fragment">
+<p>Note that we have set up the codespace to have a Python virtual environment set up and activated for you.</p>
+</div>
+</section>
 <section id="exercise-0-hello-fortran-and-pytorch" class="slide level2">
 <h2>Exercise 0 – Hello Fortran and PyTorch!</h2>
-<p><strong>Question:</strong> What are people’s experience levels with and use cases of Fortran and PyTorch?</p>
-<p><br>
-</p>
 <div class="fragment">
-<p>Before we start, we should make sure everyone has a working setup.</p>
-<p>As we move through the following exercise if you experience any issues please ask for help and we’ll aim to sort you out before the main exercises.</p>
+<p><strong>Question:</strong> What are people’s experience levels with and use cases of Fortran and PyTorch?</p>
 </div>
 <p><br>
 </p>
@@ -457,16 +467,16 @@ TensorFlow, the TensorFlow logo and any related marks are trademarks of Google I
 <p>Developer</p>
 <p><img data-src="https://www.svgrepo.com/show/308093/software-developer-work-on-computer-programmer-coder.svg" style="filter: invert(100%);width:15.0%"> <img data-src="https://www.svgrepo.com/show/67720/brain-speech-bubble.svg" style="filter: invert(100%);width:15.0%"> <img data-src="https://www.svgrepo.com/show/490654/coffee-maker.svg" style="filter: invert(100%);width:15.0%"> <img data-src="https://www.svgrepo.com/show/479706/stopwatch.svg" style="filter: invert(100%);width:15.0%"></p>
 </div></div>
-<p>At the academic end of research both have an equal effect on ‘time-to-science’.</p>
+<p>Both affect ‘time-to-science’.</p>
 <ul>
-<li>Don’t re-writing nets after you have already trained them</li>
-<li>Scientists are not all not computer scientists
+<li>Don’t rewrite nets after you have already trained them.</li>
+<li>Not all scientists are computer scientists.
 <ul>
-<li>Should be simple to learn and deploy</li>
-<li>May not have access to extensive software support</li>
+<li>Software should be simple to learn and deploy.</li>
+<li>May not have access to extensive software support.</li>
 </ul></li>
-<li>HPC environments want minimal additional dependencies</li>
-<li>Needs to be as efficient as possible</li>
+<li>HPC environments want minimal additional dependencies.</li>
+<li>Needs to be as efficient as possible.</li>
 </ul>
 <!-- =============================================================================== -->
 </section></section>
@@ -612,22 +622,22 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <h2>FTorch source code</h2>
 <p>The source code for FTorch is contained in the <code>src/</code> directory. This contains:</p>
 <ul>
-<li><code>ctorch.cpp</code> - Bindings to the libtorch C++ API</li>
-<li><code>ctorch.h</code> - header file to bind to from Fortran</li>
-<li><code>ftorch.F90</code> - the Fortran routines we will be calling</li>
+<li><code>ctorch.cpp</code> - Bindings to the libtorch C++ API.</li>
+<li><code>ctorch.h</code> - C header file to bind to from Fortran.</li>
+<li><code>ftorch.F90</code> - the Fortran routines we will be calling.</li>
 </ul>
 <p><br>
 </p>
 <p>These are compiled, linked together, and installed using CMake.</p>
 <ul>
-<li>tool to simplify build process for users</li>
-<li>accomodate different machines and setups</li>
-<li>controlled by the <code>CMakeLists.txt</code> file</li>
+<li>Simplify build process for users.</li>
+<li>Accomodate different machines and setups.</li>
+<li>Configured in the <code>CMakeLists.txt</code> file.</li>
 </ul>
 </section>
 <section id="build-ftorch" class="slide level2">
 <h2>Build FTorch</h2>
-<p>This is all handled by the <code>build_FTorch.sh</code> script.</p>
+<p>This is all handled by the <code>build_FTorch.sh</code> script in the Codespace.</p>
 <p><br>
 </p>
 <p>To keep things clean we will do all of our building from a self-contained <code>build/</code> directory.</p>
@@ -637,28 +647,30 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <p>We can now execute CMake to build here using the code in the above directory:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake .. -DCMAKE_BUILD_TYPE=Release</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="build-the-code" class="slide level2">
-<h2>Build the code</h2>
+<section id="build-ftorch---details" class="slide level2">
+<h2>Build FTorch - details</h2>
 <p>In reality we often need to specify a number of additional options:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake .. -DCMAKE_BUILD_TYPE=Release \</span>
 <span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_Fortran_COMPILER=gfortran \</span>
 <span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_C_COMPILER=gcc \</span>
 <span id="cb13-4"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_CXX_COMPILER=g++ \</span>
 <span id="cb13-5"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_PREFIX_PATH=&lt;path/to/libtorch/&gt; \</span>
-<span id="cb13-6"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_INSTALL_PREFIX=&lt;path/to/install/ftorch/&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-6"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_INSTALL_PREFIX=&lt;path/to/install/ftorch/&gt; \</span>
+<span id="cb13-7"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_GPU_DEVICE=&lt;NONE|CUDA|XPU|MPS&gt; \</span>
+<span id="cb13-8"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br>
 </p>
 <p>Notes:</p>
 <ul>
 <li>The Fortran compiler should match that being used to build your code.</li>
-<li>We need gcc &gt;= 9</li>
-<li>If debugging set build type to <code>Debug</code> for <code>-g</code></li>
-<li>Prefix path is wherever libtorch is on your system</li>
-<li>Install prefix can be set to anywhere. Defaults may require root/admin access</li>
+<li>We need gcc &gt;= 9.</li>
+<li>Set build type to <code>Debug</code> for debugging with <code>-g</code>.</li>
+<li>Prefix path is wherever libtorch is on your system.</li>
+<li>Install prefix can be set to anywhere. Defaults may require root/admin access.</li>
 </ul>
 </section>
-<section id="build-the-code-1" class="slide level2">
-<h2>Build the code</h2>
+<section id="build-ftorch---details-1" class="slide level2">
+<h2>Build FTorch - details</h2>
 <p>Assuming everything proceeds successfully CMake will generate a <code>Makefile</code> for us.</p>
 <p><br>
 </p>
@@ -671,15 +683,15 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <p>The above two commands can be combined into a single option using:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --build . --target install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside><ol class="aside-footnotes"><li id="fn2"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make</code> command.</p></li><li id="fn3"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make install</code> command.</p></li></ol></aside></section>
-<section id="the-ftorch-installation" class="slide level2">
-<h2>The FTorch installation</h2>
+<section id="build-ftorch---details-2" class="slide level2">
+<h2>Build FTorch - details</h2>
 <p>Installation will place files in <code>CMAKE_INSTALL_PREFIX/</code>:</p>
 <ul>
-<li><code>include/</code> contains header and mod files</li>
-<li><code>lib/</code> contains cmake and library files
+<li><code>include/</code> contains header and mod files.</li>
+<li><code>lib/</code> contains cmake and library files.
 <ul>
-<li>this could be called <code>lib64/</code> on some systems</li>
-<li>UNIX will use <code>.so</code> files whilst Windows has <code>.dll</code> files</li>
+<li>This could be called <code>lib64/</code> on some systems.</li>
+<li>UNIX will use <code>.so</code> files whilst Windows has <code>.dll</code> files.</li>
 </ul></li>
 </ul>
 <!-- =============================================================================== -->
@@ -697,9 +709,9 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <p>We will start of with a basic example showing how to couple code in Exercise 1:</p>
 <ol type="1">
 <li>Design and train a PyTorch model.</li>
-<li>Save PyTorch model to TorchScript</li>
-<li>Write Fortran using FTorch to call saved model</li>
-<li>Compile and run code, linking to FTorch</li>
+<li>Save PyTorch model to TorchScript.</li>
+<li>Write Fortran using FTorch to call saved model.</li>
+<li>Compile and run code, linking to FTorch.</li>
 </ol>
 </section>
 <section id="pytorch" class="slide level2">
@@ -715,6 +727,10 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <pre><code>Input:  tensor([0., 1., 2., 3., 4.])
 Output: tensor([0., 2., 4., 6., 8.])</code></pre>
 <aside><ol class="aside-footnotes"><li id="fn4"><p>This will run the <code>if __name__ == "__main__":</code> section at the bottom of the file.</p></li></ol></aside></section>
+<section id="offline-training-with-ftorch" class="slide level2">
+<h2>Offline training with FTorch</h2>
+<p><img data-src="https://cambridge-iccs.github.io/FTorch/page/offline.png" class="absolute" style="top: 35%; left: 20%; width: 60%; "></p>
+</section>
 <section id="saving-to-torchscript" class="slide level2">
 <h2>Saving to TorchScript</h2>
 <p>To use the net from Fortran we need to save it to TorchScript.</p>
@@ -730,8 +746,8 @@ Output: tensor([0., 2., 4., 6., 8.])</code></pre>
 <h2>Saving to TorchScript</h2>
 <p>Notes:</p>
 <ul>
-<li>there are handy <code>TODO</code> comments where you need to adapt the code</li>
-<li><code>pt2ts.py</code> expects an <code>nn.Module</code> subclass with a <code>forward()</code> method</li>
+<li>There are handy <code>TODO</code> comments where you need to adapt the code.</li>
+<li><code>pt2ts.py</code> expects an <code>nn.Module</code> subclass with a <code>forward()</code> method.</li>
 <li>there are two options to save:
 <ul>
 <li><a href="https://pytorch.org/docs/stable/generated/torch.jit.trace.html">tracing</a> using <code>torch.jit.trace()</code><br>
@@ -741,12 +757,16 @@ It is the simplest approach.</li>
 This converts Python code directly to TorchScript.<br>
 It is more complicated, but neccessary for advanced features and/or control operations.</li>
 </ul></li>
-<li>A summary of the TorchScript model can be printed from Python</li>
+<li>A summary of the TorchScript model can be printed from Python.</li>
 </ul>
 
 <aside><div>
 <p>See <a href="https://pytorch.org/docs/stable/jit_language_reference.html#language-reference">TorchScript reference</a> for feature compatibility.</p>
 </div></aside></section>
+<section id="offline-training-with-ftorch-1" class="slide level2">
+<h2>Offline training with FTorch</h2>
+<p><img data-src="https://cambridge-iccs.github.io/FTorch/page/offline.png" class="absolute" style="top: 35%; left: 20%; width: 60%; "></p>
+</section>
 <section id="calling-from-fortran" class="slide level2">
 <h2>Calling from Fortran</h2>
 <p>We are now in a state to use our saved TorchScript model from within Fortran.</p>
@@ -755,11 +775,11 @@ It is more complicated, but neccessary for advanced features and/or control oper
 </p>
 <p>We will modify it to create the neccessary data structures and load and call the net.</p>
 <ul>
-<li>import the <code>ftorch</code> module</li>
-<li>create <code>torch_tensors</code> and a <code>torch_model</code> to hold the data and net</li>
-<li>map Fortran data from arrays to the <code>torch_tensors</code></li>
-<li>call <code>torch_model_forward</code> to run the net</li>
-<li>clean up</li>
+<li>Import the <code>ftorch</code> module.</li>
+<li>Create <code>torch_tensors</code> and a <code>torch_model</code> to hold the data and net.</li>
+<li>Map Fortran data from arrays to the <code>torch_tensors</code>.</li>
+<li>Call <code>torch_model_forward</code> to run the net.</li>
+<li>Clean up.</li>
 </ul>
 </section>
 <section id="calling-from-fortran-1" class="slide level2">
@@ -787,8 +807,8 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <p>What we have considered so far is a simple contrived example designed to teach the basics.</p>
 <p>However, in reality the codes we will be using are more complex, and full of terrors.</p>
 <ul>
-<li>We will be calling the net repeatedly over the course of many iterations</li>
-<li>Reading in the net and weights from file is expensive
+<li>We will be calling the net repeatedly over the course of many iterations.</li>
+<li>Reading in the net and weights from file is expensive.
 <ul>
 <li>Don’t do this at every step!</li>
 </ul></li>
@@ -796,45 +816,55 @@ It is more complicated, but neccessary for advanced features and/or control oper
 </section>
 <section id="exercise-2-larger-code-considerations-1" class="slide level2">
 <h2>Exercise 2: Larger code considerations</h2>
-<p>In exercise 2 we will look at an example of how to ideally structure a slightly more complex code setup. For those familiar with climate models this may be nothing new. We make use of the traditional separation into:</p>
-<ul>
-<li>initialisation,</li>
-<li>update, and</li>
-<li>finalise subroutines.</li>
-</ul>
+<p>In exercise 2 we will look at an example of how to ideally structure a slightly more complex code setup. For those familiar with climate models this may be nothing new. We make use of the traditional separation into subroutines for:</p>
+<ol type="1">
+<li>Initialisation</li>
+<li>Updating</li>
+<li>Finalisation</li>
+</ol>
 </section>
 <section id="exercise-2" class="slide level2">
 <h2>Exercise 2</h2>
 <p>Navigate to the <code>exercises/exercise_02/</code> directory.</p>
-<p>Here you will see 2 code directories, <code>good/</code> and <code>bad/</code>.</p>
+<p>Here you will see two code directories, <code>good/</code> and <code>bad/</code>.</p>
 <p>Both perform the same operation:</p>
 <ul>
-<li>running the simplenet from example 1 10,000 times</li>
-<li>increment the input vector at each step</li>
-<li>accumulate the sum of the output vector</li>
+<li>Running the simplenet from example 1 10,000 times.</li>
+<li>Increment the input vector at each step.</li>
+<li>Accumulate the sum of the output vector.</li>
 </ul>
 </section>
 <section id="exercise-2-1" class="slide level2">
 <h2>Exercise 2</h2>
 <p>The exercise is the same for both folders:</p>
 <ul>
-<li>run the pre-prepared <code>pt2ts.py</code> script to save the net.</li>
-<li>inspect the code to see how it works:
+<li>Run the pre-prepared <code>pt2ts.py</code> script to save the net.</li>
+<li>Inspect the code to see how it works:
 <ul>
-<li>both have a main program in <code>simplenet_fortran.f90</code></li>
-<li>both have FTorch code extracted to a module <code>fortran_ml_mod.f90</code>
+<li>Both have a main program in <code>simplenet_fortran.f90</code>.</li>
+<li>Both have FTorch code extracted to a module <code>fortran_ml_mod.f90</code>.
 <ul>
-<li>bad is in a single routine</li>
-<li>good is split into init, iter, and finalise</li>
+<li><code>bad</code> is in a single routine.</li>
+<li><code>good</code> is split into init, iter, and finalise.</li>
 </ul></li>
 </ul></li>
-<li>modify the Makefile to link to FTorch and build the codes</li>
-<li>time the codes and observe the difference</li>
+<li>Modify the Makefile to link to FTorch and build the codes.</li>
+<li>Time the codes and observe the difference.</li>
 </ul>
 </section>
-<section id="exercise-3" class="slide level2">
-<h2>Exercise 3</h2>
-<p><em>To do</em></p>
+<section id="exercise-2---solution" class="slide level2">
+<h2>Exercise 2 - solution</h2>
+<p>For a complete version of the example, see the <a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/5_Looping">Looping example</a>.</p>
+</section>
+<section id="exercise-3-automatic-differentiation" class="slide level2">
+<h2>Exercise 3: automatic differentiation</h2>
+<p>PyTorch has a powerful automatic differentiation engine called <code>autograd</code> that can be used to compute derivatives of expressions involving tensors.</p>
+<p><br>
+</p>
+<p>We recently exposed this functionality in FTorch, allowing you to do this in Fortran, too. This is a key step facilitating online training in FTorch.</p>
+<p><br>
+</p>
+<p>In this exercise, we walk through differentiating the mathematical expression <span class="math display">\[Q = 3 (a^3 - b^2/3)\]</span> using both PyTorch and FTorch.</p>
 </section>
 <section id="multiple-inputs-and-outputs" class="slide level2">
 <h2>Multiple inputs and outputs</h2>
@@ -846,14 +876,15 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <section id="gpu-acceleration" class="slide level2">
 <h2>GPU Acceleration</h2>
 <ul>
-<li>FTorch automatically has access to GPU acceleration through the PyTorch backend</li>
-<li>When running <code>pt2ts.py</code> save model on GPU
+<li>FTorch automatically has access to GPU acceleration through the PyTorch backend.</li>
+<li>When running <code>pt2ts.py</code>, save the model on GPU.
 <ul>
-<li>Guidance provided in the file</li>
+<li>Guidance provided in the file.</li>
 </ul></li>
-<li>When creating <code>torch_tensor</code>s set the device to <code>torch_kCUDA</code> instead of <code>torch_kCPU</code><sup>1</sup></li>
-<li>To target a specific device supply the <code>device_index</code> argument</li>
-<li>CPU-GPU cannot avoid data transfer. Use <code>MPI_GATHER()</code> to reduce</li>
+<li>When creating <code>torch_tensor</code>s set the device to <code>torch_kCUDA</code> instead of <code>torch_kCPU</code>.<sup>1</sup></li>
+<li>To target a specific device supply the <code>device_index</code> argument.</li>
+<li>CPU-GPU cannot avoid data transfer. Use <code>MPI_GATHER()</code> to reduce.</li>
+<li>Use <code>torch_tensor_to</code> to transfer tensors between devices (and data types).</li>
 <li>For more details see:
 <ul>
 <li>the <a href="https://cambridge-iccs.github.io/FTorch/page/gpu.html">online documentation</a></li>
@@ -870,44 +901,44 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <section id="mima---proof-of-concept" class="slide level2">
 <h2>MiMA - proof of concept</h2>
 <ul>
-<li>The origins of FTorch
+<li>The origins of FTorch.
 <ul>
-<li>Emulation of existing parameterisation</li>
-<li>Coupled to an atmospheric model using <code>forpy</code> in <span class="citation" data-cites="espinosa2022machine">Espinosa et al. (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span><sup>1</sup></li>
-<li>Prohibitively slow and hard to implement</li>
+<li>Emulation of existing parameterisation.</li>
+<li>Coupled to an atmospheric model using <code>forpy</code> in <span class="citation" data-cites="espinosa2022machine">Espinosa et al. (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span>.<sup>1</sup></li>
+<li>Prohibitively slow and hard to implement.</li>
 <li>Asked for a faster, user-friendly implementation that can be used in future studies.</li>
 </ul></li>
 </ul>
 <p><br>
 </p>
 <ul>
-<li>Follow up paper using FTorch: <em>Uncertainty Quantification of a Machine Learning Subgrid-Scale Parameterization for Atmospheric Gravity Waves</em> <span class="citation" data-cites="mansfield2024uncertainty">(<a href="#/references" role="doc-biblioref" onclick="">Mansfield and Sheshadri 2024</a>)</span>
+<li>Follow up paper using FTorch: <em>Uncertainty Quantification of a Machine Learning Subgrid-Scale Parameterization for Atmospheric Gravity Waves</em> <span class="citation" data-cites="mansfield2024uncertainty">(<a href="#/references" role="doc-biblioref" onclick="">Mansfield and Sheshadri 2024</a>)</span>.
 <ul>
 <li>“Identical” offline networks have very different behaviours when deployed online.</li>
 </ul></li>
 </ul>
 
 <aside><div>
-<p>Model of an idealised Moist Atmosphere online at <a href="https://github.com/DataWaveProject/MiMA-machine-learning"><i class="fa-brands fa-github" aria-label="github"></i>/DataWaveProject/MiMA-machine-learning</a></p>
+<p>Model of an idealised Moist Atmosphere online at <a href="https://github.com/DataWaveProject/MiMA-machine-learning"><i class="fa-brands fa-github" aria-label="github"></i>/DataWaveProject/MiMA-machine-learning</a>.</p>
 </div><ol class="aside-footnotes"><li id="fn6"><p>Originally written in TensorFlow…</p></li></ol></aside></section>
 <section id="icon" class="slide level2">
 <h2>ICON</h2>
 <ul>
-<li>Icosahedral Nonhydrostatic Weather and Climate Model
+<li>Icosahedral Nonhydrostatic Weather and Climate Model.
 <ul>
-<li>Developed by DKRZ (Deutsches Klimarechenzentrum)</li>
-<li>Used by the DWD and Meteo-Swiss</li>
+<li>Developed by DKRZ (Deutsches Klimarechenzentrum).</li>
+<li>Used by the DWD and Meteo-Swiss.</li>
 </ul></li>
 </ul>
 <div class="columns">
 <div class="column" style="width:75%;">
 <ul>
-<li><em>Interpretable multiscale Machine Learning-Based Parameterizations of Convection for ICON</em> <span class="citation" data-cites="heuer2023interpretable">(<a href="#/references" role="doc-biblioref" onclick="">Heuer et al. 2023</a>)</span><sup>1</sup>
+<li><em>Interpretable multiscale Machine Learning-Based Parameterizations of Convection for ICON</em> <span class="citation" data-cites="heuer2023interpretable">(<a href="#/references" role="doc-biblioref" onclick="">Heuer et al. 2023</a>)</span>.<sup>1</sup>
 <ul>
-<li>Train U-Net convection scheme on high-res simulation</li>
-<li>Deploy in ICON via FTorch coupling</li>
-<li>Evaluate physical realism (causality) using SHAP values</li>
-<li>Online stability improved when non-causal relations are eliminated from the net</li>
+<li>Train U-Net convection scheme on high-res simulation.</li>
+<li>Deploy in ICON via FTorch coupling.</li>
+<li>Evaluate physical realism (causality) using SHAP values.</li>
+<li>Online stability improved when non-causal relations are eliminated from the net.</li>
 </ul></li>
 </ul>
 </div></div>
@@ -915,23 +946,23 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <p><img data-src="images/ICON.png" class="absolute" style="border-radius: 5%;top: 15%; right: 0px; width: 27%; "></p>
 
 <aside><div>
-<p>Running on JUWELS at the Jülich Supercomputing Centre; ICON Model is now available at <a href="https://gitlab.dkrz.de/icon/icon-model">gitlab.dkrz.de/icon/icon-model</a><br>
+<p>Running on JUWELS at the Jülich Supercomputing Centre; ICON Model is now available at <a href="https://gitlab.dkrz.de/icon/icon-model">gitlab.dkrz.de/icon/icon-model</a>.<br>
 </p>
 </div><ol class="aside-footnotes"><li id="fn7"><p>Work without direct involvement of ICCS - success on ‘ease of use’ of FTorch</p></li></ol></aside></section>
 <section id="cesm---bias-correction" class="slide level2">
 <h2>CESM - Bias Correction</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>Work by Will Chapman of NCAR/M2LInES</p>
+<p>Work by Will Chapman of NCAR/M2LInES.</p>
 <ul>
 <li><p>As representations of physics models have inherent, sometimes systematic, biases.</p></li>
-<li><p>Run CESM for 9 years relaxing hourly to ERA5 observation (data assimilation)</p></li>
-<li><p>Train CNN to predict anomaly increment at each level</p>
+<li><p>Run CESM for 9 years relaxing hourly to ERA5 observation (data assimilation).</p></li>
+<li><p>Train CNN to predict anomaly increment at each level.</p>
 <ul>
-<li>targeting just the MJO region</li>
-<li>targeting globally</li>
+<li>targeting just the MJO region.</li>
+<li>targeting globally.</li>
 </ul></li>
-<li><p>Apply online as part of predictive runs</p></li>
+<li><p>Apply online as part of predictive runs.</p></li>
 </ul>
 </div><div class="column">
 <div class="quarto-figure quarto-figure-center">
@@ -949,17 +980,17 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <section id="cesm-coupling" class="slide level2">
 <h2>CESM coupling</h2>
 <ul>
-<li>The Community Earth System Model</li>
-<li>Part of <a href="https://wcrp-cmip.org/">CMIP</a> (Coupled Model Intercomparison Project)</li>
-<li>Make it easy for users
+<li>The Community Earth System Model.</li>
+<li>Part of <a href="https://wcrp-cmip.org/">CMIP</a> (Coupled Model Intercomparison Project).</li>
+<li>Make it easy for users.
 <ul>
-<li>FTorch integrated into the build system (CIME)
+<li>FTorch integrated into the build system (CIME).
 <ul>
 <li><a href="https://github.com/Cambridge-ICCS/cime_je"><i class="fa-brands fa-github" aria-label="github"></i>/Cambridge-ICCS/cime_je</a></li>
 </ul></li>
-<li><code>libtorch</code> is included on the software stack on Derecho
+<li><code>libtorch</code> is included on the software stack on Derecho.
 <ul>
-<li>Improves reproducibility</li>
+<li>Improves reproducibility.</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -970,11 +1001,15 @@ It is more complicated, but neccessary for advanced features and/or control oper
 </div>
 <aside><div>
 <p>Work done with Will Chapman and Jim Edwards of NCAR.<br>
-CIME with FTorch is available with instructions <a href="https://github.com/Cambridge-ICCS/cime_je"><i class="fa-brands fa-github" aria-label="github"></i>/Cambridge-ICCS/cime_je</a></p>
+CIME with FTorch is available with instructions <a href="https://github.com/Cambridge-ICCS/cime_je"><i class="fa-brands fa-github" aria-label="github"></i>/Cambridge-ICCS/cime_je</a>.</p>
 </div></aside></section>
 <section id="ongoing-and-future-work" class="slide level2 smaller">
 <h2>Ongoing and future Work</h2>
 <ul>
+<li>UKCA (United Kingdom Chemistry and Aerosols) case study.
+<ul>
+<li><em>See Joe’s talk in the Weather and Climate session on Wednesday!</em></li>
+</ul></li>
 <li>Online training</li>
 <li>AMD GPU device support</li>
 <li>Benchmarking against other solutions
@@ -1008,7 +1043,7 @@ Mansfield, Laura A, and Aditi Sheshadri. 2024. <span>“Uncertainty Quantificati
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
-<p><img src="https://iccs.cam.ac.uk/sites/iccs.cam.ac.uk/files/iccs_ucam_combined_reverse_colour.png" class="slide-logo"></p>
+<p><img src="https://iccs.cam.ac.uk/sites/default/files/iccs_ucam_combined_reverse_colour.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
