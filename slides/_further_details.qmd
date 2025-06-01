@@ -46,6 +46,11 @@ The exercise is the same for both folders:
 - Modify the Makefile to link to FTorch and build the codes.
 - Time the codes and observe the difference.
 
+## Exercise 2 - solution
+
+For a complete version of the example, see the
+[Looping example](https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/5_Looping).
+
 ## Exercise 3: automatic differentiation
 
 PyTorch has a powerful automatic differentiation engine called `autograd` that
