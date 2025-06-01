@@ -12,7 +12,7 @@ iterative process.
 This example demonstrates the naive 'bad' approach and then the more efficient
 'good' approach.
 It shows the suggested way to break down the FTorch code into initialisation,
-forward, and finalisation subprocesses, and allows users to time the different
+forward, and finalisation subroutines, and allows users to time the different
 approaches to observe the significant performance difference.
 
 ## Description
