@@ -110,6 +110,155 @@ or `DYLD_LIBRARY_PATH` on mac:
 export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:</path/to/library/installation>/lib
 ```
 
+## Fortran tasks
+
+### Task 1
+
+```fortran
+   ! TODO: Import our library for interfacing with PyTorch
+```
+
+#### Solution
+
+<details>
+
+```fortran
+   ! Import our library for interfacing with PyTorch
+   use :: ftorch, only : &
+        torch_kCPU, &
+        torch_tensor_from_array, &
+        torch_model_load, &
+        torch_model_forward, &
+        torch_delete, &
+        torch_tensor, &
+        torch_model
+```
+
+</details>
+
+---
+
+### Task 2
+
+```fortran
+   ! TODO: Set up Torch data structures
+   ! The net, a vector of input tensors (in this case we only have one), and the output tensor
+```
+
+#### Solution
+
+<details>
+
+```fortran
+   ! Set up Torch data structures
+   ! The net, a vector of input tensors, and a vector of output tensors
+   type(torch_tensor), dimension(1) :: input_tensors
+   type(torch_tensor), dimension(1) :: output_tensors
+   type(torch_model) :: torch_net
+```
+
+</details>
+
+---
+
+### Task 3
+
+```fortran
+   ! TODO: Set Torchscript model path
+```
+
+#### Solution
+
+<details>
+
+```fortran
+   ! Set Torchscript model path
+   character(len=128) :: model_torchscript_file = 'saved_model.pt'
+```
+
+</details>
+
+---
+
+### Task 4
+
+```fortran
+   ! TODO: Create Torch input/output tensors from the above arrays
+```
+
+#### Solution
+
+<details>
+
+```fortran
+   ! Create Torch input/output tensors from the above arrays
+   call torch_tensor_from_array(input_tensors(1), in_data, torch_kCPU)
+   call torch_tensor_from_array(output_tensors(1), out_data, torch_kCPU)
+```
+
+</details>
+
+---
+
+### Task 5
+
+```fortran
+   ! TODO: Load ML model
+```
+
+#### Solution
+
+<details>
+
+```fortran
+   ! Load ML model
+   call torch_model_load(torch_net, model_torchscript_file, torch_kCPU)
+```
+
+</details>
+
+---
+
+### Task 6
+
+```fortran
+   ! TODO: Infer
+```
+
+#### Solution
+
+<details>
+
+```fortran
+   ! Infer
+   call torch_model_forward(torch_net, input_tensors, output_tensors)
+```
+
+</details>
+
+---
+
+### Task 7
+
+```fortran
+   ! TODO: Cleanup
+```
+
+#### Solution
+
+<details>
+
+```fortran
+   ! Cleanup
+   call torch_delete(input_tensors)
+   call torch_delete(output_tensors)
+   call torch_delete(torch_net)
+```
+
+</details>
+
+---
+
 ## Further options
 
 To explore the functionalities of this model:
