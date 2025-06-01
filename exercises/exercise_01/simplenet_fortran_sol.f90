@@ -28,8 +28,8 @@ program inference
    type(torch_tensor), dimension(1) :: output_tensors
    type(torch_model) :: torch_net
 
-   ! Get TorchScript model file
-   character(len=128) :: model_torchscript_file
+   ! Set Torchscript model path
+   character(len=128) :: model_torchscript_file = 'saved_model.pt'
 
    ! Initialise data
    in_data = [0.0, 1.0, 2.0, 3.0, 4.0]
@@ -39,13 +39,13 @@ program inference
    call torch_tensor_from_array(output_tensors(1), out_data, torch_kCPU)
 
    ! Load ML model
-   model_torchscript_file = 'saved_model.pt'
    call torch_model_load(torch_net, model_torchscript_file, torch_kCPU)
 
    ! Infer
    call torch_model_forward(torch_net, input_tensors, output_tensors)
 
    ! Write out the result of calling the net
+   ! Note: data immediately available in Fortran - no need to 'map'
    write (*,*) out_data(:)
 
    ! Cleanup
