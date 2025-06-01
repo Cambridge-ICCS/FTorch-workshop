@@ -17,7 +17,7 @@ program inference
    ! TODO: Set up Torch data structures
    ! The net, a vector of input tensors (in this case we only have one), and the output tensor
 
-   ! TODO: Get TorchScript model file
+   ! TODO: Set Torchscript model path
 
    ! Initialise data
    in_data = [0.0, 1.0, 2.0, 3.0, 4.0]
