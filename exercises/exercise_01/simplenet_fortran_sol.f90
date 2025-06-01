@@ -41,7 +41,7 @@ program inference
    ! Load ML model
    call torch_model_load(torch_net, model_torchscript_file, torch_kCPU)
 
-   ! Infer
+   ! Run inference on the model using `torch_model_forward`
    call torch_model_forward(torch_net, input_tensors, output_tensors)
 
    ! Write out the result of calling the net

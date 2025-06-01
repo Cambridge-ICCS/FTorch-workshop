@@ -1,4 +1,4 @@
-# Example 1 - SimpleNet
+# Exercise 1 - SimpleNet
 
 ## Description
 
@@ -296,7 +296,7 @@ script_to_torchscript(trained_model, filename=saved_ts_filename)
 ### Task 6
 
 ```fortran
-   ! TODO: Infer
+   ! TODO: Run inference on the model using `torch_model_forward`
 ```
 
 #### Solution
@@ -304,7 +304,7 @@ script_to_torchscript(trained_model, filename=saved_ts_filename)
 <details>
 
 ```fortran
-   ! Infer
+   ! Run inference on the model using `torch_model_forward`
    call torch_model_forward(torch_net, input_tensors, output_tensors)
 ```
 
