@@ -54,9 +54,9 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 The source code for FTorch is contained in the `src/` directory.
 This contains:
 
-- `ctorch.cpp` - Bindings to the libtorch C++ API.
-- `ctorch.h` - C header file to bind to from Fortran.
-- `ftorch.F90` - the Fortran routines we will be calling.
+- `ctorch.cpp` - Bindings to the libtorch C++ API
+- `ctorch.h` - C header file to bind to from Fortran
+- `ftorch.F90` - the Fortran routines we will be calling
 
 \
 
