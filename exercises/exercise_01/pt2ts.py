@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Load a PyTorch model and convert it to TorchScript."""
 
 import os
@@ -6,8 +5,6 @@ from typing import Optional
 
 # FPTLIB-TODO
 # Add a module import with your model here:
-# This example assumes the model architecture is in an adjacent module `my_ml_model.py`
-import my_ml_model
 import torch
 
 
@@ -24,10 +21,11 @@ def script_to_torchscript(
     filename : str
         name of file to save to
     """
-    # FIXME: torch.jit.optimize_for_inference() when PyTorch issue #81085 is resolved
+    print("Saving model using scripting...", end="")
     scripted_model = torch.jit.script(model)
     # print(scripted_model.code)
     scripted_model.save(filename)
+    print("done.")
 
 
 def trace_to_torchscript(
@@ -47,13 +45,13 @@ def trace_to_torchscript(
     filename : str
         name of file to save to
     """
-    # FIXME: torch.jit.optimize_for_inference() when PyTorch issue #81085 is resolved
+    print("Saving model using tracing...", end="")
     traced_model = torch.jit.trace(model, dummy_input)
-    # traced_model.save(filename)
     frozen_model = torch.jit.freeze(traced_model)
     ## print(frozen_model.graph)
     ## print(frozen_model.code)
     frozen_model.save(filename)
+    print("done.")
 
 
 def load_torchscript(filename: Optional[str] = "saved_model.pt") -> torch.nn.Module:
@@ -100,9 +98,7 @@ if __name__ == "__main__":
     # FPTLIB-TODO
     # Load a pre-trained PyTorch model
     # Insert code here to load your model as `trained_model`.
-    # This example assumes my_ml_model has a method `initialize` to load
-    # architecture, weights, and place in inference mode
-    trained_model = my_ml_model.initialize()
+    # trained_model = ...
 
     # Switch off specific layers/parts of the model that behave
     # differently during training and inference.
@@ -115,8 +111,7 @@ if __name__ == "__main__":
 
     # FPTLIB-TODO
     # Generate a dummy input Tensor `dummy_input` to the model of appropriate size.
-    # This example assumes two inputs of size (512x40) and (512x1)
-    trained_model_dummy_input = torch.ones((512, 40), dtype=torch.float64)
+    # trained_model_dummy_input = torch.ones(...)
 
     # Transfer the model and inputs to GPU device, if appropriate
     if device_type != "cpu":
@@ -127,10 +122,6 @@ if __name__ == "__main__":
 
     # FPTLIB-TODO
     # Run model for dummy inputs
-    # If something isn't working This will generate an error
-    trained_model_dummy_outputs = trained_model(
-        trained_model_dummy_input,
-    )
 
     # =====================================================
     # Save model
@@ -138,7 +129,7 @@ if __name__ == "__main__":
 
     # FPTLIB-TODO
     # Set the name of the file you want to save the torchscript model to:
-    saved_ts_filename = f"saved_model_{device_type}.pt"
+    # saved_ts_filename = "..."
     # A filepath may also be provided. To do this, pass the filepath as an argument to
     # this script when it is run from the command line, i.e. `./pt2ts.py path/to/model`.
 
@@ -147,7 +138,7 @@ if __name__ == "__main__":
     # -----------
     # Scripting
     # -----------
-    script_to_torchscript(trained_model, filename=saved_ts_filename)
+    # script_to_torchscript(...)
 
     # -----------
     # Tracing
@@ -155,6 +146,8 @@ if __name__ == "__main__":
     # trace_to_torchscript(
     #     trained_model, trained_model_dummy_input, filename=saved_ts_filename
     # )
+
+    print(f"Saved model to TorchScript in '{saved_ts_filename}'.")
 
     # =====================================================
     # Check model saved OK
