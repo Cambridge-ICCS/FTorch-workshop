@@ -36,6 +36,10 @@ Input:  tensor([0., 1., 2., 3., 4.])
 Output: tensor([0., 2., 4., 6., 8.])
 ```
 
+## Offline training with FTorch
+
+![](https://cambridge-iccs.github.io/FTorch/page/offline.png){.absolute top=35% left=20% width=60%}
+
 
 ## Saving to TorchScript
 
@@ -86,11 +90,11 @@ to hold input data for the net, and the results returned.
 
 We will modify it to create the neccessary data structures and load and call the net.
 
-- import the `ftorch` module
-- create `torch_tensors` and a `torch_model` to hold the data and net
-- map Fortran data from arrays to the `torch_tensors`
-- call `torch_model_forward` to run the net
-- clean up
+- Import the `ftorch` module.
+- Create `torch_tensors` and a `torch_model` to hold the data and net.
+- Map Fortran data from arrays to the `torch_tensors`.
+- Call `torch_model_forward` to run the net.
+- Clean up.
 
 
 ## Calling from Fortran
