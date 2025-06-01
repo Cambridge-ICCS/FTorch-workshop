@@ -55,21 +55,21 @@ The source code for FTorch is contained in the `src/` directory.
 This contains:
 
 - `ctorch.cpp` - Bindings to the libtorch C++ API
-- `ctorch.h` - header file to bind to from Fortran
+- `ctorch.h` - C header file to bind to from Fortran
 - `ftorch.F90` - the Fortran routines we will be calling
 
 \
 
 These are compiled, linked together, and installed using CMake.
 
-- tool to simplify build process for users
-- accomodate different machines and setups
-- controlled by the `CMakeLists.txt` file
+- Simplify build process for users.
+- Accomodate different machines and setups.
+- Configured in the `CMakeLists.txt` file.
 
 
 ## Build FTorch
 
-This is all handled by the `build_FTorch.sh` script.
+This is all handled by the `build_FTorch.sh` script in the Codespace.
 
 \
 
@@ -86,7 +86,7 @@ cmake .. -DCMAKE_BUILD_TYPE=Release
 ```
 
 
-## Build the code
+## Build FTorch - details
 
 In reality we often need to specify a number of additional options:
 
@@ -96,7 +96,9 @@ cmake .. -DCMAKE_BUILD_TYPE=Release \
 >        -DCMAKE_C_COMPILER=gcc \
 >        -DCMAKE_CXX_COMPILER=g++ \
 >        -DCMAKE_PREFIX_PATH=<path/to/libtorch/> \
->        -DCMAKE_INSTALL_PREFIX=<path/to/install/ftorch/>
+>        -DCMAKE_INSTALL_PREFIX=<path/to/install/ftorch/> \
+>        -DCMAKE_GPU_DEVICE=<NONE|CUDA|XPU|MPS> \
+>        ...
 ```
 
 \
@@ -104,13 +106,13 @@ cmake .. -DCMAKE_BUILD_TYPE=Release \
 Notes:
 
 - The Fortran compiler should match that being used to build your code.
-- We need gcc >= 9
-- If debugging set build type to `Debug` for `-g`
-- Prefix path is wherever libtorch is on your system
-- Install prefix can be set to anywhere. Defaults may require root/admin access
+- We need gcc >= 9.
+- Set build type to `Debug` for debugging with `-g`.
+- Prefix path is wherever libtorch is on your system.
+- Install prefix can be set to anywhere. Defaults may require root/admin access.
 
 
-## Build the code
+## Build FTorch - details
 
 Assuming everything proceeds successfully CMake will generate a `Makefile` for us.
 
@@ -134,11 +136,11 @@ cmake --build . --target install
 ```
 
 
-## The FTorch installation
+## Build FTorch - details
 
 Installation will place files in `CMAKE_INSTALL_PREFIX/`:
 
-- `include/` contains header and mod files
-- `lib/` contains cmake and library files
-  - this could be called `lib64/` on some systems
-  - UNIX will use `.so` files whilst Windows has `.dll` files
+- `include/` contains header and mod files.
+- `lib/` contains cmake and library files.
+  - This could be called `lib64/` on some systems.
+  - UNIX will use `.so` files whilst Windows has `.dll` files.
