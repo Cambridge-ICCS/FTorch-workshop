@@ -110,6 +110,126 @@ or `DYLD_LIBRARY_PATH` on mac:
 export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:</path/to/library/installation>/lib
 ```
 
+## Python tasks
+
+### Task 1
+
+```python
+# FPTLIB-TODO
+# Add a module import with your model here:
+```
+
+#### Solution
+
+<details>
+
+```python
+import simplenet
+```
+
+</details>
+
+---
+
+### Task 2
+
+```python
+# FPTLIB-TODO
+# Load a pre-trained PyTorch model
+# Insert code here to load your model as `trained_model`.
+```
+
+#### Solution
+
+<details>
+
+```python
+trained_model = simplenet.SimpleNet()
+```
+
+</details>
+
+---
+
+### Task 3
+
+```python
+# FPTLIB-TODO
+# Generate a dummy input Tensor `dummy_input` to the model of appropriate size.
+```
+
+#### Solution
+
+<details>
+
+```python
+trained_model_dummy_input = torch.ones(5)
+```
+
+</details>
+
+---
+
+### Task 4
+
+```python
+# FPTLIB-TODO
+# Run model for dummy inputs
+```
+
+#### Solution
+
+<details>
+
+```python
+trained_model_dummy_outputs = trained_model(
+    trained_model_dummy_input,
+)
+```
+
+</details>
+
+---
+
+### Task 5
+
+```python
+# FPTLIB-TODO
+# Set the name of the file you want to save the torchscript model to:
+```
+
+#### Solution
+
+<details>
+
+```python
+saved_ts_filename = "saved_model.pt"
+```
+
+</details>
+
+---
+
+### Task 6
+
+```python
+# FPTLIB-TODO
+# Scripting
+```
+
+#### Solution
+
+<details>
+
+```python
+script_to_torchscript(trained_model, filename=saved_ts_filename)
+```
+
+</details>
+
+---
+
+
 ## Fortran tasks
 
 ### Task 1
