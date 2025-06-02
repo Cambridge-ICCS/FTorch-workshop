@@ -36,10 +36,16 @@ cmake --build . --target install
 # Add LibTorch libraries to the paths to be searched for dynamic linking at runtime
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PYTHON_PATH/torch/lib
 
+# Add FTorch install dir to CMAKE_PREFIX_PATH so that cmake can locate the project
+export CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:/workspaces/FTorch-workshop/FTorch_bin"
+
 # Add these commands to the .bashrc for future use
 echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$PYTHON_PATH/torch/lib" >> $HOME/.bashrc
+echo "export CMAKE_PREFIX_PATH=\$CMAKE_PREFIX_PATH:/workspaces/FTorch-workshop/FTorch_bin" >> $HOME/.bashrc
+
+
 echo "run the following command to setup your environment:"
 echo "source \$HOME/.bashrc"
 
 # Return user to the root of the workshop, leaving the venv activated
-cd
+cd /workspaces/FTorch-workshop
