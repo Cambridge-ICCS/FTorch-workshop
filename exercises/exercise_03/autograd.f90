@@ -1,7 +1,7 @@
 program autograd
   use, intrinsic :: iso_fortran_env, only : sp => real32
   use ftorch, only : torch_tensor, torch_tensor_from_array, torch_kCPU, torch_tensor_backward, &
-       torch_tensor_get_gradient
+       torch_tensor_get_gradient, assignment(=), operator(-), operator(*), operator(/)
 
   implicit none
 
