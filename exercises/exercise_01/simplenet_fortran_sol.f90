@@ -28,8 +28,8 @@ program inference
    type(torch_tensor), dimension(1) :: output_tensors
    type(torch_model) :: torch_net
 
-   ! Set Torchscript model path
-   character(len=128) :: model_torchscript_file = 'saved_model.pt'
+   ! Set Torchscript model path (relative to the build directory)
+   character(len=128) :: model_torchscript_file = '../saved_model.pt'
 
    ! Initialise data
    in_data = [0.0, 1.0, 2.0, 3.0, 4.0]

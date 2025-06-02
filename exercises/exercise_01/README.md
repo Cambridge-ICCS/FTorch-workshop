@@ -246,8 +246,8 @@ script_to_torchscript(trained_model, filename=saved_ts_filename)
 <details>
 
 ```fortran
-   ! Set Torchscript model path
-   character(len=128) :: model_torchscript_file = 'saved_model.pt'
+   ! Set Torchscript model path (relative to the build directory)
+   character(len=128) :: model_torchscript_file = '../saved_model.pt'
 ```
 
 </details>
