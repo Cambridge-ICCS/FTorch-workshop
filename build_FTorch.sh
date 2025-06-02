@@ -34,10 +34,10 @@ cmake .. \
 cmake --build . --target install
 
 # Add LibTorch libraries to the paths to be searched for dynamic linking at runtime
-export LD_LIBRARY_PATH=$PYTHON_PATH/torch/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PYTHON_PATH/torch/lib
 
 # Add these commands to the .bashrc for future use
-echo "export LD_LIBRARY_PATH=$PYTHON_PATH/torch/lib" >> $HOME/.bashrc
+echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$PYTHON_PATH/torch/lib" >> $HOME/.bashrc
 echo "run the following command to setup your environment:"
 echo "source \$HOME/.bashrc"
 
