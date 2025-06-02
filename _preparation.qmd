@@ -20,6 +20,13 @@ Note that we have set up the codespace to have a Python virtual environment set 
 activated for you.
 :::
 
+:::{.fragment}
+Execute the following to start the FTorch build process:
+```shell
+source build_FTorch.sh
+```
+:::
+
 ## Exercise 0 -- Hello Fortran and PyTorch!
 
 :::{.fragment}
