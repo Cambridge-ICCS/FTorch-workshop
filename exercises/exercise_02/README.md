@@ -104,8 +104,6 @@ and
 ```
 time ./simplenet_fortran_good
 ```
-You will need to ensure that the `saved_model_cpu.pt` file is copied to the
-build directory for these commands to work.
 
 You should get output like:
 ```
