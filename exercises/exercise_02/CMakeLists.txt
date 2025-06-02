@@ -7,10 +7,10 @@ set(PROJECT_NAME LoopingExample)
 
 project(${PROJECT_NAME} LANGUAGES Fortran)
 
-# Build in Debug mode if not specified
+# Build in Release mode if not specified
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE
-      Debug
+      Release
       CACHE STRING "" FORCE)
 endif()
 

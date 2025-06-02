@@ -83,10 +83,9 @@ the network and perform a quick sanity check that it can be read.
 Now we can build the Fortran codes.
 This is done from the root level of the exercise using CMake as follows:
 ```
-mkdir build
+cmake -B build -DCMAKE_BUILD_TYPE=Release .
 cd build
-cmake .. -DCMAKE_PREFIX_PATH=<path/to/your/installation/of/library/> -DCMAKE_BUILD_TYPE=Release
-cmake --build .
+make
 ```
 
 (Note that the Fortran compiler can be chosen explicitly with the
