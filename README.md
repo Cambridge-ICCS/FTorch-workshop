@@ -7,14 +7,18 @@
 ![GitHub](https://img.shields.io/github/license/Cambridge-ICCS/FTorch-workshop)
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 
-This repository contains documentation, resources, and code for the a workshop
-teaching use of the ICCS [FTorch library](https://github.com/Cambridge-ICCS/FTorch)
+This repository contains documentation, resources, and code for a workshop
+teaching the use of the ICCS [FTorch library](https://github.com/Cambridge-ICCS/FTorch)
 for coupling PyTorch models to Fortran code.
 The session has been designed and delivered by
-[Jack Atkinson](https://jackatkinson.net/) ([**@jatkinson1000**](https://github.com/jatkinson1000))
-and has been taught at the
-[ICCS](https://iccs.cam.ac.uk/events/institute-computing-climate-science-annual-summer-school-2024) 
-summer schools.  
+[Jack Atkinson](https://jackatkinson.net/)
+([**@jatkinson1000**](https://github.com/jatkinson1000)), 
+Joseph Wallwork ([**@jwallwork23**](https://github.com/jwallwork23)) and Tom Meltzer
+([**@tommelt**](https://github.com/TomMelt))
+and has been taught at the following workshops/summer schools 
+[ICCS '24](https://iccs.cam.ac.uk/events/institute-computing-climate-science-annual-summer-school-2024), 
+[ICCS '25](https://iccs.cam.ac.uk/events/institute-computing-climate-science-annual-summer-school-2025) and 
+[Durham HPC Days 2025](https://www.durham.ac.uk/research/institutes-and-centres/data-science/events-/durham---hpc-days/).
 All materials are available such that individuals can cover the course in their own time.
 
 ## Contents
