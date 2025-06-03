@@ -41,7 +41,7 @@ Fortran files.
 
 ## Python
 
-`pytorch_net.py` defines a net `SimpleNet` that takes an input vector of length 5
+`hello_pytorch.py` defines a net `SimpleNet` that takes an input vector of length 5
 and multiplies it by 2.
 
 Note:
@@ -51,7 +51,7 @@ Note:
 
 Running:
 ```default
-python pytorch_net.py
+python hello_pytorch.py
 ```
 
 should produce the output:
