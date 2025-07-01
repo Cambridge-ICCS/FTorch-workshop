@@ -10,6 +10,7 @@ If you are not familiar with Codespaces, please refer to the
 1. Navigate to the
    [FTorch-workshop repo page](https://github.com/Cambridge-ICCS/FTorch-workshop)
    repository and click on the green "Code" button.
+   **NOTE**: Make sure you open a Codespace for `FTorch-workshop`, not `FTorch`.
 2. Select "Codespaces" and then "Create codespace on main".
 3. Wait for the codespace to be created and opened in your browser. You will be put in a
    VSCode environment with a terminal at the bottom.
@@ -21,10 +22,12 @@ activated for you.
 :::
 
 :::{.fragment}
-Execute the following to start the FTorch build process:
-```shell
+Execute the following to start the FTorch build process **using source**:
+```default
 source build_FTorch.sh
 ```
+**NOTE**: It's insufficient to just run `./build_FTorch.sh` because this will not export the
+required environment variables to the current shell session.
 :::
 
 ## Exercise 0 -- Hello Fortran and PyTorch!
