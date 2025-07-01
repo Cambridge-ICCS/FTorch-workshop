@@ -7,12 +7,10 @@
 <link href="ftorch_workshop_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="ftorch_workshop_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="ftorch_workshop_slides_files/libs/quarto-html/quarto-syntax-highlighting-dark-c3c2c9e745155556954bc4da23476b10.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="ftorch_workshop_slides_files/libs/quarto-contrib/qrcodejs-v1.0.0/qrcode.js"></script>
-<link href="ftorch_workshop_slides_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="ftorch_workshop_slides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
+<script src="ftorch_workshop_slides_files/libs/quarto-contrib/qrcodejs-v1.0.0/qrcode.js"></script><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.32">
 
-  <meta name="dcterms.date" content="2025-06-02">
+  <meta name="dcterms.date" content="2025-07-02">
   <title>Coupling Machine Learning to Fortran using the FTorch Library</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -101,7 +99,6 @@
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
-      margin-bottom: 0em;
     }
     .hanging-indent div.csl-entry {
       margin-left:2em;
@@ -233,7 +230,7 @@ Jack Atkinson <a href="https://orcid.org/0000-0001-5001-4812" class="quarto-titl
 Joe Wallwork <a href="https://orcid.org/0000-0002-3646-091X" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
 </div>
         <p class="quarto-title-affiliation">
-            Research Software Engineer <br> ICCS - University of Cambridge
+            Senior Research Software Engineer <br> ICCS - University of Cambridge
           </p>
     </div>
 <div class="quarto-title-author">
@@ -251,7 +248,7 @@ The ICCS Team and Collaborators
 </div>
 </div>
 
-  <p class="date">2025-06-02</p>
+  <p class="date">2025-07-02</p>
 </section>
 <section id="precursors" class="slide level2 smaller nostretch">
 <h2>Precursors</h2>
@@ -259,11 +256,11 @@ The ICCS Team and Collaborators
 <div class="column" style="width:50%;">
 <h4 id="slides-and-materials">Slides and Materials</h4>
 <!-- TODO: Update link to slides -->
-<p>To access links or follow on your own device these slides can be found at: <a href="https://cambridge-iccs.github.io/FTorch-workshop">cambridge-iccs.github.io/FTorch-workshop</a></p>
+<p>The material for this workshop, including a link to the slides to follow on your own device, can be found at: <a href="https://github.com/Cambridge-ICCS/FTorch-workshop">github.com/Cambridge-ICCS/FTorch-workshop</a></p>
 <div style="text-align: center">
 <div id="qr7dekity9" class="qrcode"></div>
 <script type="text/javascript">
-var qrcode = new QRCode("qr7dekity9", {"colorDark":"#000000","colorLight":"#ffffff","height":"200","text":"https://jackatkinson.net/slides","width":"200"});
+var qrcode = new QRCode("qr7dekity9", {"colorDark":"#000000","colorLight":"#ffffff","height":"200","text":"https://github.com/Cambridge-ICCS/FTorch-workshop","width":"200"});
 </script>
     
 </div>
@@ -385,192 +382,13 @@ var qrcode = new QRCode("qr7dekity9", {"colorDark":"#000000","colorLight":"#ffff
 </div>
 
 <!-- =============================================================================== -->
+<!-- {{< include _motivation.qmd >}} -->
+<!-- =============================================================================== -->
+<!-- {{< include _how_it_works.qmd >}} -->
+<!-- =============================================================================== -->
 <aside><div>
 <p>object files contain code run by the machine, and module files contain interfaces to modules.</p>
 </div></aside></section></section>
-<section>
-<section id="motivation" class="title-slide slide level1 center">
-<h1>Motivation</h1>
-<!--
-## Climate Models
-
-Climate models are large, complex, many-part systems.\
-
-![]( images/Climate_Models.svg )
--->
-</section>
-<section id="machine-learning-in-science" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Machine Learning in Science</h2>
-<p>We typically think of Deep Learning as an end-to-end process;<br>
-a black box with an input and an output<sup>1</sup>.</p>
-<p><img data-src="images/neural_net_3b1b.jpeg" class="absolute" style="border-radius: 50%;top: 39%; left: 35%; width: 30%; height: 32%; "></p>
-<p><img data-src="images/pikachu.png" class="absolute" style="top: 37.5%; left: 5.5%; width: 25%; "> <span class="absolute" style="text-align:center;top: 32.5%; left: 4%; width: 25%; ">Who’s that Pokémon?</span></p>
-<p><span class="absolute" style="top: 30%; right: 8.5%; width: 25%; "><span class="math display">\[\begin{bmatrix}\vdots\\a_{23}\\a_{24}\\a_{25}\\a_{26}\\a_{27}\\\vdots\\\end{bmatrix}=\begin{bmatrix}\vdots\\0\\0\\1\\0\\0\\\vdots\\\end{bmatrix}\]</span></span> <span class="absolute" style="text-align:center;top: 27.5%; right: 8.5%; width: 25%; ">It’s Pikachu!</span></p>
-<div class="attribution">
-<p>Neural Net by <a href="https://www.3blue1brown.com/topics/neural-networks">3Blue1Brown</a> under <a href="https://www.gov.uk/guidance/exceptions-to-copyright"><em>fair dealing</em></a>.<br>
-Pikachu © <em>The Pokemon Company</em>, used under <a href="https://www.gov.uk/guidance/exceptions-to-copyright"><em>fair dealing</em></a>.</p>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>And some models like GraphCast, FourCastNet, and Pangu operate on this principle</p></li></ol></aside></section>
-<section id="machine-learning-in-science-1" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Machine Learning in Science</h2>
-<p><img data-src="images/Climate_Models.svg"></p>
-<p><img data-src="images/neural_net_3b1b.jpeg" class="absolute" style="border-radius: 50%;left: 56%; bottom: 7%; width: 25%; height: 21%; "></p>
-<div class="attribution">
-<p>Neural Net by <a href="https://www.3blue1brown.com/topics/neural-networks">3Blue1Brown</a> under <a href="https://www.gov.uk/guidance/exceptions-to-copyright"><em>fair dealing</em></a>.<br>
-Pikachu © <em>The Pokemon Company</em>, used under <a href="https://www.gov.uk/guidance/exceptions-to-copyright"><em>fair dealing</em></a>.</p>
-</div>
-</section>
-<section id="challenges" class="slide level2">
-<h2>Challenges</h2>
-<ul>
-<li>Reproducibility
-<ul>
-<li>Ensure net functions the same in-situ</li>
-</ul></li>
-<li>Re-usability
-<ul>
-<li>Make ML parameterisations available to many models</li>
-<li>Facilitate easy re-training/adaptation</li>
-</ul></li>
-<li>Language Interoperation</li>
-</ul>
-</section>
-<section id="language-interoperation" class="slide level2">
-<h2>Language interoperation</h2>
-<p>Many large scientific models are written in Fortran (or C, or C++).<br>
-Much machine learning is conducted in Python.</p>
-<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/5/55/Mathematical_Bridge_tangents.jpg" class="absolute" style="border-radius: 50%;top: 27%; left: 30%; width: 40%; "></p>
-<p><img data-src="https://www.python.org/static/community_logos/python-logo-generic.svg" class="absolute" style="top: 40%; left: 0px; width: 30%; "></p>
-<p><img data-src="https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png" class="absolute" style="background-image: radial-gradient(gray 0%, #03334E 75%);top: 55%; left: 5%; width: 20%; "></p>
-<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/TensorFlowLogo.svg/696px-TensorFlowLogo.svg.png?20180105010857" class="absolute" style="top: 65%; left: 7.5%; width: 15%; "></p>
-<p><img data-src="https://raw.githubusercontent.com/fortran-lang/fortran-lang.org/bbdc33ec7bfc06fa6111093ae9712a7f7837b555/assets/img/fortran-logo.svg" class="absolute" style="top: 40%; right: 10%; width: 10%; "></p>
-<p><img data-src="https://www.metoffice.gov.uk/binaries/content/gallery/metofficegovuk/images/about-us/website/mo_master_for_dark_backg_rbg.png" class="absolute" style="top: 55%; right: 0%; height: 10%; "></p>
-<p><img data-src="https://climate.copernicus.eu/sites/default/files/custom-uploads/branding/ECMWF_Master_Logo_RGB_nostrap.png" class="absolute" style="top: 64.5%; left: 70%; height: 5%; "></p>
-<p><img data-src="images/ICON.png" class="absolute" style="border-radius: 5%;bottom: 14.5%; right: 0px; width: 10%; "></p>
-<p><img data-src="images/DWD.jpg" class="absolute" style="border-radius: 20%;bottom: 19.5%; right: 2%; width: 6%; "></p>
-<p><img data-src="https://www2.mmm.ucar.edu/wrf/users/images/wrf_logo.jpg" class="absolute" style="bottom: 14.5%; right: 12.75%; width: 7%; "></p>
-<p><img data-src="https://avatars.githubusercontent.com/u/33552285?s=200&amp;v=4.png" class="absolute" style="left: 70%; bottom: 14.5%; width: 7%; "></p>
-<!--
-::: {.fragment .fade-in-then-out}
-![]( ../images/Fortran_TIOBE.jpg ){.absolute top=25% width=100%}
-:::
--->
-<div class="attribution">
-<p><a href="https://en.wikipedia.org/wiki/Mathematical_Bridge">Mathematical Bridge</a> by <a href="https://commons.wikimedia.org/wiki/User:Cmglee">cmglee</a> used under <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.en">CC BY-SA 3.0</a><br>
-PyTorch, the PyTorch logo and any related marks are <a href="https://www.linuxfoundation.org/legal/trademark-usage">trademarks of The Linux Foundation</a>.”<br>
-TensorFlow, the TensorFlow logo and any related marks are trademarks of Google Inc.</p>
-</div>
-</section>
-<section id="efficiency" class="slide level2 smaller" data-auto-animate="true,">
-<h2 data-id="quarto-animate-title">Efficiency</h2>
-<p>We consider 2 types:</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Computational</p>
-<p><img data-src="https://www.svgrepo.com/show/521584/cpu.svg" style="filter: invert(100%);width:15.0%"> <img data-src="https://www.svgrepo.com/show/42898/ram-memory.svg" style="filter: invert(100%);width:15.0%"> <img data-src="https://www.svgrepo.com/show/325133/electronics-transister.svg" style="filter: invert(100%);width:15.0%"> <img data-src="https://www.svgrepo.com/show/479706/stopwatch.svg" style="filter: invert(100%);width:15.0%"></p>
-</div><div class="column">
-<p>Developer</p>
-<p><img data-src="https://www.svgrepo.com/show/308093/software-developer-work-on-computer-programmer-coder.svg" style="filter: invert(100%);width:15.0%"> <img data-src="https://www.svgrepo.com/show/67720/brain-speech-bubble.svg" style="filter: invert(100%);width:15.0%"> <img data-src="https://www.svgrepo.com/show/490654/coffee-maker.svg" style="filter: invert(100%);width:15.0%"> <img data-src="https://www.svgrepo.com/show/479706/stopwatch.svg" style="filter: invert(100%);width:15.0%"></p>
-</div></div>
-<p>Both affect ‘time-to-science’.</p>
-<ul>
-<li>Don’t rewrite nets after you have already trained them.</li>
-<li>Not all scientists are computer scientists.
-<ul>
-<li>Software should be simple to learn and deploy.</li>
-<li>May not have access to extensive software support.</li>
-</ul></li>
-<li>HPC environments want minimal additional dependencies.</li>
-<li>Needs to be as efficient as possible.</li>
-</ul>
-<!-- =============================================================================== -->
-</section></section>
-<section>
-<section id="how-it-works" class="title-slide slide level1 center">
-<h1>How it Works</h1>
-<!--
-## (Py)Torch
-
-::::{.columns}
-:::{.column width=50%}
-#### Torch
-
-- an open-source deep learning framework
-- developed at EPFL in Switzerland
-- written in C with a LUA interface
-
-![](images/Torch_logo.png)
-
-:::
-:::{.column width=50%}
-#### PyTorch
-
-- an open-source deep-learning framework
-- developed by Meta AI, now part of the Linux Foundation
-- written in C++ with a Python interface
-- port of Torch (ATen), but also includes Caffe2 etc.
-
-![]( https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png ){style="background-image: radial-gradient(gray 0%, #03334E 75%);"}
-:::
-::::
-
-:::{.attribution}
-Torch and PyTorch logos under Creative Commons
-:::
--->
-<!--
-## (Py)Torch
-
-#### Automatic Differentiation
-
-- Symbolic Differentiation
-- Numerical Differentiation
-- Automatic Differentiation
--->
-<!--
-## TorchScript and libtorch
-
-PyTorch provides a (pythonic-ish) C++ interface to the underlying C++ codes.
-
-This is accessible through libtorch
--->
-</section>
-<section id="ftorch" class="slide level2">
-<h2>FTorch</h2>
-<p><img data-src="https://raw.githubusercontent.com/fortran-lang/fortran-lang.org/bbdc33ec7bfc06fa6111093ae9712a7f7837b555/assets/img/fortran-logo.svg" class="absolute" style="top: 10%; right: 12.5%; width: 15%; "></p>
-<p><img data-src="https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png" class="absolute" style="top: 20%; right: 30%; width: 35%; height: 20%; "></p>
-<p><img data-src="https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png" class="absolute" style="top: 40%; left: 30%; height: 20%; "></p>
-<p><img data-src="https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png" class="absolute" style="transform: rotate(270deg);top: 70%; left: 30%; width: 18%; height: 10%; "></p>
-<p><img data-src="https://www.pngall.com/wp-content/uploads/5/Open-Box-PNG-Clipart.png" class="absolute" style="top: 18%; left: 0%; height: 22%; "></p>
-<p><img data-src="https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png" class="absolute" style="transform: rotate(270deg);top: 33%; left: 14%; width: 10%; height: 25%; "></p>
-<div class="absolute" style="text-align: center; color: black;top: 27%; left: 6.5%; ">
-<p>Python<br>
-env</p>
-</div>
-<div class="absolute" style="text-align: center;top: 44%; left: 44%; ">
-<p>Python<br>
-runtime</p>
-</div>
-<p><img data-src="https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png" class="absolute" style="background-image: radial-gradient(gray 0%, #03334E 75%);bottom: 10.5%; right: 6%; height: 13%; "></p>
-<div class="fragment fade-in-then-semi-out">
-<p><img data-src="https://imgs.xkcd.com/comics/python_environment_2x.png" class="absolute" style="left: 0%; bottom: 13%; height: 70%; "></p>
-</div>
-<div class="attribution">
-<p><a href="https://xkcd.com/1987/">xkcd #1987</a> by Randall Munroe, used under <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5</a></p>
-</div>
-<div class="fragment fade-in">
-<p><img data-src="https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png" class="absolute" style="transform: scaleY(-1) rotate(130deg); filter:hue-rotate(150deg);top: 37%; left: 78%; width: 35%; height: 20%; "></p>
-</div>
-</section>
-<section id="libtorch-and-ftorch" class="slide level2">
-<h2>libtorch and FTorch</h2>
-<ul>
-<li>libtorch is a C++ library providing an interface into the underlying PyTorch</li>
-<li>FTorch binds to this using the <code>iso_c_binding</code> module (intrinsic since 2003).</li>
-<li>We utilise shared memory (on CPU) reducing data transfer overheads</li>
-</ul>
-<!-- =============================================================================== -->
-</section></section>
 <section>
 <section id="installing-ftorch" class="title-slide slide level1 center">
 <h1>Installing FTorch</h1>
@@ -687,7 +505,7 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 </p>
 <p>The above two commands can be combined into a single option using:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --build . --target install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make</code> command.</p></li><li id="fn3"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make install</code> command.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make</code> command.</p></li><li id="fn2"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make install</code> command.</p></li></ol></aside></section>
 <section id="build-ftorch---details-2" class="slide level2">
 <h2>Build FTorch - details</h2>
 <p>Installation will place files in <code>CMAKE_INSTALL_PREFIX/</code>:</p>
@@ -731,7 +549,7 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>python3 simplenet.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>Input:  tensor([0., 1., 2., 3., 4.])
 Output: tensor([0., 2., 4., 6., 8.])</code></pre>
-<aside><ol class="aside-footnotes"><li id="fn4"><p>This will run the <code>if __name__ == "__main__":</code> section at the bottom of the file.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn3"><p>This will run the <code>if __name__ == "__main__":</code> section at the bottom of the file.</p></li></ol></aside></section>
 <section id="offline-training-with-ftorch" class="slide level2">
 <h2>Offline training with FTorch</h2>
 <p><img data-src="https://cambridge-iccs.github.io/FTorch/page/offline.png" class="absolute" style="top: 35%; left: 20%; width: 60%; "></p>
@@ -897,126 +715,16 @@ It is more complicated, but neccessary for advanced features and/or control oper
 </ul></li>
 </ul>
 <!-- =============================================================================== -->
-<aside><ol class="aside-footnotes"><li id="fn5"><p>We can also use Intel XPU and AppleSilicon MPS, and are investigating AMD.</p></li></ol></aside></section></section>
-<section>
-<section id="applications-and-case-studies" class="title-slide slide level1 center">
-<h1>Applications and Case Studies</h1>
-
-</section>
-<section id="mima---proof-of-concept" class="slide level2">
-<h2>MiMA - proof of concept</h2>
-<ul>
-<li>The origins of FTorch.
-<ul>
-<li>Emulation of existing parameterisation.</li>
-<li>Coupled to an atmospheric model using <code>forpy</code> in <span class="citation" data-cites="espinosa2022machine">Espinosa et al. (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span>.<sup>1</sup></li>
-<li>Prohibitively slow and hard to implement.</li>
-<li>Asked for a faster, user-friendly implementation that can be used in future studies.</li>
-</ul></li>
-</ul>
-<p><br>
-</p>
-<ul>
-<li>Follow up paper using FTorch: <em>Uncertainty Quantification of a Machine Learning Subgrid-Scale Parameterization for Atmospheric Gravity Waves</em> <span class="citation" data-cites="mansfield2024uncertainty">(<a href="#/references" role="doc-biblioref" onclick="">Mansfield and Sheshadri 2024</a>)</span>.
-<ul>
-<li>“Identical” offline networks have very different behaviours when deployed online.</li>
-</ul></li>
-</ul>
-
-<aside><div>
-<p>Model of an idealised Moist Atmosphere online at <a href="https://github.com/DataWaveProject/MiMA-machine-learning"><i class="fa-brands fa-github" aria-label="github"></i>/DataWaveProject/MiMA-machine-learning</a>.</p>
-</div><ol class="aside-footnotes"><li id="fn6"><p>Originally written in TensorFlow…</p></li></ol></aside></section>
-<section id="icon" class="slide level2">
-<h2>ICON</h2>
-<ul>
-<li>Icosahedral Nonhydrostatic Weather and Climate Model.
-<ul>
-<li>Developed by DKRZ (Deutsches Klimarechenzentrum).</li>
-<li>Used by the DWD and Meteo-Swiss.</li>
-</ul></li>
-</ul>
-<div class="columns">
-<div class="column" style="width:75%;">
-<ul>
-<li><em>Interpretable multiscale Machine Learning-Based Parameterizations of Convection for ICON</em> <span class="citation" data-cites="heuer2023interpretable">(<a href="#/references" role="doc-biblioref" onclick="">Heuer et al. 2023</a>)</span>.<sup>1</sup>
-<ul>
-<li>Train U-Net convection scheme on high-res simulation.</li>
-<li>Deploy in ICON via FTorch coupling.</li>
-<li>Evaluate physical realism (causality) using SHAP values.</li>
-<li>Online stability improved when non-causal relations are eliminated from the net.</li>
-</ul></li>
-</ul>
-</div></div>
-<p><img data-src="images/Heuer_SHAP.jpg" class="absolute" style="top: 45%; right: 0px; width: 27%; "></p>
-<p><img data-src="images/ICON.png" class="absolute" style="border-radius: 5%;top: 15%; right: 0px; width: 27%; "></p>
-
-<aside><div>
-<p>Running on JUWELS at the Jülich Supercomputing Centre; ICON Model is now available at <a href="https://gitlab.dkrz.de/icon/icon-model">gitlab.dkrz.de/icon/icon-model</a>.<br>
-</p>
-</div><ol class="aside-footnotes"><li id="fn7"><p>Work without direct involvement of ICCS - success on ‘ease of use’ of FTorch</p></li></ol></aside></section>
-<section id="cesm---bias-correction" class="slide level2">
-<h2>CESM - Bias Correction</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Work by Will Chapman of NCAR/M2LInES.</p>
-<ul>
-<li><p>As representations of physics models have inherent, sometimes systematic, biases.</p></li>
-<li><p>Run CESM for 9 years relaxing hourly to ERA5 observation (data assimilation).</p></li>
-<li><p>Train CNN to predict anomaly increment at each level.</p>
-<ul>
-<li>targeting just the MJO region.</li>
-<li>targeting globally.</li>
-</ul></li>
-<li><p>Apply online as part of predictive runs.</p></li>
-</ul>
-</div><div class="column">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/Will_Champan_CNN_SLP_bias.jpg" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/Will_Champan_CNN_precip_bias.jpg" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
-</figure>
-</div>
-</div></div>
-</section>
-<section id="cesm-coupling" class="slide level2">
-<h2>CESM coupling</h2>
-<ul>
-<li>The Community Earth System Model.</li>
-<li>Part of <a href="https://wcrp-cmip.org/">CMIP</a> (Coupled Model Intercomparison Project).</li>
-<li>Make it easy for users.
-<ul>
-<li>FTorch integrated into the build system (CIME).
-<ul>
-<li><a href="https://github.com/Cambridge-ICCS/cime_je"><i class="fa-brands fa-github" aria-label="github"></i>/Cambridge-ICCS/cime_je</a></li>
-</ul></li>
-<li><code>libtorch</code> is included on the software stack on Derecho.
-<ul>
-<li>Improves reproducibility.</li>
-</ul></li>
-</ul></li>
-</ul>
-<p><img data-src="https://www.hpcwire.com/wp-content/uploads/2022/03/derecho-ncar-render.png" class="absolute" style="top: 15%; right: 0%; height: 20%; "></p>
-
-<div class="attribution">
-<p>Derecho by NCAR</p>
-</div>
-<aside><div>
-<p>Work done with Will Chapman and Jim Edwards of NCAR.<br>
-CIME with FTorch is available with instructions <a href="https://github.com/Cambridge-ICCS/cime_je"><i class="fa-brands fa-github" aria-label="github"></i>/Cambridge-ICCS/cime_je</a>.</p>
-</div></aside></section>
+<!-- {{< include _case_studies.qmd >}} -->
+<aside><ol class="aside-footnotes"><li id="fn4"><p>We can also use AMD HIP, Intel XPU and AppleSilicon MPS.</p></li></ol></aside></section>
 <section id="ongoing-and-future-work" class="slide level2 smaller">
 <h2>Ongoing and future Work</h2>
 <ul>
-<li>UKCA (United Kingdom Chemistry and Aerosols) case study.
+<li>Online training
 <ul>
-<li><em>See Joe’s talk in the Weather and Climate session on Wednesday!</em></li>
+<li>UKCA (United Kingdom Chemistry and Aerosols) case study.</li>
 </ul></li>
-<li>Online training</li>
-<li>AMD GPU device support</li>
+<li>Better integration into CESM and other codes</li>
 <li>Benchmarking against other solutions
 <ul>
 <li>Benchmarking “ease of use” is hard</li>
@@ -1032,16 +740,8 @@ CIME with FTorch is available with instructions <a href="https://github.com/Camb
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-espinosa2022machine" class="csl-entry" role="listitem">
-Espinosa, Zachary I, Aditi Sheshadri, Gerald R Cain, Edwin P Gerber, and Kevin J DallaSanta. 2022. <span>“Machine Learning Gravity Wave Parameterization Generalizes to Capture the QBO and Response to Increased CO2.”</span> <em>Geophysical Research Letters</em> 49 (8): e2022GL098174.
-</div>
-<div id="ref-heuer2023interpretable" class="csl-entry" role="listitem">
-Heuer, Helge, Mierk Schwabe, Pierre Gentine, Marco A Giorgetta, and Veronika Eyring. 2023. <span>“Interpretable Multiscale Machine Learning-Based Parameterizations of Convection for ICON.”</span> <em>arXiv Preprint arXiv:2311.03251</em>.
-</div>
-<div id="ref-mansfield2024uncertainty" class="csl-entry" role="listitem">
-Mansfield, Laura A, and Aditi Sheshadri. 2024. <span>“Uncertainty Quantification of a Machine Learning Subgrid-Scale Parameterization for Atmospheric Gravity Waves.”</span> <em>Authorea Preprints</em>.
-</div>
+<div id="refs" role="list">
+
 </div>
 
 </section></section>

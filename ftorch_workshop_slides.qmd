@@ -22,12 +22,12 @@ authors:
     affiliations: Senior Research Software Engineer <br> ICCS - University of Cambridge
   - name: Joe Wallwork
     orcid: 0000-0002-3646-091X
-    affiliations: Research Software Engineer <br> ICCS - University of Cambridge
+    affiliations: Senior Research Software Engineer <br> ICCS - University of Cambridge
   - name: Tom Meltzer
     orcid: 0000-0003-1740-9550
     affiliations: Senior Research Software Engineer <br> ICCS - University of Cambridge
   - name: The ICCS Team and Collaborators
-date: "2025-06-02"
+date: "2025-07-02"
 bibliography: references.bib
 ---
 
@@ -39,11 +39,12 @@ bibliography: references.bib
 
 <!-- TODO: Update link to slides -->
 
-To access links or follow on your own device these slides can be found at:
-[cambridge-iccs.github.io/FTorch-workshop](https://cambridge-iccs.github.io/FTorch-workshop)
+The material for this workshop, including a link to the slides to follow on your own
+device, can be found at:
+[github.com/Cambridge-ICCS/FTorch-workshop]( https://github.com/Cambridge-ICCS/FTorch-workshop)
 
 ::: {style="text-align: center"}
-{{< qrcode https://jackatkinson.net/slides qr7dekity9 width=200 height=200 >}}
+{{< qrcode https://github.com/Cambridge-ICCS/FTorch-workshop qr7dekity9 width=200 height=200 >}}
 :::
 
 :::
@@ -67,11 +68,11 @@ under [CC0(1.0)](https://creativecommons.org/publicdomain/zero/1.0/deed.en) or
 
 <!-- =============================================================================== -->
 
-{{< include _motivation.qmd >}}
+<!-- {{< include _motivation.qmd >}} -->
 
 <!-- =============================================================================== -->
 
-{{< include _how_it_works.qmd >}}
+<!-- {{< include _how_it_works.qmd >}} -->
 
 <!-- =============================================================================== -->
 
@@ -87,15 +88,14 @@ under [CC0(1.0)](https://creativecommons.org/publicdomain/zero/1.0/deed.en) or
 
 <!-- =============================================================================== -->
 
-{{< include _case_studies.qmd >}}
+<!-- {{< include _case_studies.qmd >}} -->
 
 ## Ongoing and future Work {.smaller}
 
 
-* UKCA (United Kingdom Chemistry and Aerosols) case study.
-  * *See Joe's talk in the Weather and Climate session on Wednesday!*
 - Online training
-- AMD GPU device support
+  - UKCA (United Kingdom Chemistry and Aerosols) case study.
+- Better integration into CESM and other codes
 - Benchmarking against other solutions
   - Benchmarking "ease of use" is hard
 
