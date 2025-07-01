@@ -289,7 +289,7 @@ var qrcode = new QRCode("qr7dekity9", {"colorDark":"#000000","colorLight":"#ffff
 <p>In this tutorial, we will be using GitHub Codespaces to run the exercises. If you are not familiar with Codespaces, please refer to the <a href="https://docs.github.com/en/codespaces">Codespaces documentation</a> for more information.</p>
 <div class="fragment">
 <ol type="1">
-<li>Navigate to the <a href="https://github.com/Cambridge-ICCS/FTorch-workshop">FTorch-workshop repo page</a> repository and click on the green “Code” button.</li>
+<li>Navigate to the <a href="https://github.com/Cambridge-ICCS/FTorch-workshop">FTorch-workshop repo page</a> repository and click on the green “Code” button. <strong>NOTE</strong>: Make sure you open a Codespace for <code>FTorch-workshop</code>, not <code>FTorch</code>.</li>
 <li>Select “Codespaces” and then “Create codespace on main”.</li>
 <li>Wait for the codespace to be created and opened in your browser. You will be put in a VSCode environment with a terminal at the bottom.</li>
 </ol>
@@ -298,8 +298,9 @@ var qrcode = new QRCode("qr7dekity9", {"colorDark":"#000000","colorLight":"#ffff
 <p>Note that we have set up the codespace to have a Python virtual environment set up and activated for you.</p>
 </div>
 <div class="fragment">
-<p>Execute the following to start the FTorch build process:</p>
-<pre class="shell"><code>source build_FTorch.sh</code></pre>
+<p>Execute the following to start the FTorch build process <strong>using source</strong>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>source build_FTorch.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>NOTE</strong>: It’s insufficient to just run <code>./build_FTorch.sh</code> because this will not export the required environment variables to the current shell session.</p>
 </div>
 </section>
 <section id="exercise-0-hello-fortran-and-pytorch" class="slide level2">
