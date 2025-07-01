@@ -21,10 +21,12 @@ activated for you.
 :::
 
 :::{.fragment}
-Execute the following to start the FTorch build process:
-```shell
+Execute the following to start the FTorch build process **using source**:
+```default
 source build_FTorch.sh
 ```
+**NOTE**: It's insufficient to just run `./build_FTorch.sh` because this will not export the
+required environment variables to the current shell session.
 :::
 
 ## Exercise 0 -- Hello Fortran and PyTorch!
