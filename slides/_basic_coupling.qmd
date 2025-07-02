@@ -110,7 +110,13 @@ Notes:
 
 Once we have modified the Fortran we need to compile the code and link it to FTorch.
 
-For convenience, this can be done in the codespace by simply running `make` in the `exercise_01/` subdirectory.
+For convenience, this can be done in the codespace from the `exercise_01/` subdirectory as follows:
+```sh
+mkdir build
+cd build
+cmake ..
+```
+The path to the FTorch installation will be picked up automatically so doesn't need to be specified.
 
 
 ## Running the code
