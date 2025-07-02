@@ -48,7 +48,6 @@ if __name__ == "__main__":
     model.eval()
 
     # Define an arbitrary input tensor
-    input = torch.Tensor([0.0, 1.0, 2.0, 3.0, 4.0])
     tensor_in = torch.Tensor([0.0, 1.0, 2.0, 3.0, 4.0])
 
     # Run inference to obtain an output tensor
