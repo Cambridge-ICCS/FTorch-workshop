@@ -17,8 +17,10 @@ Joe Wallwork ([**@jwallwork23**](https://joewallwork.com)) and Tom Meltzer
 ([**@tommelt**](https://github.com/TomMelt))
 and has been taught at the following workshops/summer schools 
 [ICCS '24](https://iccs.cam.ac.uk/events/institute-computing-climate-science-annual-summer-school-2024), 
-[ICCS '25](https://iccs.cam.ac.uk/events/institute-computing-climate-science-annual-summer-school-2025) and 
-[Durham HPC Days 2025](https://www.durham.ac.uk/research/institutes-and-centres/data-science/events-/durham---hpc-days/).
+[ICCS '25](https://iccs.cam.ac.uk/events/institute-computing-climate-science-annual-summer-school-2025),
+[Durham HPC Days 2025](https://www.durham.ac.uk/research/institutes-and-centres/data-science/events-/durham---hpc-days/)
+and at the
+[Department of Atmospheric, Oceanic, and Planetary Physics at the University of Oxford](https://www.physics.ox.ac.uk/research/subdepartment/atmospheric-oceanic-and-planetary-physics).
 All materials are available such that individuals can cover the course in their own time.
 
 ## Contents
