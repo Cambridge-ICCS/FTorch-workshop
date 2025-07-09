@@ -18,7 +18,7 @@
 :::{.column width=50%}
 #### libtorch
 
-- A (pythonic-ish) C++ interface to the underlying code.
+- A (Pythonic-ish) C++ interface to the underlying code.
 - Ability to save and read PyTorch models (and weights) through TorchScript
 - Fortran can bind to this using the `iso_c_binding` module (intrinsic since 2003).
 - Utilising shared memory (on CPU) reduces data transfer overheads.
