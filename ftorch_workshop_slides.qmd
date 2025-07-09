@@ -27,7 +27,7 @@ authors:
     orcid: 0000-0003-1740-9550
     affiliations: Senior Research Software Engineer <br> ICCS - University of Cambridge
   - name: The ICCS Team and Collaborators
-date: "2025-07-02"
+date: "2025-07-09"
 bibliography: references.bib
 ---
 
@@ -36,8 +36,6 @@ bibliography: references.bib
 :::: {.columns}
 ::: {.column width="50%"}
 #### Slides and Materials
-
-<!-- TODO: Update link to slides -->
 
 The material for this workshop, including a link to the slides to follow on your own
 device, can be found at:
@@ -68,11 +66,28 @@ under [CC0(1.0)](https://creativecommons.org/publicdomain/zero/1.0/deed.en) or
 
 <!-- =============================================================================== -->
 
-<!-- {{< include _motivation.qmd >}} -->
+{{< include _motivation.qmd >}}
 
 <!-- =============================================================================== -->
 
-<!-- {{< include _how_it_works.qmd >}} -->
+{{< include _how_it_works.qmd >}}
+
+<!-- =============================================================================== -->
+
+## Further Information {.smaller}
+
+For more details on the development see slides from our recent talk here:
+[jackatkinson.net/slides/Oxford-FTorch/](https://jackatkinson.net/slides/Oxford-FTorch/)
+
+{{< qrcode https://jackatkinson.net/slides/Oxford-FTorch/ hslcvu57fy width=200 height=200 >}}
+
+Or join the upcoming (18th July) seminar here: [N8 Leeds Seminar](https://www.eventbrite.co.uk/e/ftorch-a-library-for-coupling-pytorch-models-to-fortran-tickets-1468959069119)
+
+{{< qrcode https://www.eventbrite.co.uk/e/ftorch-a-library-for-coupling-pytorch-models-to-fortran-tickets-1468959069119 vhtifowi38 width=200 height=200 >}}
+
+<!-- =============================================================================== -->
+
+{{< include _exercise_0.qmd >}}
 
 <!-- =============================================================================== -->
 

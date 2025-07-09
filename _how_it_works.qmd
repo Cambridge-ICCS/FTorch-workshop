@@ -1,20 +1,9 @@
 # How it Works
 
 
-<!--
-## (Py)Torch
+## Torch
 
 ::::{.columns}
-:::{.column width=50%}
-#### Torch
-
-- an open-source deep learning framework
-- developed at EPFL in Switzerland
-- written in C with a LUA interface
-
-![](images/Torch_logo.png)
-
-:::
 :::{.column width=50%}
 #### PyTorch
 
@@ -25,30 +14,21 @@
 
 ![]( https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png ){style="background-image: radial-gradient(gray 0%, #03334E 75%);"}
 :::
+
+:::{.column width=50%}
+#### libtorch
+
+- A (Pythonic-ish) C++ interface to the underlying code.
+- Ability to save and read PyTorch models (and weights) through TorchScript
+- Fortran can bind to this using the `iso_c_binding` module (intrinsic since 2003).
+- Utilising shared memory (on CPU) reduces data transfer overheads.
+:::
+
 ::::
 
 :::{.attribution}
 Torch and PyTorch logos under Creative Commons
 :::
--->
-
-<!--
-## (Py)Torch
-
-#### Automatic Differentiation
-
-- Symbolic Differentiation
-- Numerical Differentiation
-- Automatic Differentiation
--->
-
-<!--
-## TorchScript and libtorch
-
-PyTorch provides a (pythonic-ish) C++ interface to the underlying C++ codes.
-
-This is accessible through libtorch
--->
 
 
 ## FTorch
@@ -92,10 +72,3 @@ used under [CC BY-NC 2.5](https://creativecommons.org/licenses/by-nc/2.5/)
 ::: {.fragment .fade-in}
 ![](https://www.freepngimg.com/thumb/youtube/77810-arrows-marketing-youtube-arrow-red-free-transparent-image-hq.png){style="transform: scaleY(-1) rotate(130deg); filter:hue-rotate(150deg);" .absolute top=37% left=78% width="35%" height="20%"}
 :::
-
-
-## libtorch and FTorch
-
-- libtorch is a C++ library providing an interface into the underlying PyTorch 
-- FTorch binds to this using the `iso_c_binding` module (intrinsic since 2003).
-- We utilise shared memory (on CPU) reducing data transfer overheads
