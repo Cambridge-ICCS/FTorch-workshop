@@ -123,11 +123,3 @@ For more information please speak to us afterwards, or drop us a message.
 ![](https://iccs.cam.ac.uk/sites/default/files/logo2_2.png){style="width: 20%; height: 30%; object-fit: cover; object-position: 0 0;" .absolute top=25% right=0%}
 
 The ICCS received support from ![]( images/schmidt_science.png ){height=2.4em style="margin: 0; vertical-align: -2%"}
-
-
-## References
-
-::: {#refs}
-:::
-
-
