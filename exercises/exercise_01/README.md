@@ -65,7 +65,7 @@ This runs the model with the array `[0.0, 1.0, 2.0, 3.0, 4.0]` should produce th
 ### Task 1
 
 ```python
-# FTORCH-TODO
+# TODO
 # Add a module import with your model here:
 ```
 
@@ -84,7 +84,7 @@ import simplenet
 ### Task 2
 
 ```python
-# FTORCH-TODO
+# TODO
 # Load a pre-trained PyTorch model
 # Insert code here to load your model as `trained_model`.
 # trained_model = ...
@@ -105,7 +105,7 @@ trained_model = simplenet.SimpleNet()
 ### Task 3
 
 ```python
-# FTORCH-TODO
+# TODO
 # Generate a dummy input Tensor `dummy_input` to the model of appropriate size.
 # trained_model_dummy_input = torch.ones(...)
 ```
@@ -125,7 +125,7 @@ trained_model_dummy_input = torch.ones(5)
 ### Task 4
 
 ```python
-# FTORCH-TODO
+# TODO
 # Run model for dummy inputs
 ```
 
@@ -146,7 +146,7 @@ trained_model_dummy_outputs = trained_model(
 ### Task 5
 
 ```python
-# FTORCH-TODO
+# TODO
 # Set the name of the file you want to save the torchscript model to:
 # saved_ts_filename = "..."
 ```
@@ -166,7 +166,7 @@ saved_ts_filename = "saved_model.pt"
 ### Task 6
 
 ```python
-# FTORCH-TODO
+# TODO
 # Save the PyTorch model using either scripting (recommended if possible) or tracing
 # script_to_torchscript(...)
 ```
