@@ -116,6 +116,7 @@ For convenience, this can be done in the codespace from the `exercise_01/` subdi
 mkdir build
 cd build
 cmake ..
+cmake --build .
 ```
 The path to the FTorch installation will be picked up automatically so doesn't need to be specified.
 
