@@ -43,7 +43,8 @@ Output: tensor([0., 2., 4., 6., 8.])
 
 ## Saving to TorchScript
 
-To use the net from Fortran we need to save it to TorchScript.
+To use the net from Fortran we need to save our PyTorch net as TorchScript in a `.pt`
+file.
 
 \
 
