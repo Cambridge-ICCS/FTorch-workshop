@@ -208,6 +208,18 @@ script_to_torchscript(trained_model, filename=saved_ts_filename)
         torch_model
 ```
 
+Note that
+```fortran
+   ! Import our library for interfacing with PyTorch
+   use :: ftorch
+```
+would work, and may be useful for the purposes of getting familiar with the code in
+the exercise.
+However, this approach is the equivalent of `from module import *` in Python which is
+considered bad practice as it pulls everything from the module into the namespace.
+This can have unintended consequences and cause conflicts so it is better to explicitly
+import only what you need.
+
 </details>
 
 ---
