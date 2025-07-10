@@ -43,7 +43,8 @@ Output: tensor([0., 2., 4., 6., 8.])
 
 ## Saving to TorchScript
 
-To use the net from Fortran we need to save it to TorchScript.
+To use the net from Fortran we need to save our PyTorch net as TorchScript in a `.pt`
+file.
 
 \
 
@@ -52,8 +53,8 @@ FTorch comes with a handy utility `pt2ts.py` to help with this located at\
 
 \
 
-We will now copy this across to `exercise_01/`, modify it, and run it to save our code to
-TorchScript.
+We have copied a version of this into `exercise_01/`, ready for you to modify and run
+to save our SimpleNet model to TorchScript.
 
 
 ## Saving to TorchScript
@@ -115,6 +116,7 @@ For convenience, this can be done in the codespace from the `exercise_01/` subdi
 mkdir build
 cd build
 cmake ..
+cmake --build .
 ```
 The path to the FTorch installation will be picked up automatically so doesn't need to be specified.
 

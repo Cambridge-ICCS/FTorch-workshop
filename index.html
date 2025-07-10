@@ -709,14 +709,14 @@ Output: tensor([0., 2., 4., 6., 8.])</code></pre>
 </section>
 <section id="saving-to-torchscript" class="slide level2">
 <h2>Saving to TorchScript</h2>
-<p>To use the net from Fortran we need to save it to TorchScript.</p>
+<p>To use the net from Fortran we need to save our PyTorch net as TorchScript in a <code>.pt</code> file.</p>
 <p><br>
 </p>
 <p>FTorch comes with a handy utility <code>pt2ts.py</code> to help with this located at<br>
 <code>FTorch/utils/pt2ts.py</code>.</p>
 <p><br>
 </p>
-<p>We will now copy this across to <code>exercise_01/</code>, modify it, and run it to save our code to TorchScript.</p>
+<p>We have copied a version of this into <code>exercise_01/</code>, ready for you to modify and run to save our SimpleNet model to TorchScript.</p>
 </section>
 <section id="saving-to-torchscript-1" class="slide level2">
 <h2>Saving to TorchScript</h2>
@@ -772,7 +772,8 @@ It is more complicated, but neccessary for advanced features and/or control oper
 <p>For convenience, this can be done in the codespace from the <code>exercise_01/</code> subdirectory as follows:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
 <span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span>
-<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> ..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> ..</span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The path to the FTorch installation will be picked up automatically so doesn’t need to be specified.</p>
 </section>
 <section id="running-the-code" class="slide level2">
