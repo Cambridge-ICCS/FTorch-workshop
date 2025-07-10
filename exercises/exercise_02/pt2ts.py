@@ -3,7 +3,7 @@
 import os
 from typing import Optional
 
-# FPTLIB-TODO
+# FTORCH-TODO
 # Add a module import with your model here:
 # This example assumes the model architecture is in an adjacent module `my_ml_model.py`
 import simplenet
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     # Load model and prepare for saving
     # =====================================================
 
-    # FPTLIB-TODO
+    # FTORCH-TODO
     # Load a pre-trained PyTorch model
     # Insert code here to load your model as `trained_model`.
     # This example assumes my_ml_model has a method `initialize` to load
@@ -112,7 +112,7 @@ if __name__ == "__main__":
     # Prepare dummy input and check model runs
     # =====================================================
 
-    # FPTLIB-TODO
+    # FTORCH-TODO
     # Generate a dummy input Tensor `dummy_input` to the model of appropriate size.
     # This example assumes two inputs of size (512x40) and (512x1)
     trained_model_dummy_input = torch.ones((5), dtype=torch.float32)
@@ -124,7 +124,7 @@ if __name__ == "__main__":
         trained_model.eval()
         trained_model_dummy_input = trained_model_dummy_input.to(device)
 
-    # FPTLIB-TODO
+    # FTORCH-TODO
     # Run model for dummy inputs
     # If something isn't working This will generate an error
     trained_model_dummy_outputs = trained_model(
@@ -135,13 +135,13 @@ if __name__ == "__main__":
     # Save model
     # =====================================================
 
-    # FPTLIB-TODO
+    # FTORCH-TODO
     # Set the name of the file you want to save the torchscript model to:
     saved_ts_filename = f"saved_model_{device_type}.pt"
     # A filepath may also be provided. To do this, pass the filepath as an argument to
     # this script when it is run from the command line, i.e. `./pt2ts.py path/to/model`.
 
-    # FPTLIB-TODO
+    # FTORCH-TODO
     # Save the PyTorch model using either scripting (recommended if possible) or tracing
     # -----------
     # Scripting

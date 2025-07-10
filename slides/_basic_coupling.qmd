@@ -60,7 +60,7 @@ to save our SimpleNet model to TorchScript.
 
 Notes:
 
-- There are handy `TODO` comments where you need to adapt the code.
+- There are handy `FTORCH-TODO` comments where you need to adapt the code.
 - `pt2ts.py` expects an `nn.Module` subclass with a `forward()` method.
 - there are two options to save:
   - [tracing](https://pytorch.org/docs/stable/generated/torch.jit.trace.html) using `torch.jit.trace()`\
