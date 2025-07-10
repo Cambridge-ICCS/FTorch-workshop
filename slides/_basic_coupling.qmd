@@ -52,8 +52,8 @@ FTorch comes with a handy utility `pt2ts.py` to help with this located at\
 
 \
 
-We will now copy this across to `exercise_01/`, modify it, and run it to save our code to
-TorchScript.
+We have copied a version of this into `exercise_01/`, ready for you to modify and run
+to save our SimpleNet model to TorchScript.
 
 
 ## Saving to TorchScript
