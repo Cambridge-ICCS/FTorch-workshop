@@ -21,7 +21,10 @@ and has been taught at the following workshops/summer schools
 [Durham HPC Days 2025](https://www.durham.ac.uk/research/institutes-and-centres/data-science/events-/durham---hpc-days/)
 and at the
 [Department of Atmospheric, Oceanic, and Planetary Physics at the University of Oxford](https://www.physics.ox.ac.uk/research/subdepartment/atmospheric-oceanic-and-planetary-physics).
+
 All materials are available such that individuals can cover the course in their own time.
+A recording from a previous workshop can be viewed
+[on youtube](https://www.youtube.com/watch?v=reACnx0llnU&list=PL3PByZO-B6dODVXyQcfKEDnIldqReFryp&index=19).
 
 ## Contents
 
@@ -55,6 +58,8 @@ However, more specifically we aim to:
 The slides for this workshop can be viewed on the ICCS Summer School Website:
 
 - [Slides](https://cambridge-iccs.github.io/FTorch-workshop)
+- [Recording](https://www.youtube.com/watch?v=reACnx0llnU&list=PL3PByZO-B6dODVXyQcfKEDnIldqReFryp&index=19) from the 2025 ICCS summer school.
+)
 
 The slides are generated from markdown using quarto.
 The raw markdown and html files can be found in the [slides](slides/) directory.
