@@ -9,12 +9,15 @@
 python3 -m venv .venv
 source .venv/bin/activate
 echo "source $(pwd)/.venv/bin/activate" >> $HOME/.bashrc
-pip install torch --index-url https://download.pytorch.org/whl/cpu
-pip install numpy
 
 # Clone FTorch and move to the directory
 git clone https://github.com/Cambridge-ICCS/FTorch.git
 cd FTorch
+
+# Install the ftorch_utils Python package, which provides the pt2ts CLI tool
+# Force cpu version of torch first
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install .
 
 # Create a build directory to build FTorch in using CMake
 mkdir build
@@ -38,9 +41,6 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PYTHON_PATH/torch/lib
 
 # Add FTorch install dir to CMAKE_PREFIX_PATH so that cmake can locate the project
 export CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:/workspaces/FTorch-workshop/FTorch_bin"
-
-# Install the ftorch_utils Python package, which provides the pt2ts CLI tool
-pip install ./FTorch/
 
 # Add these commands to the .bashrc for future use
 echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$PYTHON_PATH/torch/lib" >> $HOME/.bashrc
