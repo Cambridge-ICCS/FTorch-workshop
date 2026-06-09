@@ -47,16 +47,17 @@ Generated data/image_batch_1.dat with batch size 1.
 #### Python task: Implement batching
 
 Look at the `# TODO` comments in `generate_input_batch.py`. Currently every
-element of the batch uses the same image. Extend the script to:
+element of the batch uses `dog.jpg`. Two images are provided — `data/dog.jpg`
+and `data/dog2.jpg`. Extend the script to:
 
-1. Add a second image to the `data/` directory.
-2. Use a different image for each index in the batch (controlled by the loop
+1. Use a different image for each index in the batch (controlled by the loop
    variable `i`).
+2. For larger batches, add more images to `data/`.
 
 Re-run with a larger batch size to confirm it works:
 
 ```
-python3 generate_input_batch.py 4
+python3 generate_input_batch.py 2
 ```
 
 ### 2. Convert to TorchScript

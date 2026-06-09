@@ -65,13 +65,13 @@ if __name__ == "__main__":
     data_dir = parsed_args.data_dir
     np_precision = getattr(np, parsed_args.precision)
 
-    # TODO: Provide different images rather than repeating the same one.
-    #       Add more images to data/ and use a different file for each
-    #       index in the batch.
     input_batch = []
     for i in range(batch_size):
-        # TODO: Use a different image for each batch element
-        # image_path = os.path.join(data_dir, f"{i+1}.jpg")
+        # TODO: Use a different image for each batch element.
+        #       Currently all images are the same (dog.jpg).
+        #       Two images are provided: data/dog.jpg and data/dog2.jpg.
+        #       For larger batches add more images to data/.
+        # image_path = os.path.join(data_dir, f"dog{i+1}.jpg")
         image_path = os.path.join(data_dir, "dog.jpg")
         input_tensor = preprocess_image(image_path)
         input_batch.append(input_tensor.unsqueeze(0).numpy())
