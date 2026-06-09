@@ -37,7 +37,7 @@ Both perform the same operation:
 
 The exercise is the same for both folders:
 
-- Run the pre-prepared `pt2ts.py` script to save the net.
+- Run the `pt2ts` command to save the net (as in exercise 1).
 - Inspect the code to see how it works:
   - Both have a main program in `simplenet_fortran.f90`.
   - Both have FTorch code extracted to a module `fortran_ml_mod.f90`.
@@ -49,7 +49,7 @@ The exercise is the same for both folders:
 ## Exercise 2 - solution
 
 For a complete version of the example, see the
-[Looping example](https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/5_Looping).
+[Looping example](https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/06_Looping).
 
 
 ## Exercise 3: automatic differentiation
@@ -78,13 +78,13 @@ using both PyTorch and FTorch.
 
 Supply as an array of tensors, innit.
 
-- For more details see the [MultiIO Example](https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/6_MultiIO).
+- For more details see the [MultiIO Example](https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/05_MultiIO).
 
 
 ## GPU Acceleration
 
 - FTorch automatically has access to GPU acceleration through the PyTorch backend.
-- When running `pt2ts.py`, save the model on GPU.
+- When running `pt2ts`, save the model on GPU.
   - Guidance provided in the file.
 - When creating `torch_tensor`s set the device to `torch_kCUDA` instead of `torch_kCPU`.^[We can also use AMD HIP, Intel XPU and AppleSilicon MPS.]
 - To target a specific device supply the `device_index` argument.
@@ -92,4 +92,4 @@ Supply as an array of tensors, innit.
 * Use `torch_tensor_to` to transfer tensors between devices (and data types).
 - For more details see:
   - the [online documentation](https://cambridge-iccs.github.io/FTorch/page/gpu.html)
-  - the [GPU Example](https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/6_MultiGPU)
+  - the [GPU Example](https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/07_MultiGPU)
