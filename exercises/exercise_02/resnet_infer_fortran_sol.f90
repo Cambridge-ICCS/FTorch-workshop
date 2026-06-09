@@ -1,156 +1,162 @@
-program inference
+! Solution for ResNet-18 inference with FTorch
+!
+! Stage 2: 4D arrays with torch_tensor_from_array (dynamic batch_size)
+!
+! Usage:
+!   ./resnet_infer_fortran <model_file>         (batch_size=1)
+!   ./resnet_infer_fortran <model_file> <N>     (batch_size=N)
 
-   use, intrinsic :: iso_fortran_env, only : sp => real32
+program resnet_infer_fortran
+  use ftorch
+  implicit none
 
-   ! Import our library for interfacing with PyTorch
-   use ftorch, only : torch_model, torch_tensor, torch_kCPU, torch_delete, &
-                      torch_tensor_from_array, torch_model_load, torch_model_forward
+  integer, parameter :: wp = sp
 
-   use ftorch_test_utils, only : isclose
+  integer :: batch_size
+  character(len=256) :: model_file
+  logical :: file_exists
 
-   implicit none
+  integer :: nargs
+  character(len=32) :: arg
 
-   integer, parameter :: wp = sp
+  ! Model IO — 4D arrays with batch dimension
+  real(wp), dimension(:,:,:,:), allocatable, target :: in_data
+  real(wp), dimension(:,:), allocatable, target :: out_data
 
-   call main()
+  type(torch_model) :: model
+  type(torch_tensor), dimension(1) :: in_tensors, out_tensors
+
+  ! File paths
+  character(len=256) :: in_file
+
+  ! Loop index
+  integer :: i
+
+  ! Get the model file from CLI
+  nargs = command_argument_count()
+  if (nargs < 1) then
+    write(*, *) "Usage: ./resnet_infer_fortran <model_file> [batch_size]"
+    stop
+  end if
+  call get_command_argument(1, model_file)
+  inquire(file=trim(model_file), exist=file_exists)
+  if (.not. file_exists) then
+    write(*, *) "Model file not found: ", trim(model_file)
+    stop
+  end if
+
+  ! Get batch_size from CLI (default 1)
+  batch_size = 1
+  if (nargs >= 2) then
+    call get_command_argument(2, arg)
+    read(arg, *) batch_size
+  end if
+  write(*, *) "Running inference with batch_size = ", batch_size
+
+  ! Allocate 4D arrays with batch dimension
+  allocate(in_data(batch_size, 3, 224, 224))
+  allocate(out_data(batch_size, 1000))
+
+  ! Load the input data
+  write(in_file, "(A, I0, A)") "data/image_batch_", batch_size, ".dat"
+  inquire(file=trim(in_file), exist=file_exists)
+  if (.not. file_exists) then
+    write(*, *) "Input data file not found: ", trim(in_file)
+    stop
+  end if
+  call load_data(trim(in_file), in_data)
+  write(*, *) "Loaded input data from ", trim(in_file)
+
+  ! Create torch tensors from Fortran arrays
+  call torch_tensor_from_array(in_tensors(1), in_data, torch_kCPU)
+  call torch_tensor_from_array(out_tensors(1), out_data, torch_kCPU)
+
+  ! Load the TorchScript model
+  call torch_model_load(model, model_file, torch_kCPU)
+
+  ! Run inference
+  call torch_model_forward(model, in_tensors, out_tensors)
+
+  ! Classify results for each image in the batch
+  do i = 1, batch_size
+    call classify(out_data(i, :), i)
+  end do
+
+  ! Clean up
+  call torch_delete(in_tensors)
+  call torch_delete(out_tensors)
+  call torch_delete(model)
+
+  deallocate(in_data)
+  deallocate(out_data)
 
 contains
 
-   subroutine main()
+  subroutine load_data(filename, arr)
+    character(len=*), intent(in) :: filename
+    real(wp), dimension(:,:,:,:), intent(out) :: arr
 
-      ! Torch data structures
-      type(torch_model) :: model
-      type(torch_tensor), dimension(1) :: in_tensors
-      type(torch_tensor), dimension(1) :: out_tensors
+    integer :: unit, sz, ierr
+    real(wp), dimension(:), allocatable :: flat
 
-      ! Fortran data arrays — 4D with batch dimension
-      real(wp), dimension(:,:,:,:), allocatable, target :: in_data
-      real(wp), dimension(:,:), allocatable, target :: out_data
-      real(wp), dimension(1000) :: out_data_1d
+    sz = size(arr)
+    allocate(flat(sz))
+    open(newunit=unit, file=filename, access="stream", &
+         form="unformatted", status="old", iostat=ierr)
+    if (ierr /= 0) then
+      write(*, *) "Error opening ", filename
+      stop
+    end if
+    read(unit) flat
+    close(unit)
+    arr = reshape(flat, shape(arr))
+    deallocate(flat)
+  end subroutine
 
-      integer :: batch_size, tensor_length, num_args
-      character(len=128) :: model_file, data_dir, tensor_file, arg
+  subroutine classify(out_data, idx)
+    real(wp), dimension(:), intent(in) :: out_data
+    integer, intent(in) :: idx
 
-      ! Parse command-line arguments
-      num_args = command_argument_count()
-      if (num_args < 1) then
-         write (*,*) "Usage: ./resnet_infer_fortran <model_file> [batch_size] [data_dir]"
-         stop 1
+    character(len=256), dimension(1000) :: labels
+    integer :: unit, i, max_idx
+    real(wp) :: max_val
+
+    call load_labels(labels)
+
+    max_val = -huge(max_val)
+    max_idx = 1
+    do i = 1, 1000
+      if (out_data(i) > max_val) then
+        max_val = out_data(i)
+        max_idx = i
       end if
-      call get_command_argument(1, model_file)
-      if (num_args > 1) then
-         call get_command_argument(2, arg)
-         read(arg, *) batch_size
-      else
-         batch_size = 1
+    end do
+
+    write(*, "(A, I0, A)") "Image ", idx, ":"
+    write(*, "(A, A, A, F6.4)") "  Predicted: ", trim(labels(max_idx)), &
+      ", probability ", max_val
+  end subroutine classify
+
+  subroutine load_labels(labels)
+    character(len=256), dimension(1000), intent(out) :: labels
+
+    integer :: unit, i, ierr
+    character(len=256) :: line
+
+    open(newunit=unit, file="data/categories.txt", status="old", iostat=ierr)
+    if (ierr /= 0) then
+      write(*, *) "Error opening categories.txt"
+      stop
+    end if
+    do i = 1, 1000
+      read(unit, "(A)", iostat=ierr) line
+      if (ierr /= 0) then
+        write(*, *) "Error reading categories.txt at line ", i
+        stop
       end if
-      if (num_args > 2) then
-         call get_command_argument(3, data_dir)
-      else
-         data_dir = "data"
-      end if
+      labels(i) = trim(adjustl(line))
+    end do
+    close(unit)
+  end subroutine load_labels
 
-      ! Allocate 4D arrays with batch dimension
-      allocate(in_data(batch_size, 3, 224, 224))
-      allocate(out_data(batch_size, 1000))
-
-      tensor_length = batch_size * 3 * 224 * 224
-      if (batch_size == 1) then
-         tensor_file = trim(data_dir)//"/image_tensor.dat"
-      else
-         write(tensor_file, "(a,a,i0,a)") trim(data_dir), "/image_batch_", batch_size, ".dat"
-      end if
-      call load_data_4d(tensor_file, tensor_length, in_data)
-
-      ! Create input and output torch_tensors from the Fortran arrays
-      call torch_tensor_from_array(in_tensors(1), in_data, torch_kCPU)
-      call torch_tensor_from_array(out_tensors(1), out_data, torch_kCPU)
-
-      ! Load the TorchScript model
-      call torch_model_load(model, model_file, torch_kCPU)
-
-      ! Run inference
-      call torch_model_forward(model, in_tensors, out_tensors)
-
-      ! Classify the results
-      call classify_batch(data_dir, batch_size, out_data)
-
-      ! Clean up
-      call torch_delete(model)
-      call torch_delete(in_tensors)
-      call torch_delete(out_tensors)
-      deallocate(in_data)
-      deallocate(out_data)
-
-      write (*,*) "ResNet-18 example ran successfully"
-
-   end subroutine main
-
-   subroutine load_data_4d(filename, tensor_length, in_data)
-
-      character(len=*), intent(in) :: filename
-      integer, intent(in) :: tensor_length
-      real(wp), dimension(:,:,:,:), intent(out) :: in_data
-
-      real(wp) :: flat_data(tensor_length)
-      integer :: ios
-
-      open(unit=10, file=filename, status='old', access='stream', &
-           form='unformatted', action="read", iostat=ios)
-      if (ios /= 0) then
-         write (*,*) "Error opening ", trim(filename)
-         stop 1
-      end if
-      read(10) flat_data
-      close(10)
-
-      ! Data was transposed in Python before saving so that the order
-      ! is consistent with Fortran's column-major memory layout when
-      ! reshaped here.
-      in_data = reshape(flat_data, shape(in_data))
-
-   end subroutine load_data_4d
-
-   subroutine classify_batch(data_dir, batch_size, out_data)
-
-      character(len=*), intent(in) :: data_dir
-      integer, intent(in) :: batch_size
-      real(wp), dimension(batch_size, 1000), intent(in) :: out_data
-
-      character(len=128), dimension(1000) :: categories
-      real(wp), dimension(1000) :: probabilities
-      integer :: indices(batch_size)
-      real(wp), dimension(batch_size) :: top_probabilities
-      integer :: i, ios
-      character(len=128) :: cat_file
-
-      ! Load category labels
-      cat_file = trim(data_dir)//"/categories.txt"
-      open(unit=11, file=cat_file, status='old', action='read', iostat=ios)
-      if (ios /= 0) then
-         write (*,*) "Error opening ", trim(cat_file)
-         stop 1
-      end if
-      do i = 1, 1000
-         read(11, '(a)', iostat=ios) categories(i)
-         if (ios /= 0) exit
-      end do
-      close(11)
-
-      ! Apply softmax and find top result per batch element
-      do i = 1, batch_size
-         probabilities = exp(out_data(i, :))
-         probabilities = probabilities / sum(probabilities)
-         top_probabilities(i) = maxval(probabilities)
-         indices(i) = maxloc(probabilities, dim=1)
-      end do
-
-      ! Print results
-      do i = 1, batch_size
-         write (*, "(i0,': ',a,', probability ',f6.4)") i, &
-            trim(categories(indices(i))), top_probabilities(i)
-      end do
-
-   end subroutine classify_batch
-
-end program inference
+end program resnet_infer_fortran

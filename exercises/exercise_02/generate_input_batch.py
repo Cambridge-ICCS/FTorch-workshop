@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Preprocess an image for ResNet-18 inference."""
+"""Preprocess images for ResNet-18 inference."""
 
 import os
 
@@ -10,19 +10,6 @@ from PIL import Image
 
 
 def preprocess_image(image_path: str) -> torch.Tensor:
-    """
-    Load and preprocess a single image for ResNet-18.
-
-    Parameters
-    ----------
-    image_path : str
-        Path to the image file.
-
-    Returns
-    -------
-    torch.Tensor
-        Preprocessed image tensor of shape [3, 224, 224].
-    """
     input_image = Image.open(image_path)
     preprocess = torchvision.transforms.Compose(
         [
@@ -38,23 +25,43 @@ def preprocess_image(image_path: str) -> torch.Tensor:
 
 
 if __name__ == "__main__":
-    data_dir = os.path.join(os.path.dirname(__file__), "data")
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "--batch_size",
+        help="Number of images to batch together",
+        type=int,
+        default=1,
+    )
+    parser.add_argument(
+        "--data_dir",
+        help="Path to the data directory",
+        type=str,
+        default=os.path.join(os.path.dirname(__file__), "data"),
+    )
+    parsed_args = parser.parse_args()
+    batch_size = parsed_args.batch_size
+    data_dir = parsed_args.data_dir
     np_precision = np.float32
 
-    # Preprocess a single image
-    input_tensor = preprocess_image(os.path.join(data_dir, "dog.jpg"))
+    # TODO: Use a different image for each batch element.
+    #       Currently all images are the same (dog.jpg).
+    #       Two images are provided: data/dog.jpg and data/dog2.jpg.
+    #       For larger batches add more images to data/.
+    input_batch = []
+    for i in range(batch_size):
+        # image_path = os.path.join(data_dir, f"dog{i+1}.jpg")
+        image_path = os.path.join(data_dir, "dog.jpg")
+        input_tensor = preprocess_image(image_path)
+        input_batch.append(input_tensor.unsqueeze(0).numpy())
 
-    # TODO: Extend this script to batch multiple images.
-    #       1. Add a --batch_size command-line argument.
-    #       2. Load a different image for each index (dog2.jpg is provided).
-    #       3. Stack them into a batch with torch.stack().
-    #       4. Save the batched array (shape [N, 3, 224, 224]) instead.
-    #       You will also need to update the Fortran code to match.
+    # Stack images and transpose for Fortran column-major layout
+    np_input = np.array(np.vstack(input_batch), dtype=np_precision)
+    np_input = np_input.transpose().flatten()
 
-    # Transpose so memory order is consistent with Fortran column-major layout
-    np_input = np.array(input_tensor.numpy().transpose().flatten(), dtype=np_precision)
-
-    # Save as binary for Fortran to read
-    out_file = os.path.join(data_dir, "image_tensor.dat")
+    out_file = os.path.join(data_dir, f"image_batch_{batch_size}.dat")
     np_input.tofile(out_file)
-    print(f"Generated {out_file}")
+    print(f"Generated {out_file} with batch size {batch_size}.")
