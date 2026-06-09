@@ -39,6 +39,9 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PYTHON_PATH/torch/lib
 # Add FTorch install dir to CMAKE_PREFIX_PATH so that cmake can locate the project
 export CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:/workspaces/FTorch-workshop/FTorch_bin"
 
+# Install the ftorch_utils Python package, which provides the pt2ts CLI tool
+pip install ./FTorch/
+
 # Add these commands to the .bashrc for future use
 echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$PYTHON_PATH/torch/lib" >> $HOME/.bashrc
 echo "export CMAKE_PREFIX_PATH=\$CMAKE_PREFIX_PATH:/workspaces/FTorch-workshop/FTorch_bin" >> $HOME/.bashrc
