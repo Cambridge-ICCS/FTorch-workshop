@@ -15,37 +15,30 @@ contains
 
    subroutine main()
 
+      character(len=128) :: model_file
+      integer :: num_args
+
       ! TODO: Declare torch_model and torch_tensor variables
 
-      ! Fortran data arrays (allocated based on batch_size)
-      real(wp), dimension(:,:,:,:), allocatable, target :: in_data
-      real(wp), dimension(:,:), allocatable, target :: out_data
+      ! Fortran data arrays — currently 3D for a single image
+      real(wp), dimension(3, 224, 224), target :: in_data
+      real(wp), dimension(1000), target :: out_data
 
-      integer :: batch_size, tensor_length
-      character(len=128) :: model_file, data_dir, tensor_file
-      character(len=128) :: arg
-
-      ! Parse command-line arguments: <model_file> <batch_size> [data_dir]
-      if (command_argument_count() < 2) then
-         write (*,*) "Usage: ./resnet_infer_fortran <model_file> <batch_size> [data_dir]"
+      ! Parse command-line argument: <model_file>
+      num_args = command_argument_count()
+      if (num_args < 1) then
+         write (*,*) "Usage: ./resnet_infer_fortran <model_file>"
+         write (*,*) "       For batched inference: ./resnet_infer_fortran <model_file> <batch_size>"
          stop 1
       end if
       call get_command_argument(1, model_file)
-      call get_command_argument(2, arg)
-      read(arg, *) batch_size
-      if (command_argument_count() > 2) then
-         call get_command_argument(3, data_dir)
-      else
-         data_dir = "data"
-      end if
 
-      ! Allocate input and output arrays based on batch size
-      allocate(in_data(batch_size, 3, 224, 224))
-      allocate(out_data(batch_size, 1000))
+      call load_data("data/image_tensor.dat", in_data)
 
-      tensor_length = batch_size * 3 * 224 * 224
-      write(tensor_file, "(a,a,i0,a)") trim(data_dir), "/image_batch_", batch_size, ".dat"
-      call load_data(tensor_file, tensor_length, in_data)
+      ! TODO: The ResNet model expects a 4-dimensional input tensor with shape
+      !       (batch, channels, height, width). Currently in_data is 3D.
+      !       You will need to handle this difference. One option is to declare
+      !       in_data as a 4D array and reshape.
 
       ! TODO: Create input and output torch_tensors from the Fortran arrays
       !       using torch_tensor_from_array
@@ -54,21 +47,24 @@ contains
 
       ! TODO: Run inference using torch_model_forward
 
-      ! Classify the results
-      call classify(data_dir, batch_size, out_data)
+      ! Print the top result
+      call classify("data", out_data)
 
-      ! TODO: Clean up allocated torch objects and Fortran arrays
+      ! TODO: Clean up allocated torch objects
 
    end subroutine main
 
-   subroutine load_data(filename, tensor_length, in_data)
+   subroutine load_data(filename, in_data)
 
       character(len=*), intent(in) :: filename
-      integer, intent(in) :: tensor_length
-      real(wp), dimension(:,:,:,:), intent(out) :: in_data
+      real(wp), dimension(:,:,:), intent(out) :: in_data
 
-      real(wp) :: flat_data(tensor_length)
+      integer :: tensor_length
+      real(wp), allocatable :: flat_data(:)
       integer :: ios
+
+      tensor_length = size(in_data)
+      allocate(flat_data(tensor_length))
 
       open(unit=10, file=filename, status='old', access='stream', &
            form='unformatted', action="read", iostat=ios)
@@ -86,18 +82,22 @@ contains
 
    end subroutine load_data
 
-   subroutine classify(data_dir, batch_size, out_data)
+   subroutine classify(data_dir, out_data)
 
       character(len=*), intent(in) :: data_dir
-      integer, intent(in) :: batch_size
-      real(wp), dimension(batch_size, 1000), intent(in) :: out_data
+      real(wp), dimension(:), intent(in) :: out_data
 
       character(len=128), dimension(1000) :: categories
       real(wp), dimension(1000) :: probabilities
-      integer :: indices(batch_size)
-      real(wp), dimension(batch_size) :: top_probabilities
-      integer :: i, ios
+      integer :: max_idx, i, ios
       character(len=128) :: cat_file
+
+      ! Apply softmax
+      probabilities = exp(out_data)
+      probabilities = probabilities / sum(probabilities)
+
+      ! Find top result
+      max_idx = maxloc(probabilities, dim=1)
 
       ! Load category labels
       cat_file = trim(data_dir)//"/categories.txt"
@@ -112,19 +112,8 @@ contains
       end do
       close(11)
 
-      ! Apply softmax and find top result per batch element
-      do i = 1, batch_size
-         probabilities = exp(out_data(i, :))
-         probabilities = probabilities / sum(probabilities)
-         top_probabilities(i) = maxval(probabilities)
-         indices(i) = maxloc(probabilities, dim=1)
-      end do
-
-      ! Print results
-      do i = 1, batch_size
-         write (*, "(i0,': ',a,', probability ',f6.4)") i, &
-            trim(categories(indices(i))), top_probabilities(i)
-      end do
+      write (*, "(a,', probability ',f6.4)") trim(categories(max_idx)), &
+         probabilities(max_idx)
 
    end subroutine classify
 

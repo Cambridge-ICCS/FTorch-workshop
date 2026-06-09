@@ -19,92 +19,62 @@ Navigate to `exercises/exercise_02/`.
 
 You will find:
 
-- `generate_input_batch.py` — preprocesses images and writes binary batch data.
-- `resnet_infer_python.py` — Python verification using the TorchScript model.
+- `generate_input_batch.py` — preprocesses a single image to binary.
+- `resnet_infer_python.py` — Python verification.
 - `resnet_infer_fortran.f90` — Fortran template with `! TODO` comments.
-- `resnet_infer_fortran_sol.f90` — complete solution.
-- `data/` — contains the example image (`dog.jpg`) and ImageNet labels (`categories.txt`).
+- `resnet_infer_fortran_sol.f90` — complete solution (including batching).
+- `data/` — contains example images and ImageNet labels.
 
 
-## Pipeline overview
+## Stage 1: Single-image inference
 
-1. **Python**: Run `generate_input_batch.py N` to preprocess N images and save as a binary batch.
-2. **Convert**: Run `pt2ts resnet18 --model_weights IMAGENET1K_V1` to download the pre-trained model and save as TorchScript.
-3. **Fortran**: Fill in the TODOs in `resnet_infer_fortran.f90`, build, and run with the batch size as an argument.
+1. **Generate input**: `python3 generate_input_batch.py`
+2. **Convert**: `pt2ts resnet18 --model_weights IMAGENET1K_V1 --output_model_file torchscript_resnet18_model_cpu.pt`
+3. **Fortran**: Fill in TODOs, build with CMake, run:
+   ```sh
+   ./resnet_infer_fortran torchscript_resnet18_model_cpu.pt
+   ```
+
+Expected output:
+```
+Samoyed, probability 0.8846
+```
 
 
-## Python task: batching
+## Challenge: the batch dimension
 
-`generate_input_batch.py` takes the batch size as a command-line argument:
+The ResNet model expects **4D** input `(batch, channels, height, width)`,
+but the current Fortran array is **3D** `(3, 224, 224)`.
+
+You will need to handle this difference to make the inference work.
+
+Hint: look at the solution or think about how to represent a "batch of one
+image" as a 4-dimensional array.
+
+
+## Stage 2: Add batching
+
+Once single-image inference works, extend to multiple images:
+
+**Python**: Add `--batch_size` to `generate_input_batch.py`. Load a different
+image for each index, stack them, save as `image_batch_N.dat`.
+
+**Fortran**: Accept batch size as optional CLI arg. Allocate 4D arrays
+dynamically. Read the batch file. Print results per image.
 
 ```sh
-python3 generate_input_batch.py 1
+./resnet_infer_fortran torchscript_resnet18_model_cpu.pt 2
 ```
-
-It has `# TODO` comments asking you to:
-
-1. Add a second image to the `data/` directory.
-2. Use a different image for each index in the batch (rather than repeating the same one).
-
-
-## Converting to TorchScript
-
-For well-known architectures with pre-trained weights, `pt2ts` can load the
-model directly from TorchVision:
-
-```sh
-pt2ts resnet18 \
-  --model_weights IMAGENET1K_V1 \
-  --output_model_file torchscript_resnet18_model_cpu.pt
-```
-
-No model definition file is needed — `pt2ts` knows ResNet-18 from the
-TorchVision registry.
-
-
-## Fortran tasks
-
-Open `resnet_infer_fortran.f90` and fill in the `! TODO` sections to:
-
-1. **Import** the `ftorch` module.
-2. **Declare** `torch_model` and `torch_tensor` variables.
-3. **Create tensors** via `torch_tensor_from_array`.
-4. **Load the model** via `torch_model_load`.
-5. **Run inference** via `torch_model_forward`.
-6. **Clean up** via `torch_delete`.
-
-The solution is in `resnet_infer_fortran_sol.f90`.
-
-
-## Batching in Fortran
-
-The Fortran program takes batch size as a runtime argument:
-
-```sh
-./resnet_infer_fortran torchscript_resnet18_model_cpu.pt 1
-./resnet_infer_fortran torchscript_resnet18_model_cpu.pt 4
-```
-
-The arrays are allocated dynamically based on the batch size:
-
-```fortran
-allocate(in_data(batch_size, 3, 224, 224))
-allocate(out_data(batch_size, 1000))
-```
-
-Try different batch sizes and observe the output for each image.
 
 
 ## Data layout
-
-The ResNet-18 input is a 4-D tensor `(batch, channels, height, width)`.
 
 Python (C) and Fortran store arrays in opposite memory order:
 
 - **Python**: row-major, last index changes fastest.
 - **Fortran**: column-major, first index changes fastest.
 
-The Python script handles this by transposing before saving to binary:
+The Python script transposes before saving to binary:
 
 ```python
 np_input = np_input.transpose().flatten()
