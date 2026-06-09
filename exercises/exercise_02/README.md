@@ -9,8 +9,8 @@ You will:
 
 - Work with a **real-world** pre-trained model (not a toy example).
 - Explore **batching** — processing multiple images in a single forward pass.
-- Follow the **full Python-to-Fortran pipeline**: define the model in Python,
-  convert to TorchScript, then call from Fortran.
+- Follow the **full Python-to-Fortran pipeline**: generate input data in Python,
+  convert the model to TorchScript, then call from Fortran.
 
 The model takes a 4-dimensional input tensor with shape `(batch, channels, height, width)`.
 Handling this multidimensional data requires care with memory layout — see
@@ -20,67 +20,58 @@ Handling this multidimensional data requires care with memory layout — see
 
 There are three stages to this exercise:
 
-1. **Python**: Run `resnet18.py` to download the pre-trained ResNet-18,
-   preprocess an example image (`data/dog.jpg`), and save the model and input
-   data.
-2. **Convert**: Use the `pt2ts` command to convert the PyTorch model to
-   TorchScript.
+1. **Python**: Run `generate_input_batch.py` with a batch size to preprocess
+   images and write them as a binary tensor.
+2. **Convert**: Use the `pt2ts` command to download the pre-trained ResNet-18
+   from TorchVision and save it as TorchScript.
 3. **Fortran**: Write Fortran code using FTorch to load the TorchScript model
-   and run inference.
+   and run inference on the batch.
 
 ## Running
 
-### 1. Python model
+### 1. Generate input data
 
-Run the Python script to download ResNet-18, preprocess the example image,
-and save the model and input data:
+Create a batch of preprocessed images for Fortran:
 
 ```
-python3 resnet18.py
+python3 generate_input_batch.py 1
 ```
 
-This will produce:
-- `pytorch_resnet18_model_cpu.pt` — the PyTorch model (state dict).
-- `data/image_tensor.dat` — the preprocessed image as a binary tensor.
-- The expected output:
+This preprocesses `data/dog.jpg` and saves it as `data/image_batch_1.dat`.
+
+Expected output:
 ```
-Top prediction: class 258, probability = 0.884623
-Input batch included 1 image(s).
+Generated data/image_batch_1.dat with batch size 1.
 ```
 
 #### Python task: Implement batching
 
-Look at the `# TODO` comment in `resnet18.py`. Currently the script processes
-a single image. Modify it to:
+Look at the `# TODO` comments in `generate_input_batch.py`. Currently every
+element of the batch uses the same image. Extend the script to:
 
-1. Load a second image (you can download one or copy the existing one).
-2. Preprocess it with `preprocess_image()`.
-3. Stack the two image tensors into a batch with `torch.stack()`.
-4. Confirm the output says `Input batch included 2 image(s)`.
+1. Add a second image to the `data/` directory.
+2. Use a different image for each index in the batch (controlled by the loop
+   variable `i`).
+
+Re-run with a larger batch size to confirm it works:
+
+```
+python3 generate_input_batch.py 4
+```
 
 ### 2. Convert to TorchScript
 
-The `pt2ts` command-line tool converts a PyTorch model to TorchScript for use
-from Fortran. Run:
+The `pt2ts` command-line tool can load a pre-trained model directly from
+TorchVision by name, without needing a model definition file:
 
 ```
-pt2ts ResNet18 \
-  --model_definition_file resnet18.py \
-  --input_model_file pytorch_resnet18_model_cpu.pt \
-  --output_model_file torchscript_resnet18_model_cpu.pt \
-  --input_tensor_file data/image_tensor.dat \
-  --test
+pt2ts resnet18 \
+  --model_weights IMAGENET1K_V1 \
+  --output_model_file torchscript_resnet18_model_cpu.pt
 ```
 
-This generates `torchscript_resnet18_model_cpu.pt` and performs a quick sanity
-check.
-
-Note that `pt2ts` works with pre-trained models just as it does with custom
-ones — it only needs the model definition and the trained weights.
-
-(Later, if you modified `resnet18.py` to use a batch size other than 1, you
-will need to re-run both the Python script and `pt2ts` to regenerate the
-data and TorchScript model with the matching batch size.)
+This downloads ResNet-18 with ImageNet weights and saves it as TorchScript.
+The `--test` flag can be added to verify the output.
 
 ### 3. Fortran inference
 
@@ -92,16 +83,15 @@ cd build
 cmake --build .
 ```
 
-Run the compiled executable with the path to the TorchScript model:
+Run with the model file, batch size, and optionally the data directory:
 
 ```
-./resnet_infer_fortran ../torchscript_resnet18_model_cpu.pt
+./resnet_infer_fortran ../torchscript_resnet18_model_cpu.pt 1
 ```
 
 Expected output:
 ```
- Top result:
- Samoyed (id= 258 ), probability =  0.884623706
+1: Samoyed, probability 0.8846
 ```
 
 #### Fortran tasks
@@ -109,7 +99,7 @@ Expected output:
 The file `resnet_infer_fortran.f90` contains a skeleton with `! TODO` comments.
 Fill them in to complete the inference pipeline:
 
-1. **Import the `ftorch` module** (and the types and procedures you need).
+1. **Import** the `ftorch` module.
 2. **Declare** a `torch_model` and `torch_tensor` variables.
 3. **Create tensors** from the Fortran arrays using `torch_tensor_from_array`.
 4. **Load the model** using `torch_model_load`.
@@ -118,36 +108,31 @@ Fill them in to complete the inference pipeline:
 
 For a complete reference, see `resnet_infer_fortran_sol.f90`.
 
-#### Batching in Fortran
+#### Explore batching
 
-The batch size is controlled by the first element of `in_shape` in the Fortran
-code:
+Try different batch sizes:
 
-```fortran
-integer, parameter :: in_shape(in_dims) = [1, 3, 224, 224]
+```
+./resnet_infer_fortran ../torchscript_resnet18_model_cpu.pt 2
+./resnet_infer_fortran ../torchscript_resnet18_model_cpu.pt 4
+./resnet_infer_fortran ../torchscript_resnet18_model_cpu.pt 8
 ```
 
-If you changed the Python script to process multiple images, update this value
-to match your batch size, rebuild, and re-run. The output tensor also needs a
-matching first dimension.
+Each requires the corresponding `image_batch_N.dat` file — re-run
+`generate_input_batch.py` with each batch size first.
 
 ### Verification with Python
 
-You can also verify the TorchScript model works correctly in Python before
-moving to Fortran:
+You can verify the TorchScript model against the same batch data:
 
 ```
-python3 resnet_infer_python.py
+python3 resnet_infer_python.py 1
 ```
-
-This loads the saved TorchScript model and runs inference, printing the top
-prediction.
 
 ## A note on data layout
 
-The input image is a 4-dimensional tensor with shape `(1, 3, 224, 224)` (batch,
-colour channels, height, width). However, Python (C) and Fortran store
-multidimensional arrays in opposite memory order:
+The input image is a 4-dimensional tensor with shape `(batch, channels, height, width)`.
+However, Python (C) and Fortran store multidimensional arrays in opposite memory order:
 
 - **C / Python**: row-major — the last dimension changes fastest.
 - **Fortran**: column-major — the first dimension changes fastest.
@@ -156,15 +141,12 @@ To ensure the data is laid out correctly in memory for Fortran, the Python
 script transposes the tensor before saving to binary:
 
 ```python
-np_input = np.array(input_batch.numpy().transpose().flatten(), dtype=np_precision)
+np_input = np_input.transpose().flatten()
 ```
 
 `transpose()` reverses the index order from `[B, C, H, W]` to `[W, H, C, B]`.
-When Fortran then reads the flat binary and `reshape`s it into its own `[B, C, H, W]`
-array, the elements fall into the expected positions.
-
-(Note that `torch_tensor_from_array` performs a further internal transpose
-as required for correct interaction with the model.)
+When Fortran then reads the flat binary and `reshape`s it into its own
+`[B, C, H, W]` array, the elements fall into the expected positions.
 
 For a more detailed discussion, see the FTorch documentation on
 [when to transpose arrays](https://cambridge-iccs.github.io/FTorch/page/usage/transposing.html).
