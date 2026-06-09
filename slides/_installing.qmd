@@ -56,7 +56,7 @@ This contains:
 
 - `ctorch.cpp` - Bindings to the libtorch C++ API.
 - `ctorch.h` - C header file to bind to from Fortran.
-- `ftorch.F90` - the Fortran routines we will be calling.
+- `ftorch.f90` - the umbrella module that `use`s submodules containing the Fortran routines we will be calling (`ftorch_devices.F90`, `ftorch_types.f90`, `ftorch_tensor.f90`, `ftorch_model.f90`, `ftorch_optim.f90`).
 
 \
 
@@ -110,6 +110,9 @@ Notes:
 - Set build type to `Debug` for debugging with `-g`.
 - Prefix path is wherever libtorch is on your system.
 - Install prefix can be set to anywhere. Defaults may require root/admin access.
+- After building FTorch with `build_FTorch.sh`, the script also runs `pip install` to
+  install the `pt2ts` command-line tool. This brings Python dependencies including
+  `numpy` and `torch`.
 
 
 ## Build FTorch - details
