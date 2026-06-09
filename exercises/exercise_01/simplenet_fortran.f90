@@ -4,6 +4,7 @@ program inference
    use, intrinsic :: iso_fortran_env, only : sp => real32
 
    ! TODO: Import our library for interfacing with PyTorch
+   ! use ftorch, only : ...
 
    implicit none
 
