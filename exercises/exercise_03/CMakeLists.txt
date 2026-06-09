@@ -3,20 +3,26 @@ cmake_minimum_required(VERSION 3.18...3.31)
 # target_sources is run
 cmake_policy(SET CMP0076 NEW)
 
-set(PROJECT_NAME AutogradExample)
+set(PROJECT_NAME LoopingExample)
 
 project(${PROJECT_NAME} LANGUAGES Fortran)
 
-# Build in Debug mode if not specified
+# Build in Release mode if not specified
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE
-      Debug
+      Release
       CACHE STRING "" FORCE)
 endif()
 
 find_package(FTorch)
 message(STATUS "Building with Fortran PyTorch coupling")
 
-# Fortran example
-add_executable(autograd autograd.f90)
-target_link_libraries(autograd PRIVATE FTorch::ftorch)
+# Fortran example - bad
+add_executable(simplenet_fortran_bad bad/simplenet_fortran.f90)
+target_link_libraries(simplenet_fortran_bad PRIVATE FTorch::ftorch)
+target_sources(simplenet_fortran_bad PRIVATE bad/fortran_ml_mod.f90)
+
+# Fortran example - good
+add_executable(simplenet_fortran_good good/simplenet_fortran.f90)
+target_link_libraries(simplenet_fortran_good PRIVATE FTorch::ftorch)
+target_sources(simplenet_fortran_good PRIVATE good/fortran_ml_mod.f90)

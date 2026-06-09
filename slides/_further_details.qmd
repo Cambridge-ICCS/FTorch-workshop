@@ -1,4 +1,4 @@
-## Exercise 2: Larger code considerations
+## Exercise 3: Larger code considerations
 
 What we have considered so far is a simple contrived example designed to teach the basics.
 
@@ -9,9 +9,9 @@ However, in reality the codes we will be using are more complex, and full of ter
   - Don't do this at every step!
 
 
-## Exercise 2: Larger code considerations
+## Exercise 3: Larger code considerations
 
-In exercise 2 we will look at an example of how to ideally structure a slightly more
+In exercise 3 we will look at an example of how to ideally structure a slightly more
 complex code setup.
 For those familiar with climate models this may be nothing new.
 We make use of the traditional separation into subroutines for:
@@ -21,9 +21,9 @@ We make use of the traditional separation into subroutines for:
 3. Finalisation
 
 
-## Exercise 2
+## Exercise 3
 
-Navigate to the `exercises/exercise_02/` directory.
+Navigate to the `exercises/exercise_03/` directory.
 
 Here you will see two code directories, `good/` and `bad/`.
 
@@ -33,7 +33,7 @@ Both perform the same operation:
 - Increment the input vector at each step.
 - Accumulate the sum of the output vector.
 
-## Exercise 2
+## Exercise 3
 
 The exercise is the same for both folders:
 
@@ -46,13 +46,13 @@ The exercise is the same for both folders:
 - Modify the Makefile to link to FTorch and build the codes.
 - Time the codes and observe the difference.
 
-## Exercise 2 - solution
+## Exercise 3 - solution
 
 For a complete version of the example, see the
 [Looping example](https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/06_Looping).
 
 
-## Exercise 3: automatic differentiation
+## Exercise 4: automatic differentiation
 
 PyTorch has a powerful automatic differentiation engine called `autograd` that
 can be used to compute derivatives of expressions involving tensors.
