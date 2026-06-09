@@ -48,32 +48,36 @@ file.
 
 \
 
-FTorch comes with a handy utility `pt2ts.py` to help with this located at\
-`FTorch/utils/pt2ts.py`.
+FTorch comes with a handy utility `pt2ts` to help with this, which is installed
+alongside the Python components of the library.
 
 \
 
-We have copied a version of this into `exercise_01/`, ready for you to modify and run
-to save our SimpleNet model to TorchScript.
+We run `simplenet.py` to produce a PyTorch model file (`.pt` file with the model
+architecture and weights), then use the `pt2ts` command to convert it to
+TorchScript ready for use from Fortran.
 
 
 ## Saving to TorchScript
 
-Notes:
+Run `simplenet.py` to save the PyTorch model and an input tensor:
+```sh
+python3 simplenet.py
+```
 
-- There are handy `TODO` comments where you need to adapt the code.
-- `pt2ts.py` expects an `nn.Module` subclass with a `forward()` method.
-- there are two options to save:
-  - [tracing](https://pytorch.org/docs/stable/generated/torch.jit.trace.html) using `torch.jit.trace()`\
-    This passes a dummy tensor throgh the model recording operations.\
-    It is the simplest approach.
-  - [scripting](https://pytorch.org/docs/stable/generated/torch.jit.script.html) using `torch.jit.script()`\
-    This converts Python code directly to TorchScript.\
-    It is more complicated, but neccessary for advanced features and/or control operations.
-- A summary of the TorchScript model can be printed from Python.
+Then convert to TorchScript using the `pt2ts` command:
+```sh
+pt2ts SimpleNet \
+  --model_definition_file simplenet.py \
+  --input_model_file pytorch_simplenet_model_cpu.pt \
+  --output_model_file torchscript_simplenet_model_cpu.pt \
+  --input_tensor_file pytorch_simplenet_input_tensor_cpu.pt \
+  --test
+```
 
 :::{.aside}
-See [TorchScript reference](https://pytorch.org/docs/stable/jit_language_reference.html#language-reference) for feature compatibility.
+The `--test` flag runs a basic check that the TorchScript model produces the same
+output as the PyTorch model after saving it.
 :::
 
 ## Offline training with FTorch
@@ -94,6 +98,7 @@ We will modify it to create the neccessary data structures and load and call the
 - Import the `ftorch` module.
 - Create `torch_tensors` and a `torch_model` to hold the data and net.
 - Map Fortran data from arrays to the `torch_tensors`.
+- Load the model and optionally print its parameters.
 - Call `torch_model_forward` to run the net.
 - Clean up.
 
@@ -128,5 +133,14 @@ To run the code we can use the generated executable:
 ./simplenet_fortran
 ```
 ```
+ Model parameters:
+_fwd_seq.0.weight:
+  2  0  0  0  0
+  0  2  0  0  0
+  0  0  2  0  0
+  0  0  0  2  0
+  0  0  0  0  2
+ [ CPUFloatType{5,5} ]
+ Model output:
    0.00000000       2.00000000       4.00000000       6.00000000       8.00000000
 ```

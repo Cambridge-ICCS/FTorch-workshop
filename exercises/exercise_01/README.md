@@ -9,9 +9,9 @@ A Python file `simplenet.py` is provided that defines a very simple PyTorch
 'net' that takes an input vector of length 5 and applies a single `Linear` layer
 to multiply it by 2.
 
-We will develop a utility script called `pt2ts.py` which will save this simple
-net to TorchScript. Then we will modify `simplenet_fortran.f90` to read in the
-torchscripted model and run inference.
+We will use the FTorch `pt2ts` utility to save this simple net to TorchScript.
+Then we will modify `simplenet_fortran.f90` to read in the torchscripted model
+and run inference.
 
 ## Running
 
@@ -21,17 +21,23 @@ python3 simplenet.py
 ```
 This defines the net and runs it with an input tensor [0.0, 1.0, 2.0, 3.0, 4.0] to produce the result:
 ```
-tensor([0., 2., 4., 6., 8.])
+Model output: tensor([[0., 2., 4., 6., 8.]])
 ```
+A PyTorch model file `pytorch_simplenet_model_cpu.pt` and an input tensor file
+`pytorch_simplenet_input_tensor_cpu.pt` will also be created.
 
-To save the SimpleNet model to TorchScript we will first need to modify the
-`pt2ts.py` file. See the Python Tasks below.
-
-Once you have finished those tasks, come back here and run the following:
+To convert the SimpleNet model to TorchScript run the `pt2ts` command that
+comes with FTorch:
 ```
-python3 pt2ts.py
+pt2ts SimpleNet \
+  --model_definition_file simplenet.py \
+  --input_model_file pytorch_simplenet_model_cpu.pt \
+  --output_model_file torchscript_simplenet_model_cpu.pt \
+  --input_tensor_file pytorch_simplenet_input_tensor_cpu.pt \
+  --test
 ```
-which will generate `saved_model.pt` - the TorchScript instance of the net.
+This should produce `torchscript_simplenet_model_cpu.pt` - the TorchScript
+instance of the net.
 
 To call the saved SimpleNet model from Fortran we need to first modify the
 template provided in `simplenet_fortran.f90`. See the Fortran Tasks below.
@@ -50,140 +56,28 @@ cmake --build .
 and should match the compiler that was used to locally build FTorch.)
 
 To run the compiled code calling the saved SimpleNet TorchScript from Fortran run the
-executable with an argument of the saved model file:
+executable:
 ```
 ./simplenet_fortran
 ```
 
-This runs the model with the array `[0.0, 1.0, 2.0, 3.0, 4.0]` should produce the output:
+This runs the model with the array `[0.0, 1.0, 2.0, 3.0, 4.0]` and should produce the output:
 ```
+ Model parameters:
+_fwd_seq.0.weight:
+  2  0  0  0  0
+  0  2  0  0  0
+  0  0  2  0  0
+  0  0  0  2  0
+  0  0  0  0  2
+ [ CPUFloatType{5,5} ]
+ Model output:
    0.00000000       2.00000000       4.00000000       6.00000000       8.00000000
 ```
-
-## Python tasks
-
-### Task 1
-
-```python
-# TODO
-# Add a module import with your model here:
+If the test passes, you should also see:
 ```
-
-#### Solution
-
-<details>
-
-```python
-import simplenet
+SimpleNet example ran successfully
 ```
-
-</details>
-
----
-
-### Task 2
-
-```python
-# TODO
-# Load a pre-trained PyTorch model
-# Insert code here to load your model as `trained_model`.
-# trained_model = ...
-```
-
-#### Solution
-
-<details>
-
-```python
-trained_model = simplenet.SimpleNet()
-```
-
-</details>
-
----
-
-### Task 3
-
-```python
-# TODO
-# Generate a dummy input Tensor `dummy_input` to the model of appropriate size.
-# trained_model_dummy_input = torch.ones(...)
-```
-
-#### Solution
-
-<details>
-
-```python
-trained_model_dummy_input = torch.ones(5)
-```
-
-</details>
-
----
-
-### Task 4
-
-```python
-# TODO
-# Run model for dummy inputs
-```
-
-#### Solution
-
-<details>
-
-```python
-trained_model_dummy_outputs = trained_model(
-    trained_model_dummy_input,
-)
-```
-
-</details>
-
----
-
-### Task 5
-
-```python
-# TODO
-# Set the name of the file you want to save the torchscript model to:
-# saved_ts_filename = "..."
-```
-
-#### Solution
-
-<details>
-
-```python
-saved_ts_filename = "saved_model.pt"
-```
-
-</details>
-
----
-
-### Task 6
-
-```python
-# TODO
-# Save the PyTorch model using either scripting (recommended if possible) or tracing
-# script_to_torchscript(...)
-```
-
-#### Solution
-
-<details>
-
-```python
-script_to_torchscript(trained_model, filename=saved_ts_filename)
-```
-
-</details>
-
----
-
-
 ## Fortran tasks
 
 ### Task 1
@@ -198,20 +92,14 @@ script_to_torchscript(trained_model, filename=saved_ts_filename)
 
 ```fortran
    ! Import our library for interfacing with PyTorch
-   use :: ftorch, only : &
-        torch_kCPU, &
-        torch_tensor_from_array, &
-        torch_model_load, &
-        torch_model_forward, &
-        torch_delete, &
-        torch_tensor, &
-        torch_model
+   use ftorch, only : torch_model, torch_tensor, torch_kCPU, torch_delete, &
+                      torch_tensor_from_array, torch_model_load, &
+                      torch_model_forward, torch_model_print_parameters
 ```
 
 Note that
 ```fortran
-   ! Import our library for interfacing with PyTorch
-   use :: ftorch
+   use ftorch
 ```
 would work, and may be useful for the purposes of getting familiar with the code in
 the exercise.
@@ -259,7 +147,7 @@ import only what you need.
 
 ```fortran
    ! Set Torchscript model path (relative to the build directory)
-   character(len=128) :: model_torchscript_file = '../saved_model.pt'
+   character(len=128) :: model_torchscript_file = '../torchscript_simplenet_model_cpu.pt'
 ```
 
 </details>
