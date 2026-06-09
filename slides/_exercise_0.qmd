@@ -75,7 +75,7 @@ To check this is installed run:
 ```default
 cmake --version
 ```
-and verify it is >= 3.1.
+and verify it is >= 3.18.
 :::
 ::::
 :::
