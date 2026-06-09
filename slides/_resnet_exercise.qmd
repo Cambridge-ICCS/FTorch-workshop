@@ -1,0 +1,98 @@
+## Exercise 2: A more realistic example
+
+In exercise 1 we used a simple contrived model with a 1-D input.
+
+In this exercise we take a big step up to a **real-world** example:
+classifying images with a pre-trained ResNet-18 model from TorchVision.
+
+This highlights:
+
+- Working with **multidimensional** data (batch, channels, height, width).
+- The **Python-to-Fortran pipeline** for pre-trained models.
+- **Batching** — processing multiple images in a single forward pass.
+- **Data layout** awareness between Python (row-major) and Fortran (column-major).
+
+
+## Exercise 2
+
+Navigate to `exercises/exercise_02/`.
+
+You will find:
+
+- `resnet18.py` — downloads the pre-trained ResNet-18, preprocesses `data/dog.jpg`.
+- `resnet_infer_python.py` — Python verification using the TorchScript model.
+- `resnet_infer_fortran.f90` — Fortran template with `! TODO` comments.
+- `resnet_infer_fortran_sol.f90` — complete solution.
+- `data/` — contains the example image (`dog.jpg`) and ImageNet labels (`categories.txt`).
+
+
+## Pipeline overview
+
+The three-stage pipeline mirrors exercise 1:
+
+1. **Python**: Run `resnet18.py` to download the model, preprocess the image, and save the model and input data.
+2. **Convert**: Run `pt2ts` to convert to TorchScript.
+3. **Fortran**: Fill in the TODOs in `resnet_infer_fortran.f90`, build, and run.
+
+
+## Python task: batching
+
+`resnet18.py` has a `# TODO` asking you to extend it from a single image to a
+batch of two images.
+
+You will:
+
+1. Load and preprocess a second image.
+2. Stack the tensors with `torch.stack()`.
+3. Re-run to confirm the batch size is 2.
+
+This mirrors how real workflows process multiple inputs efficiently.
+
+
+## Data layout
+
+The ResNet-18 input is a 4-D tensor `(batch, channels, height, width)`.
+
+Python (C) and Fortran store arrays in opposite memory order:
+
+- **Python**: row-major, last index changes fastest.
+- **Fortran**: column-major, first index changes fastest.
+
+The Python script handles this by transposing before saving to binary:
+
+```python
+np_input = np.array(input_batch.numpy().transpose().flatten())
+```
+
+Fortran's `reshape(flat_data, shape(in_data))` then places elements correctly.
+
+For more detail see the [online docs](https://cambridge-iccs.github.io/FTorch/page/usage/transposing.html).
+
+
+## Fortran tasks
+
+Open `resnet_infer_fortran.f90` and fill in the `! TODO` sections to:
+
+1. **Import** the `ftorch` module.
+2. **Declare** `torch_model` and `torch_tensor` variables.
+3. **Create tensors** via `torch_tensor_from_array`.
+4. **Load the model** via `torch_model_load`.
+5. **Run inference** via `torch_model_forward`.
+6. **Clean up** via `torch_delete`.
+
+The solution is in `resnet_infer_fortran_sol.f90`.
+
+
+## Batching in Fortran
+
+The batch size is the first element of `in_shape` in the Fortran code:
+
+```fortran
+integer, parameter :: in_shape(in_dims) = [1, 3, 224, 224]
+```
+
+Change `1` to `2` after completing the Python batching task, rebuild, and
+re-run. Both the input and output shapes need updating.
+
+This exercises the full pipeline — Python generates the batch, `pt2ts`
+converts the model, and Fortran processes it.
