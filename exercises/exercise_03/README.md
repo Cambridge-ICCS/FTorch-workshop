@@ -138,6 +138,23 @@ Q = 3 * (a^3 - b*b/3) = 3*a^3 - b^2 =   -12.0000000       65.0000000
 ### Task 3
 
 ```fortran
+  ! TODO: Run the back-propagation operator using torch_tensor_backward with the external gradient
+```
+
+#### Solution
+
+<details>
+
+```fortran
+  ! Run the back-propagation operator with the external gradient
+  call torch_tensor_backward(Q, external_gradient)
+```
+
+</details>
+
+### Task 4
+
+```fortran
   ! TODO: Create tensors dQda and dQdb based off output arrays for the gradients with
   !       torch_tensor_from_array.
 ```
@@ -154,7 +171,7 @@ Q = 3 * (a^3 - b*b/3) = 3*a^3 - b^2 =   -12.0000000       65.0000000
 
 </details>
 
-### Task 4
+### Task 5
 
 ```fortran
   ! TODO: Retrieve the gradient values with torch_tensor_get_gradient and print the corresponding
