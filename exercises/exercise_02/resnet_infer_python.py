@@ -8,6 +8,18 @@ import torch
 
 
 def load_labels(data_dir):
+    """Load ImageNet class labels from categories.txt.
+
+    Parameters
+    ----------
+    data_dir : str
+        Path to the data directory.
+
+    Returns
+    -------
+    list of str
+        The 1000 ImageNet class labels.
+    """
     labels = []
     with open(os.path.join(data_dir, "categories.txt")) as f:
         for line in f:
@@ -16,6 +28,18 @@ def load_labels(data_dir):
 
 
 def softmax(x):
+    """Compute the softmax of array x.
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        Input array.
+
+    Returns
+    -------
+    numpy.ndarray
+        Softmax-normalized array.
+    """
     e_x = np.exp(x - np.max(x))
     return e_x / e_x.sum()
 
