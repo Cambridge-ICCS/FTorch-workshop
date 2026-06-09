@@ -25,7 +25,7 @@ We sum the results of each forward pass and print the final result.
 
 There are two folders `bad/` and `good/` that show two different approaches.
 
-The same `pt2ts.py` tool as in the previous examples is used to save the
+The same `pt2ts` command as in the previous exercise is used to save the
 network to TorchScript.
 A `simplenet_fortran.f90` file contains the main program that runs over the
 loop.
@@ -69,16 +69,22 @@ python3 simplenet.py
 This defines the network and runs it with input tensor [0.0, 1.0, 2.0, 3.0, 4.0]
 to produce the result:
 ```
-(tensor([0., 2., 4., 6., 8.]))
+Model output: tensor([[0., 2., 4., 6., 8.]])
 ```
+A PyTorch model file `pytorch_simplenet_model_cpu.pt` and an input tensor file
+`pytorch_simplenet_input_tensor_cpu.pt` will also be created.
 
-To save the SimpleNet model to TorchScript, run the modified version of the
-`pt2ts.py` tool:
+To save the SimpleNet model to TorchScript, run the `pt2ts` command:
 ```
-python3 pt2ts.py
+pt2ts SimpleNet \
+  --model_definition_file simplenet.py \
+  --input_model_file pytorch_simplenet_model_cpu.pt \
+  --output_model_file torchscript_simplenet_model_cpu.pt \
+  --input_tensor_file pytorch_simplenet_input_tensor_cpu.pt \
+  --test
 ```
-which will generate `saved_model_cpu.pt` - the TorchScript instance of
-the network and perform a quick sanity check that it can be read.
+which will generate `torchscript_simplenet_model_cpu.pt` - the TorchScript
+instance of the network and perform a quick sanity check that it can be read.
 
 Now we can build the Fortran codes.
 This is done from the root level of the exercise using CMake as follows:
