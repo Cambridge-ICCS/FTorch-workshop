@@ -7,7 +7,16 @@
 !   ./resnet_infer_fortran <model_file> <N>     (batch_size=N)
 
 program resnet_infer_fortran
-  use ftorch
+  use, intrinsic :: iso_fortran_env, only : sp => real32
+  use ftorch, only: &
+    torch_model, &
+    torch_tensor, &
+    torch_tensor_from_array, &
+    torch_kCPU, &
+    torch_model_load, &
+    torch_model_forward, &
+    torch_delete
+
   implicit none
 
   integer, parameter :: wp = sp
@@ -111,7 +120,7 @@ contains
     close(unit)
     arr = reshape(flat, shape(arr))
     deallocate(flat)
-  end subroutine
+  end subroutine load_data
 
   subroutine classify(out_data, idx)
     real(wp), dimension(:), intent(in) :: out_data
