@@ -46,8 +46,19 @@ echo "export LD_LIBRARY_PATH=\${LD_LIBRARY_PATH:+\${LD_LIBRARY_PATH}:}$PYTHON_PA
 echo "export CMAKE_PREFIX_PATH=\${CMAKE_PREFIX_PATH:+\${CMAKE_PREFIX_PATH}:}/workspaces/FTorch-workshop/FTorch_bin" >> $HOME/.bashrc
 
 
-echo "run the following command to setup your environment:"
-echo "source \$HOME/.bashrc"
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+echo ""
+echo -e "${YELLOW}======================================================${NC}"
+echo -e "${YELLOW}  FTorch build complete!${NC}"
+echo -e "${YELLOW}======================================================${NC}"
+echo ""
+echo -e "${GREEN}Run the following command to set up your environment:${NC}"
+echo ""
+echo -e "  ${GREEN}source \$HOME/.bashrc${NC}"
+echo ""
+echo -e "${YELLOW}======================================================${NC}"
 
 # Return user to the root of the workshop, leaving the venv activated
 cd /workspaces/FTorch-workshop
