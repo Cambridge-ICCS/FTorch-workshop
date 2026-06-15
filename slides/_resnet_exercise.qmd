@@ -39,7 +39,9 @@ You will find:
    ```sh
    python resnet_infer_python.py
    ```
-   Expected: `Image 0: Samoyed, probability 0.8846`
+   ```
+   Image 0: Samoyed, probability 0.8846
+   ```
 
 4. **Fortran**: Build using CMake, completing the TODOs in `resnet_infer_fortran.f90`,
    then run:
@@ -50,13 +52,14 @@ You will find:
 
 ## The Fortran TODOs
 
-TorchScript models **always require a leading batch dimension**, even for a
-single image. The arrays are already shaped correctly:
+The Fortran arrays are already set up for you to read data from file:
 
 ```fortran
-in_data(batch_size, 3, 224, 224)   ! 4D input
-out_data(batch_size, 1000)          ! 2D output
+in_data(batch_size, 3, 224, 224)
+out_data(batch_size, 1000)
 ```
+
+You need to:
 
 1. **Declare** `torch_model` and `torch_tensor` variables.
 2. **Create tensors** from Fortran arrays with `torch_tensor_from_array`.
@@ -68,7 +71,7 @@ out_data(batch_size, 1000)          ! 2D output
 
 ## Stage 2: Add batching
 
-Now extend from single-image to multi-image batching:
+Now extend from single-image to multi-image inference:
 
 1. **Generate a larger batch** by editing `generate_input_batch.py` to include
    `dog2.jpg` (and any other images you download). Re-run the script.
@@ -82,7 +85,7 @@ Now extend from single-image to multi-image batching:
    ```
 
 
-## Data layout
+## Data layout discussion
 
 Python (C) and Fortran store arrays in opposite memory order:
 
@@ -102,4 +105,5 @@ This means that when read into memory by Fortran they will appear structured as 
 FTorch then uses Torch's `stride`d memory access to account for differences in layout
 meaning the arrays can appear the same to the user in both Fortran and Python.
 
-See the [online docs](https://cambridge-iccs.github.io/FTorch/page/usage/transposing.html).
+See the [online docs](https://cambridge-iccs.github.io/FTorch/page/usage/transposing.html)
+for more detail.

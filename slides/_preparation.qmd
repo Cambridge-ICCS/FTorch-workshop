@@ -17,15 +17,13 @@ If you are not familiar with Codespaces, please refer to the
 :::
 
 :::{.fragment}
-Note that we have set up the codespace to have a Python virtual environment set up and
-activated for you.
-:::
-
-:::{.fragment}
-Execute the following to start the FTorch build process **using source**:
+Execute the following to start the FTorch build process:^[NOTE: running `./build_FTorch.sh`
+is insufficcient as this will not export environment variables to the current shell session.]
 ```default
 source build_FTorch.sh
 ```
-**NOTE**: It's insufficient to just run `./build_FTorch.sh` because this will not export the
-required environment variables to the current shell session.
+
+Note that after running this there will be a Python virtual environment set up and
+activated for you.
 :::
+

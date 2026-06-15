@@ -135,8 +135,6 @@ cmake --build .
 The path to the FTorch installation will be picked up automatically so doesn't need to be specified.
 
 
-Now you have the basics, try exercise 2 for a real-world example.
-
 ## Running the code
 
 To run the code we can use the generated executable:
