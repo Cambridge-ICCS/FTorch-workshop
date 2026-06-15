@@ -53,7 +53,7 @@ out_data(1000)
 But the model expects a **4D** input `(batch_size, 3, 224, 224)`
 and a **2D** output `(batch_size, 1000)`.
 
-The `batch_size` CLI arg is present (default 1) but not yet used for array sizes.
+Not yet used for array sizes in Stage 1.
 
 **Task**: Use `torch_tensor_from_blob` to add the batch dimension to the
 tensor shape while keeping 3D Fortran arrays.
@@ -88,11 +88,11 @@ Now extend from single-image to multi-image batching:
    ```
 3. **Loop** over all batch elements in the classify step.
 
-4. **Python**: update `generate_input_batch.py` to use a different
-   image per batch element. Two images (`dog.jpg`, `dog2.jpg`) provided.
+4. **Python**: add `dog2.jpg` to the `image_files` list in
+    `generate_input_batch.py`. You can also add your own downloaded images.
 
 ```sh
-python3 generate_input_batch.py --batch_size 2
+python3 generate_input_batch.py
 ./resnet_infer_fortran torchscript_resnet18_model_cpu.pt 2
 ```
 

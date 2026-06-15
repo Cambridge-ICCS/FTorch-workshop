@@ -9,8 +9,8 @@ The exercise has two stages:
 
 1. **Single-image inference** — arrays are 3D (no batch dimension). You use
    `torch_tensor_from_blob` to create a 4D tensor view for the model.
-2. **Add batching** — arrays become 4D with dynamic `batch_size`. You switch
-   to `torch_tensor_from_array`. The `batch_size` CLI arg is already available.
+ 2. **Add batching** — arrays become 4D with dynamic `batch_size`. You switch
+    to `torch_tensor_from_array`.
 
 ## Stage 1: Single-image inference
 
@@ -77,24 +77,22 @@ python3 resnet_infer_python.py
 
 ## Stage 2: Add batching
 
-The `--batch_size` / `batch_size` argument is already wired in — default 1.
-
 ### Extend the Fortran code
 
 1. Change `in_data` from 3D `(3,224,224)` to 4D `(batch_size,3,224,224)`.
 2. Change `out_data` from 1D `(1000)` to 2D `(batch_size,1000)`.
 3. Replace `torch_tensor_from_blob` with `torch_tensor_from_array` — the
-   batch dimension is now in the array shape, so no extra shape info is needed.
+    batch dimension is now in the array shape, so no extra shape info is needed.
 4. Loop over all batch elements in the classify step.
 
 ### Generate a batch
 
-In `generate_input_batch.py`, update the image path TODO to use a different
-image for each batch element. Two images are provided: `data/dog.jpg`
-and `data/dog2.jpg`. For larger batches, add more images.
+In `generate_input_batch.py`, add `dog2.jpg` to the `image_files` list
+to create a two-image batch. You can also download your own images, place
+them in `data/`, and add them to the list to run batches of any size.
 
 ```
-python3 generate_input_batch.py --batch_size 2
+python3 generate_input_batch.py
 ```
 
 ### Run with the batch

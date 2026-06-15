@@ -44,32 +44,25 @@ if __name__ == "__main__":
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
-        "--batch_size",
-        help="Number of images to batch together",
-        type=int,
-        default=1,
-    )
-    parser.add_argument(
         "--data_dir",
         help="Path to the data directory",
         type=str,
         default=os.path.join(os.path.dirname(__file__), "data"),
     )
     parsed_args = parser.parse_args()
-    batch_size = parsed_args.batch_size
     data_dir = parsed_args.data_dir
     np_precision = np.float32
 
-    # Add new images to this list. The generator will cycle through them
-    # up to the requested batch_size.
+    # Add images here. The batch size matches the list length.
     image_files = [
         "dog.jpg",
-        "dog2.jpg",
     ]
+
+    batch_size = len(image_files)
 
     input_batch = []
     for i in range(batch_size):
-        image_path = os.path.join(data_dir, image_files[i % len(image_files)])
+        image_path = os.path.join(data_dir, image_files[i])
         input_tensor = preprocess_image(image_path)
         input_batch.append(input_tensor.unsqueeze(0).numpy())
 
