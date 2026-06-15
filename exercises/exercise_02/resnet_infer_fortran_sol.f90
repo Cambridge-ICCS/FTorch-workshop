@@ -13,6 +13,7 @@ program resnet_infer_fortran
     torch_tensor, &
     torch_tensor_from_array, &
     torch_kCPU, &
+    torch_kFloat32, &
     torch_model_load, &
     torch_model_forward, &
     torch_delete
@@ -32,6 +33,7 @@ program resnet_infer_fortran
   real(wp), dimension(:,:,:,:), allocatable, target :: in_data
   real(wp), dimension(:,:), allocatable, target :: out_data
 
+  ! TODO 1: Declare torch_model and torch_tensor variables
   type(torch_model) :: model
   type(torch_tensor), dimension(1) :: in_tensors, out_tensors
 
@@ -67,7 +69,7 @@ program resnet_infer_fortran
   allocate(out_data(batch_size, 1000))
 
   ! Load the input data
-  write(in_file, "(A, I0, A)") "data/image_batch_", batch_size, ".dat"
+  write(in_file, "(A, I0, A)") "../data/image_batch_", batch_size, ".dat"
   inquire(file=trim(in_file), exist=file_exists)
   if (.not. file_exists) then
     write(*, *) "Input data file not found: ", trim(in_file)
@@ -76,17 +78,18 @@ program resnet_infer_fortran
   call load_data(trim(in_file), in_data)
   write(*, *) "Loaded input data from ", trim(in_file)
 
-  ! Create torch tensors from Fortran arrays
+  ! TODO 2: Create the input and output torch tensors from
+  !         the Fortran arrays.
   call torch_tensor_from_array(in_tensors(1), in_data, torch_kCPU)
   call torch_tensor_from_array(out_tensors(1), out_data, torch_kCPU)
 
-  ! Load the TorchScript model
+  ! TODO 3: Load the TorchScript model using torch_model_load
   call torch_model_load(model, model_file, torch_kCPU)
 
-  ! Run inference
+  ! TODO 4: Run inference using torch_model_forward
   call torch_model_forward(model, in_tensors, out_tensors)
 
-  ! Classify results for each image in the batch
+  ! TODO 5: Call the classification subroutine to see the results
   do i = 1, batch_size
     call classify(out_data(i, :), i)
   end do
@@ -124,6 +127,7 @@ contains
 
   subroutine classify(out_data, idx)
     real(wp), dimension(:), intent(in) :: out_data
+    real(wp), dimension(:) :: probabilities
     integer, intent(in) :: idx
 
     character(len=256), dimension(1000) :: labels
@@ -132,11 +136,14 @@ contains
 
     call load_labels(labels)
 
+    ! Calculate probabilities
+    probabilities = exp(out_data) / sum(out_data)
+
     max_val = -huge(max_val)
     max_idx = 1
     do i = 1, 1000
       if (out_data(i) > max_val) then
-        max_val = out_data(i)
+        max_val = probabilities(i)
         max_idx = i
       end if
     end do
@@ -152,7 +159,7 @@ contains
     integer :: unit, i, ierr
     character(len=256) :: line
 
-    open(newunit=unit, file="data/categories.txt", status="old", iostat=ierr)
+    open(newunit=unit, file="../data/categories.txt", status="old", iostat=ierr)
     if (ierr /= 0) then
       write(*, *) "Error opening categories.txt"
       stop

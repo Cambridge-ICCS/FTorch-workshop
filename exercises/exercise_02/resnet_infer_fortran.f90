@@ -15,7 +15,7 @@ program resnet_infer_fortran
   use ftorch, only: &
     torch_model, &
     torch_tensor, &
-    torch_tensor_from_blob, &
+    torch_tensor_from_array, &
     torch_kCPU, &
     torch_kFloat32, &
     torch_model_load, &
@@ -23,8 +23,6 @@ program resnet_infer_fortran
     torch_delete
 
   implicit none
-
-  ! TODO 1: Declare torch_model and torch_tensor variables
 
   integer, parameter :: wp = sp
 
@@ -38,6 +36,9 @@ program resnet_infer_fortran
   ! Model IO — Stage 1 uses 3D arrays
   real(wp), dimension(:,:,:), allocatable, target :: in_data
   real(wp), dimension(:), allocatable, target :: out_data
+
+  ! TODO 1: Declare torch_model and torch_tensor variables
+
 
   ! File paths
   character(len=256) :: in_file
@@ -73,7 +74,7 @@ program resnet_infer_fortran
   ! Stage 1: load the single-image batch (image_batch_1.dat).
   ! Stage 2: switch to batch_size-dependent filename
   !          (image_batch_N.dat) when arrays become 4D.
-  in_file = "data/image_batch_1.dat"
+  in_file = "../data/image_batch_1.dat"
   inquire(file=trim(in_file), exist=file_exists)
   if (.not. file_exists) then
     write(*, *) "Input data file not found: ", trim(in_file)
@@ -83,19 +84,14 @@ program resnet_infer_fortran
   write(*, *) "Loaded input data from ", trim(in_file)
 
   ! TODO 2: Create the input and output torch tensors from
-  !         the Fortran arrays. The model expects 4D input
-  !         (batch_size, 3, 224, 224) and 2D output
-  !         (batch_size, 1000), but the arrays are 3D/1D.
+  !         the Fortran arrays.
   !
-  !         HINT: torch_tensor_from_blob(data, n_dims, shape, layout, dtype)
-  !         creates a tensor with the given shape from raw data.
 
   ! TODO 3: Load the TorchScript model using torch_model_load
 
   ! TODO 4: Run inference using torch_model_forward
 
-  ! TODO 5: Print the classification result for each image
-  !         in the batch using the classify subroutine
+  ! TODO 5: Call the classification subroutine to see the results
 
   ! TODO 6: Clean up using torch_delete
 
@@ -127,6 +123,7 @@ contains
 
   subroutine classify(out_data, idx)
     real(wp), dimension(:), intent(in) :: out_data
+    real(wp), dimension(:) :: probabilities
     integer, intent(in) :: idx
 
     character(len=256), dimension(1000) :: labels
@@ -135,11 +132,14 @@ contains
 
     call load_labels(labels)
 
+    ! Calculate probabilities
+    probabilities = exp(out_data) / sum(out_data)
+
     max_val = -huge(max_val)
     max_idx = 1
     do i = 1, 1000
       if (out_data(i) > max_val) then
-        max_val = out_data(i)
+        max_val = probabilities(i)
         max_idx = i
       end if
     end do
@@ -155,7 +155,7 @@ contains
     integer :: unit, i, ierr
     character(len=256) :: line
 
-    open(newunit=unit, file="data/categories.txt", status="old", iostat=ierr)
+    open(newunit=unit, file="../data/categories.txt", status="old", iostat=ierr)
     if (ierr /= 0) then
       write(*, *) "Error opening categories.txt"
       stop
