@@ -7,10 +7,9 @@ ResNet-18 model from TorchVision to classify images.
 
 The exercise has two stages:
 
-1. **Single-image inference** — arrays are 3D (no batch dimension). You use
-   `torch_tensor_from_blob` to create a 4D tensor view for the model.
- 2. **Add batching** — arrays become 4D with dynamic `batch_size`. You switch
-    to `torch_tensor_from_array`.
+1. **Single-image inference** - fill in the TODOs and run with `batch_size = 1`.
+2. **Batching Extension** - add further images to the input data and run with
+   larger batch sizes.
 
 ## Stage 1: Single-image inference
 
@@ -32,6 +31,19 @@ pt2ts resnet18 \
   --output_model_file torchscript_resnet18_model_cpu.pt
 ```
 
+### 3. Verification with Python
+
+Verify that the saved model can be read and used from Python by running:
+
+```
+python3 resnet_infer_python.py
+```
+
+to get a prediction for the dog image:
+```
+Image 0: Samoyed, probability 0.8846
+```
+
 ### 3. Fortran inference
 
 Build using CMake:
@@ -40,7 +52,6 @@ Build using CMake:
 cmake -B build
 cd build
 cmake --build .
-```
 
 Run:
 
@@ -50,42 +61,31 @@ Run:
 
 Expected output:
 ```
-Samoyed, probability 0.8846
+ Running inference with batch_size =            1
+ Loaded input data from ../data/image_batch_1.dat
+Image 1:
+  Predicted: Samoyed, probability 0.8846
 ```
 
-#### Fortran TODOs
+Before this works, however, you will need to complete the code to cast the Fortran
+data to tensors, load a model, and run inference. Building on what you learnt in
+exercise 1 complete the following tasks labelled as `TODO` comments in
+`resnet_infer_fortran.f90`:
 
-The file `resnet_infer_fortran.f90` has 6 TODO comments:
-
-1. **Import** the `ftorch` module.
-2. **Create tensors** — the Fortran arrays are 3D (`in_data(3,224,224)`,
-   `out_data(1000)`) but the model expects 4D input and 2D output. Use
-   `torch_tensor_from_blob` to create tensors with the batch dimension
-   included in the shape.
+1. **Declare** `torch_model` and `torch_tensor` variables.
+2. **Create tensors** from the Fortran arrays using
+   `torch_tensor_from_array`. The arrays are 4D (`in_data(batch_size,3,224,224)`)
+   and 2D (`out_data(batch_size,1000)`) with `batch_size = 1`.
 3. **Load the model** using `torch_model_load`.
 4. **Run inference** using `torch_model_forward`.
-5. **Classify results** for each image in the batch.
+5. **Classify results** for each image in the batch using the `classify`
+   subroutine.
 6. **Clean up** using `torch_delete`.
 
-See `resnet_infer_fortran_sol.f90` for a complete reference.
-
-### Verification with Python
-
-```
-python3 resnet_infer_python.py
-```
 
 ## Stage 2: Add batching
 
-### Extend the Fortran code
-
-1. Change `in_data` from 3D `(3,224,224)` to 4D `(batch_size,3,224,224)`.
-2. Change `out_data` from 1D `(1000)` to 2D `(batch_size,1000)`.
-3. Replace `torch_tensor_from_blob` with `torch_tensor_from_array` — the
-    batch dimension is now in the array shape, so no extra shape info is needed.
-4. Loop over all batch elements in the classify step.
-
-### Generate a batch
+### Generate a larger batch
 
 In `generate_input_batch.py`, add `dog2.jpg` to the `image_files` list
 to create a two-image batch. You can also download your own images, place
@@ -107,12 +107,10 @@ python3 generate_input_batch.py
 python3 resnet_infer_python.py --batch_size 2
 ```
 
-## Expected results
+## Solution
 
-For the single image (`data/dog.jpg`):
-```
-Samoyed, probability 0.8846
-```
+If you become stuck See `resnet_infer_fortran_sol.f90` for a complete reference
+solution.
 
 ## A note on data layout
 

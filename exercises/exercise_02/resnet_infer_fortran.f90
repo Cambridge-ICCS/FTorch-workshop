@@ -1,14 +1,12 @@
 ! Template for ResNet-18 inference with FTorch
 !
-! The TorchScript model accepts a 4D input tensor
-!   (batch_size, channels, height, width).
+! Usage:
+!   ./resnet_infer_fortran <model_file>         (batch_size=1)
+!   ./resnet_infer_fortran <model_file> <N>     (batch_size=N)
 !
-! Stage 1: The Fortran arrays are 3D (no batch dimension).
-!          Use torch_tensor_from_blob to create a 4D tensor
-!          view with batch_size as the first dimension.
-!
-! Stage 2: Change arrays to 4D and use torch_tensor_from_array.
-!          The batch_size CLI arg is already available.
+! Stage 1: fill in the TODOs, build, and run with batch_size = 1.
+! Stage 2: add a second image to the data, re-generate, and run with
+!          batch_size > 1. Your code should work without any changes.
 
 program resnet_infer_fortran
   use, intrinsic :: iso_fortran_env, only : sp => real32
@@ -17,7 +15,6 @@ program resnet_infer_fortran
     torch_tensor, &
     torch_tensor_from_array, &
     torch_kCPU, &
-    torch_kFloat32, &
     torch_model_load, &
     torch_model_forward, &
     torch_delete
@@ -33,12 +30,13 @@ program resnet_infer_fortran
   integer :: nargs
   character(len=32) :: arg
 
-  ! Model IO — Stage 1 uses 3D arrays
-  real(wp), dimension(:,:,:), allocatable, target :: in_data
-  real(wp), dimension(:), allocatable, target :: out_data
+  ! Model IO
+  ! NOTE: Both Fortran arrays are already shaped with a leading batch dimension
+  ! with batch_size read from the command line (default 1).
+  real(wp), dimension(:,:,:,:), allocatable, target :: in_data
+  real(wp), dimension(:,:), allocatable, target :: out_data
 
   ! TODO 1: Declare torch_model and torch_tensor variables
-
 
   ! File paths
   character(len=256) :: in_file
@@ -59,7 +57,7 @@ program resnet_infer_fortran
     stop
   end if
 
-  ! Get batch_size from CLI (default 1). Available for Stage 2.
+  ! Get batch_size from CLI (default 1)
   batch_size = 1
   if (nargs >= 2) then
     call get_command_argument(2, arg)
@@ -67,14 +65,12 @@ program resnet_infer_fortran
   end if
   write(*, *) "Running inference with batch_size = ", batch_size
 
-  ! Stage 1: allocate 3D arrays (single image, no batch dimension)
-  allocate(in_data(3, 224, 224))
-  allocate(out_data(1000))
+  ! Allocate arrays with batch dimension
+  allocate(in_data(batch_size, 3, 224, 224))
+  allocate(out_data(batch_size, 1000))
 
-  ! Stage 1: load the single-image batch (image_batch_1.dat).
-  ! Stage 2: switch to batch_size-dependent filename
-  !          (image_batch_N.dat) when arrays become 4D.
-  in_file = "../data/image_batch_1.dat"
+  ! Load the batch data
+  write(in_file, "(A, I0, A)") "../data/image_batch_", batch_size, ".dat"
   inquire(file=trim(in_file), exist=file_exists)
   if (.not. file_exists) then
     write(*, *) "Input data file not found: ", trim(in_file)
@@ -83,15 +79,13 @@ program resnet_infer_fortran
   call load_data(trim(in_file), in_data)
   write(*, *) "Loaded input data from ", trim(in_file)
 
-  ! TODO 2: Create the input and output torch tensors from
-  !         the Fortran arrays.
-  !
+  ! TODO 2: Create input and output torch tensors from Fortran arrays
 
   ! TODO 3: Load the TorchScript model using torch_model_load
 
   ! TODO 4: Run inference using torch_model_forward
 
-  ! TODO 5: Call the classification subroutine to see the results
+  ! TODO 5: Classify results for each image in the batch
 
   ! TODO 6: Clean up using torch_delete
 
@@ -102,7 +96,7 @@ contains
 
   subroutine load_data(filename, arr)
     character(len=*), intent(in) :: filename
-    real(wp), dimension(:,:,:), intent(out) :: arr
+    real(wp), dimension(:,:,:,:), intent(out) :: arr
 
     integer :: unit, sz, ierr
     real(wp), dimension(:), allocatable :: flat
@@ -123,7 +117,7 @@ contains
 
   subroutine classify(out_data, idx)
     real(wp), dimension(:), intent(in) :: out_data
-    real(wp), dimension(:) :: probabilities
+    real(wp), dimension(size(out_data)) :: probabilities
     integer, intent(in) :: idx
 
     character(len=256), dimension(1000) :: labels
@@ -132,8 +126,9 @@ contains
 
     call load_labels(labels)
 
-    ! Calculate probabilities
-    probabilities = exp(out_data) / sum(out_data)
+    ! Apply softmax to convert raw outputs to probabilities
+    probabilities = exp(out_data)
+    probabilities = probabilities / sum(probabilities)
 
     max_val = -huge(max_val)
     max_idx = 1

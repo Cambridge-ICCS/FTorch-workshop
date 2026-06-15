@@ -1,7 +1,5 @@
 ! Solution for ResNet-18 inference with FTorch
 !
-! Stage 2: 4D arrays with torch_tensor_from_array (dynamic batch_size)
-!
 ! Usage:
 !   ./resnet_infer_fortran <model_file>         (batch_size=1)
 !   ./resnet_infer_fortran <model_file> <N>     (batch_size=N)
@@ -13,7 +11,6 @@ program resnet_infer_fortran
     torch_tensor, &
     torch_tensor_from_array, &
     torch_kCPU, &
-    torch_kFloat32, &
     torch_model_load, &
     torch_model_forward, &
     torch_delete
@@ -29,11 +26,12 @@ program resnet_infer_fortran
   integer :: nargs
   character(len=32) :: arg
 
-  ! Model IO — 4D arrays with batch dimension
+  ! Model IO
+  ! NOTE: Both Fortran arrays are already shaped with a leading batch dimension
+  ! with batch_size read from the command line (default 1).
   real(wp), dimension(:,:,:,:), allocatable, target :: in_data
   real(wp), dimension(:,:), allocatable, target :: out_data
 
-  ! TODO 1: Declare torch_model and torch_tensor variables
   type(torch_model) :: model
   type(torch_tensor), dimension(1) :: in_tensors, out_tensors
 
@@ -64,11 +62,11 @@ program resnet_infer_fortran
   end if
   write(*, *) "Running inference with batch_size = ", batch_size
 
-  ! Allocate 4D arrays with batch dimension
+  ! Allocate arrays with batch dimension
   allocate(in_data(batch_size, 3, 224, 224))
   allocate(out_data(batch_size, 1000))
 
-  ! Load the input data
+  ! Load the batch data
   write(in_file, "(A, I0, A)") "../data/image_batch_", batch_size, ".dat"
   inquire(file=trim(in_file), exist=file_exists)
   if (.not. file_exists) then
@@ -78,18 +76,17 @@ program resnet_infer_fortran
   call load_data(trim(in_file), in_data)
   write(*, *) "Loaded input data from ", trim(in_file)
 
-  ! TODO 2: Create the input and output torch tensors from
-  !         the Fortran arrays.
+  ! Create torch tensors from Fortran arrays
   call torch_tensor_from_array(in_tensors(1), in_data, torch_kCPU)
   call torch_tensor_from_array(out_tensors(1), out_data, torch_kCPU)
 
-  ! TODO 3: Load the TorchScript model using torch_model_load
+  ! Load the TorchScript model
   call torch_model_load(model, model_file, torch_kCPU)
 
-  ! TODO 4: Run inference using torch_model_forward
+  ! Run inference
   call torch_model_forward(model, in_tensors, out_tensors)
 
-  ! TODO 5: Call the classification subroutine to see the results
+  ! Classify results for each image in the batch
   do i = 1, batch_size
     call classify(out_data(i, :), i)
   end do
@@ -127,7 +124,7 @@ contains
 
   subroutine classify(out_data, idx)
     real(wp), dimension(:), intent(in) :: out_data
-    real(wp), dimension(:) :: probabilities
+    real(wp), dimension(size(out_data)) :: probabilities
     integer, intent(in) :: idx
 
     character(len=256), dimension(1000) :: labels
@@ -136,8 +133,9 @@ contains
 
     call load_labels(labels)
 
-    ! Calculate probabilities
-    probabilities = exp(out_data) / sum(out_data)
+    ! Apply softmax to convert raw outputs to probabilities
+    probabilities = exp(out_data)
+    probabilities = probabilities / sum(probabilities)
 
     max_val = -huge(max_val)
     max_idx = 1

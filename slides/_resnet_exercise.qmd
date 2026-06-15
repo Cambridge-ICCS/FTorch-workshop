@@ -1,16 +1,14 @@
 ## Exercise 2: A more realistic example
 
-In exercise 1 we used a simple contrived model with a 1-D input.
+In exercise 1 we used a contrived model, SimpleNet, with a 1-D input.
 
-In this exercise we take a big step up to a **real-world** example:
+In this exercise we take a step up using a real-world example:
 classifying images with a pre-trained ResNet-18 model from TorchVision.
 
-Highlights:
-
-- Working with **multidimensional** data (batch, channels, height, width).
-- The **Python-to-Fortran pipeline** for pre-trained models.
-- **Batching** — processing multiple images in a single forward pass.
-- **Data layout** between Python (row-major) and Fortran (column-major).
+We will reinforce what we learnt in exercise 1 whilst using multidimensional data
+and briefly exploting batched data as an extension.
+As part of this we will also discuss data layout differences between Python (row-major)
+and Fortran (column-major).
 
 
 ## Exercise 2
@@ -19,94 +17,69 @@ Navigate to `exercises/exercise_02/`.
 
 You will find:
 
-- `generate_input_batch.py` — preprocesses image(s) to binary.
-- `resnet_infer_python.py` — Python verification.
-- `resnet_infer_fortran.f90` — template with `! TODO` comments.
-- `resnet_infer_fortran_sol.f90` — complete solution.
-- `data/` — example images and ImageNet labels.
+- `generate_input_batch.py` -- preprocesses image(s) to a binary data file.
+- `resnet_infer_python.py` -- Run resnet from Python.
+- `resnet_infer_fortran.f90` -- template with `! TODO` comments.
+- `resnet_infer_fortran_sol.f90` -- complete solution.
+- `data/` -- example images and ImageNet labels.
 
 
-## Stage 1: Single-image inference
+## Stage 1: Basic inference
 
-1. **Generate input**: `python3 generate_input_batch.py`
-2. **Convert**: `pt2ts resnet18 --model_weights IMAGENET1K_V1 --output_model_file torchscript_resnet18_model_cpu.pt`
-3. **Fortran**: Fill in TODOs, build, run:
+1. **Generate input**: `python generate_input_batch.py`
+   - This takes images in `data/` and pre-processes them ready to be read as inputs to
+     the ResNet model.
+2. **Convert to TorchScript**:
+   ```sh
+   pt2ts resnet18 --model_weights IMAGENET1K_V1 --output_model_file torchscript_resnet18_model_cpu.pt
+   ```
+   - This downloads a model definition and weights from TorchVision and saves it to
+     TorchScript.
+3. **Verify inference works in Python**:
+   ```sh
+   python resnet_infer_python.py
+   ```
+   Expected: `Image 0: Samoyed, probability 0.8846`
+
+4. **Fortran**: Build using CMake, completing the TODOs in `resnet_infer_fortran.f90`,
+   then run:
    ```sh
    ./resnet_infer_fortran torchscript_resnet18_model_cpu.pt
    ```
 
-Expected:
-```
-Samoyed, probability 0.8846
-```
 
+## The Fortran TODOs
 
-## Arrays and the batch dimension
-
-In Stage 1 the Fortran arrays are **3D** — no batch dimension:
-
-```
-in_data(3, 224, 224)
-out_data(1000)
-```
-
-But the model expects a **4D** input `(batch_size, 3, 224, 224)`
-and a **2D** output `(batch_size, 1000)`.
-
-Not yet used for array sizes in Stage 1.
-
-**Task**: Use `torch_tensor_from_blob` to add the batch dimension to the
-tensor shape while keeping 3D Fortran arrays.
-
-
-## torch_tensor_from_blob
+TorchScript models **always require a leading batch dimension**, even for a
+single image. The arrays are already shaped correctly:
 
 ```fortran
-in_tensor = torch_tensor_from_blob(in_data, 4, &
-    [batch_size, 3, 224, 224], torch_kCPU, torch_kFloat64)
+in_data(batch_size, 3, 224, 224)   ! 4D input
+out_data(batch_size, 1000)          ! 2D output
 ```
 
-Wraps existing memory as a tensor with the given shape, treating the
-data as C-contiguous (the standard for TorchScript models).
+1. **Declare** `torch_model` and `torch_tensor` variables.
+2. **Create tensors** from Fortran arrays with `torch_tensor_from_array`.
+3. **Load the model** with `torch_model_load`.
+4. **Run inference** with `torch_model_forward`.
+5. **Classify results** for each image in the batch.
+6. **Clean up** with `torch_delete`.
 
-This lets you introduce the batch dimension without changing your
-underlying Fortran data structures.
 
-
-## Stage 2: Extend to batching
+## Stage 2: Add batching
 
 Now extend from single-image to multi-image batching:
 
-1. **Fortran arrays**: 3D → 4D, 1D → 2D
-   ```fortran
-   allocate(in_data(batch_size, 3, 224, 224))
-   allocate(out_data(batch_size, 1000))
+1. **Generate a larger batch** by editing `generate_input_batch.py` to include
+   `dog2.jpg` (and any other images you download). Re-run the script.
+2. **Run with batch_size 2**:
+   ```sh
+   ./resnet_infer_fortran torchscript_resnet18_model_cpu.pt 2
    ```
-2. **Tensor creation**: replace `from_blob` with `from_array`
-   ```fortran
-   in_tensor = torch_tensor_from_array(in_data, torch_kCPU)
+3. **Verify the results in Python**:
+   ```sh
+   python3 resnet_infer_python.py --batch_size 2
    ```
-3. **Loop** over all batch elements in the classify step.
-
-4. **Python**: add `dog2.jpg` to the `image_files` list in
-    `generate_input_batch.py`. You can also add your own downloaded images.
-
-```sh
-python3 generate_input_batch.py
-./resnet_infer_fortran torchscript_resnet18_model_cpu.pt 2
-```
-
-
-## Recap
-
-The model always expects a batch dimension — even for a single image.
-
-| | Stage 1 | Stage 2 |
-|---|---------|---------|
-| Fortran arrays | 3D / 1D | 4D / 2D |
-| Tensor creation | `from_blob` | `from_array` |
-| batch_size in arrays | no | yes |
-| Classify | single call | loop |
 
 
 ## Data layout
@@ -116,12 +89,17 @@ Python (C) and Fortran store arrays in opposite memory order:
 - **Python**: row-major, last index varies fastest.
 - **Fortran**: column-major, first index varies fastest.
 
-Python transposes before saving:
+This is why we transpose the data in Python before saving when generating the
+batch input:
 
 ```python
 np_input = np_input.transpose().flatten()
 ```
 
-Fortran's `reshape` then places elements correctly.
+`transpose()` reverses axes from `[B, C, H, W]` to `[W, H, C, B]`.
+
+This means that when read into memory by Fortran they will appear structured as we expect.
+FTorch then uses Torch's `stride`d memory access to account for differences in layout
+meaning the arrays can appear the same to the user in both Fortran and Python.
 
 See the [online docs](https://cambridge-iccs.github.io/FTorch/page/usage/transposing.html).
