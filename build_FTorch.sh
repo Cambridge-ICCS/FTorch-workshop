@@ -16,7 +16,7 @@ cd FTorch
 
 # Install the ftorch_utils Python package, which provides the pt2ts CLI tool
 # This has PyTorch as a dependency, for which we force the cpu version as follows
-pip install . --extra-index-url https://download.pytorch.org/whl/cpu
+pip install .[examples] --extra-index-url https://download.pytorch.org/whl/cpu
 
 # Create a build directory to build FTorch in using CMake
 mkdir build
