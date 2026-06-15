@@ -71,9 +71,10 @@ They consist of:
 
 * Exercise 0: An introduction to Fortran and PyTorch to get up to speed
 * Exercise 1: A walkthrough of how to take your net from PyTorch and use it in Fortran
-* Exercise 2: A comparison of efficient and inefficient approaches to using FTorch as part
+* Exercise 2: Real-world inference with ResNet-18, including batched input
+* Exercise 3: A comparison of efficient and inefficient approaches to using FTorch as part
   of a larger numerical code
-* Exercise 3: A demonstration of some of the automatic differentiation features of FTorch
+* Exercise 4: A demonstration of the automatic differentiation features of FTorch
 
 Between exercises 0 and 1 we will also walk through building and installing FTorch,
 details for which can be found in the slides and in the [`build_FTorch.sh`](build_FTorch.sh)
