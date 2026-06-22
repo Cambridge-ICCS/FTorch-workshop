@@ -36,6 +36,4 @@ program inference
    ! Note: data immediately available in Fortran - no need to 'map'
    write (*,*) out_data(:)
 
-   ! TODO: Cleanup
-
 end program inference

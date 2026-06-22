@@ -100,7 +100,6 @@ We will modify it to create the neccessary data structures and load and call the
 - Map Fortran data from arrays to the `torch_tensors`.
 - Load the model and optionally print its parameters.
 - Call `torch_model_forward` to run the net.
-- Clean up.
 
 
 ## Calling from Fortran
