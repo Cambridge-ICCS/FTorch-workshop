@@ -4,7 +4,7 @@ program inference
    use, intrinsic :: iso_fortran_env, only : sp => real32
 
    ! Import our library for interfacing with PyTorch
-   use ftorch, only : torch_model, torch_tensor, torch_kCPU, torch_delete, &
+   use ftorch, only : torch_model, torch_tensor, torch_kCPU, &
                       torch_tensor_from_array, torch_model_load, &
                       torch_model_forward, torch_model_print_parameters
 
@@ -58,11 +58,6 @@ program inference
    ! Check output tensor matches expected value
    expected = [0.0, 2.0, 4.0, 6.0, 8.0]
    test_pass = allclose(out_data, expected, test_name="SimpleNet", rtol=1e-5)
-
-   ! Cleanup
-   call torch_delete(input_tensors)
-   call torch_delete(output_tensors)
-   call torch_delete(torch_net)
 
    if (.not. test_pass) then
      stop 999

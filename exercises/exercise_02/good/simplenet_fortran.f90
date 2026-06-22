@@ -4,7 +4,7 @@ program inference
    use, intrinsic :: iso_fortran_env, only : sp => real32
 
    ! Import the ml module
-   use ml_mod, only : ml_init, ml_routine, ml_final
+   use ml_mod, only : ml_init, ml_routine
 
    implicit none
 
@@ -30,8 +30,6 @@ program inference
 
       in_data(:) = in_data(:) + 1.0
    end do
-
-   call ml_final()
 
    ! Write out the result of calling the net
    write (*,*) sum_data(:)

@@ -27,12 +27,13 @@ program inference
 
    ! TODO: Load ML model
 
+   ! Print model weights to the console
+   call torch_model_print_parameters(model)
+
    ! TODO: Run inference on the model using `torch_model_forward`
 
    ! Write out the result of calling the net
    ! Note: data immediately available in Fortran - no need to 'map'
    write (*,*) out_data(:)
-
-   ! TODO: Cleanup
 
 end program inference

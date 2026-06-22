@@ -4,7 +4,7 @@ module ml_mod
 
   ! Import our library for interfacing with PyTorch
    use ftorch, only : torch_tensor, torch_model, torch_kCPU, torch_tensor_from_array, &
-                      torch_model_load, torch_model_forward, torch_delete
+                      torch_model_load, torch_model_forward
 
   implicit none
 
@@ -42,11 +42,6 @@ module ml_mod
 
     ! Infer
     call torch_model_forward(torch_net, input_tensors, output_tensors)
-
-    ! Cleanup
-    call torch_delete(input_tensors)
-    call torch_delete(output_tensors)
-    call torch_delete(torch_net)
 
   end subroutine ml_routine
 
