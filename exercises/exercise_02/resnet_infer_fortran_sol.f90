@@ -140,7 +140,7 @@ contains
     max_val = -huge(max_val)
     max_idx = 1
     do i = 1, 1000
-      if (out_data(i) > max_val) then
+      if (probabilities(i) > max_val) then
         max_val = probabilities(i)
         max_idx = i
       end if
