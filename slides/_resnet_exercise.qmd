@@ -66,7 +66,6 @@ You need to:
 3. **Load the model** with `torch_model_load`.
 4. **Run inference** with `torch_model_forward`.
 5. **Classify results** for each image in the batch.
-6. **Clean up** with `torch_delete`.
 
 
 ## Stage 2: Add batching

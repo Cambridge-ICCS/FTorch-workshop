@@ -16,8 +16,7 @@ program resnet_infer_fortran
     torch_tensor_from_array, &
     torch_kCPU, &
     torch_model_load, &
-    torch_model_forward, &
-    torch_delete
+    torch_model_forward
 
   implicit none
 
@@ -86,8 +85,6 @@ program resnet_infer_fortran
   ! TODO 4: Run inference using torch_model_forward
 
   ! TODO 5: Classify results for each image in the batch
-
-  ! TODO 6: Clean up using torch_delete
 
   deallocate(in_data)
   deallocate(out_data)

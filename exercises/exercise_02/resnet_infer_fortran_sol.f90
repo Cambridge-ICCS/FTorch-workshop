@@ -12,8 +12,7 @@ program resnet_infer_fortran
     torch_tensor_from_array, &
     torch_kCPU, &
     torch_model_load, &
-    torch_model_forward, &
-    torch_delete
+    torch_model_forward
 
   implicit none
 
@@ -90,11 +89,6 @@ program resnet_infer_fortran
   do i = 1, batch_size
     call classify(out_data(i, :), i)
   end do
-
-  ! Clean up
-  call torch_delete(in_tensors)
-  call torch_delete(out_tensors)
-  call torch_delete(model)
 
   deallocate(in_data)
   deallocate(out_data)

@@ -80,7 +80,6 @@ exercise 1 complete the following tasks labelled as `TODO` comments in
 4. **Run inference** using `torch_model_forward`.
 5. **Classify results** for each image in the batch using the `classify`
    subroutine.
-6. **Clean up** using `torch_delete`.
 
 
 ## Stage 2: Add batching
