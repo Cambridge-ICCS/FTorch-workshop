@@ -92,7 +92,7 @@ SimpleNet example ran successfully
 
 ```fortran
    ! Import our library for interfacing with PyTorch
-   use ftorch, only : torch_model, torch_tensor, torch_kCPU, torch_delete, &
+   use ftorch, only : torch_model, torch_tensor, torch_kCPU, &
                       torch_tensor_from_array, torch_model_load, &
                       torch_model_forward, torch_model_print_parameters
 ```
@@ -206,27 +206,6 @@ import only what you need.
 ```fortran
    ! Run inference on the model using `torch_model_forward`
    call torch_model_forward(torch_net, input_tensors, output_tensors)
-```
-
-</details>
-
----
-
-### Task 7
-
-```fortran
-   ! TODO: Cleanup
-```
-
-#### Solution
-
-<details>
-
-```fortran
-   ! Cleanup
-   call torch_delete(input_tensors)
-   call torch_delete(output_tensors)
-   call torch_delete(torch_net)
 ```
 
 </details>

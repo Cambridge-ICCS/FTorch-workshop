@@ -4,12 +4,12 @@ module ml_mod
 
   ! Import our library for interfacing with PyTorch
    use ftorch, only : torch_tensor, torch_model, torch_kCPU, torch_tensor_from_array, &
-                      torch_model_load, torch_model_forward, torch_delete
+                      torch_model_load, torch_model_forward
 
   implicit none
 
   private
-  public ml_init, ml_routine, ml_final
+  public ml_init, ml_routine
 
   ! Set working precision for reals
   integer, parameter :: wp = sp
@@ -48,13 +48,5 @@ module ml_mod
     call torch_model_forward(torch_net, input_tensors, output_tensors)
 
   end subroutine ml_routine
-
-  subroutine ml_final()
-    ! Cleanup
-    call torch_delete(input_tensors)
-    call torch_delete(output_tensors)
-    call torch_delete(torch_net)
-
-  end subroutine ml_final
 
 end module ml_mod
