@@ -127,10 +127,8 @@ Once we have modified the Fortran we need to compile the code and link it to FTo
 
 For convenience, this can be done in the codespace from the `exercise_01/` subdirectory as follows:
 ```sh
-mkdir build
-cd build
-cmake ..
-cmake --build .
+cmake -S -B .
+cmake --build build
 ```
 The path to the FTorch installation will be picked up automatically so doesn't need to be specified.
 
