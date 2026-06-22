@@ -7,7 +7,7 @@ set(PROJECT_NAME ResNetExample)
 
 project(${PROJECT_NAME} LANGUAGES Fortran)
 
-# Build in Debug mode if not specified
+# Build in Release mode if not specified
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE
       Release
