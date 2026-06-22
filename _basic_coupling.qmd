@@ -60,10 +60,15 @@ TorchScript ready for use from Fortran.
 
 ## Saving to TorchScript
 
-Run `simplenet.py` to save the PyTorch model and an input tensor:
+We already ran
 ```sh
 python3 simplenet.py
 ```
+Run
+```sh
+ls
+```
+to check that the `pytorch_simplenet_input_tensor_cpu.pt` file was created.
 
 Then convert to TorchScript using the `pt2ts` command:
 ```sh
@@ -74,6 +79,11 @@ pt2ts SimpleNet \
   --input_tensor_file pytorch_simplenet_input_tensor_cpu.pt \
   --test
 ```
+Now run
+```sh
+ls
+```
+to check that the `torchscript_simplenet_input_tensor_cpu.pt` file was created.
 
 :::{.aside}
 The `--test` flag runs a basic check that the TorchScript model produces the same
@@ -100,7 +110,6 @@ We will modify it to create the neccessary data structures and load and call the
 - Map Fortran data from arrays to the `torch_tensors`.
 - Load the model and optionally print its parameters.
 - Call `torch_model_forward` to run the net.
-- Clean up.
 
 
 ## Calling from Fortran

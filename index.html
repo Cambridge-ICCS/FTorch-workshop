@@ -723,15 +723,21 @@ Output: tensor([0., 2., 4., 6., 8.])</code></pre>
 </section>
 <section id="saving-to-torchscript-1" class="slide level2">
 <h2>Saving to TorchScript</h2>
-<p>Run <code>simplenet.py</code> to save the PyTorch model and an input tensor:</p>
+<p>We already ran</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> simplenet.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>to check that the <code>pytorch_simplenet_input_tensor_cpu.pt</code> file was created.</p>
 <p>Then convert to TorchScript using the <code>pt2ts</code> command:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">pt2ts</span> SimpleNet <span class="dt">\</span></span>
-<span id="cb21-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model_definition_file</span> simplenet.py <span class="dt">\</span></span>
-<span id="cb21-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input_model_file</span> pytorch_simplenet_model_cpu.pt <span class="dt">\</span></span>
-<span id="cb21-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output_model_file</span> torchscript_simplenet_model_cpu.pt <span class="dt">\</span></span>
-<span id="cb21-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input_tensor_file</span> pytorch_simplenet_input_tensor_cpu.pt <span class="dt">\</span></span>
-<span id="cb21-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">pt2ts</span> SimpleNet <span class="dt">\</span></span>
+<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model_definition_file</span> simplenet.py <span class="dt">\</span></span>
+<span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input_model_file</span> pytorch_simplenet_model_cpu.pt <span class="dt">\</span></span>
+<span id="cb22-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output_model_file</span> torchscript_simplenet_model_cpu.pt <span class="dt">\</span></span>
+<span id="cb22-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input_tensor_file</span> pytorch_simplenet_input_tensor_cpu.pt <span class="dt">\</span></span>
+<span id="cb22-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now run</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>to check that the <code>torchscript_simplenet_input_tensor_cpu.pt</code> file was created.</p>
 
 <aside><div>
 <p>The <code>--test</code> flag runs a basic check that the TorchScript model produces the same output as the PyTorch model after saving it.</p>
@@ -753,7 +759,6 @@ Output: tensor([0., 2., 4., 6., 8.])</code></pre>
 <li>Map Fortran data from arrays to the <code>torch_tensors</code>.</li>
 <li>Load the model and optionally print its parameters.</li>
 <li>Call <code>torch_model_forward</code> to run the net.</li>
-<li>Clean up.</li>
 </ul>
 </section>
 <section id="calling-from-fortran-1" class="slide level2">
@@ -768,16 +773,16 @@ Output: tensor([0., 2., 4., 6., 8.])</code></pre>
 <h2>Building the code</h2>
 <p>Once we have modified the Fortran we need to compile the code and link it to FTorch.</p>
 <p>For convenience, this can be done in the codespace from the <code>exercise_01/</code> subdirectory as follows:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
-<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span>
-<span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> ..</span>
-<span id="cb22-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span>
+<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> ..</span>
+<span id="cb24-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The path to the FTorch installation will be picked up automatically so doesn’t need to be specified.</p>
 </section>
 <section id="running-the-code" class="slide level2">
 <h2>Running the code</h2>
 <p>To run the code we can use the generated executable:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a>./simplenet_fortran</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a>./simplenet_fortran</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> Model parameters:
 _fwd_seq.0.weight:
   2  0  0  0  0
