@@ -35,7 +35,7 @@ program resnet_infer_fortran
   real(wp), dimension(:,:,:,:), allocatable, target :: in_data
   real(wp), dimension(:,:), allocatable, target :: out_data
 
-  ! TODO 1: Declare torch_model and torch_tensor variables
+  ! TODO 1: Declare `torch_model` and `torch_tensor` variables
 
   ! File paths
   character(len=256) :: in_file
@@ -78,13 +78,15 @@ program resnet_infer_fortran
   call load_data(trim(in_file), in_data)
   write(*, *) "Loaded input data from ", trim(in_file)
 
-  ! TODO 2: Create input and output torch tensors from Fortran arrays
+  ! TODO 2: Create input and output torch tensors from Fortran arrays using
+  !         `torch_tensor_from_array`
 
-  ! TODO 3: Load the TorchScript model using torch_model_load
+  ! TODO 3: Load the TorchScript model using `torch_model_load`
 
-  ! TODO 4: Run inference using torch_model_forward
+  ! TODO 4: Run inference using `torch_model_forward`
 
-  ! TODO 5: Classify results for each image in the batch
+  ! TODO 5: Classify results for each image in the batch using the `classify`
+  !         subroutine defined below
 
   deallocate(in_data)
   deallocate(out_data)

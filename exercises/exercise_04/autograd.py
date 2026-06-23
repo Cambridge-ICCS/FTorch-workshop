@@ -9,7 +9,7 @@ b = torch.tensor([6.0, 4.0], requires_grad=True)
 # Compute some mathematical expression involving the tensors
 Q = 3 * (a**3 - b * b / 3)
 
-# TODO: Calculate the value of Q by hand to provide expected values
+# TODO 1: Calculate the value of Q by hand to provide expected values
 # Q_expected =
 print(f"Q: expected {Q_expected}, got {Q}")
 
@@ -21,7 +21,7 @@ Q.backward(gradient=external_grad)
 dQda = a.grad
 dQdb = b.grad
 
-# TODO: Calculate the directional derivatives of Q with respect to a and b by hand to
+# TODO 2: Calculate the directional derivatives of Q with respect to a and b by hand to
 #       provide expected values
 # dQda_expected =
 # dQdb_expected =
