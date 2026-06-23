@@ -45,8 +45,8 @@ _Provide the ability to couple PyTorch models to Fortran using FTorch_.
 
 However, more specifically we aim to:
 
-* provide a deeper understanding of Torch models and the libtorch library,
-* introduce FTorch and it's aims and benefits,
+* provide a deeper understanding of Torch and the libtorch library,
+* introduce FTorch and its aims and benefits,
 * teach users the full pipeline of taking a PyTorch model and coupling it to a Fortran code,
 * introduce the automatic differentiation aspects of FTorch, and
 * highlight best practices and efficient use when doing the above.

@@ -49,6 +49,41 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 
 -->
 
+## Obtaining FTorch
+
+::::{.columns}
+:::{.column width=50%}
+FTorch is available from GitHub:\
+[github.com/Cambridge-ICCS/FTorch](https://github.com/Cambridge-ICCS/FTorch)
+
+::: {style="text-align: center"}
+{{< qrcode https://github.com/Cambridge-ICCS/FTorch qrjeyf6490 width=200 height=200 >}}
+:::
+
+:::
+:::{.column width=50%}
+With supporting documentation at:\
+[cambridge-iccs.github.io/FTorch/](https://cambridge-iccs.github.io/FTorch/)
+
+::: {style="text-align: center"}
+{{< qrcode https://cambridge-iccs.github.io/FTorch/ qrr6f94nhd width=200 height=200 >}}
+:::
+
+:::
+::::
+
+For the purposes of this workshop using GitHub codespaces FTorch is 
+built by running the `build_FTorch.sh` script.
+
+This downloads the FTorch source from GitHub, installs libtorch through
+PyTorch, and then uses CMake to build FTorch and link it to libtorch.
+
+If you want to build locally you can inspect this script for more
+details and consult the comprehensive [online documentation](https://cambridge-iccs.github.io/FTorch/page/installation/general.html).
+
+
+
+
 ## FTorch source code
 
 The source code for FTorch is contained in the `src/` directory.
