@@ -32,9 +32,7 @@ comes with FTorch:
 pt2ts SimpleNet \
   --model_definition_file simplenet.py \
   --input_model_file pytorch_simplenet_model_cpu.pt \
-  --output_model_file torchscript_simplenet_model_cpu.pt \
-  --input_tensor_file pytorch_simplenet_input_tensor_cpu.pt \
-  --test
+  --output_model_file torchscript_simplenet_model_cpu.pt
 ```
 This should produce `torchscript_simplenet_model_cpu.pt` - the TorchScript
 instance of the net.
@@ -92,9 +90,9 @@ SimpleNet example ran successfully
 
 ```fortran
    ! Import our library for interfacing with PyTorch
-   use ftorch, only : torch_model, torch_tensor, torch_kCPU, &
-                      torch_tensor_from_array, torch_model_load, &
-                      torch_model_forward, torch_model_print_parameters
+   use ftorch, only : torch_model_print_parameters, torch_model, torch_tensor, &
+                      torch_kCPU, torch_tensor_from_array, torch_model_load, &
+                      torch_model_forward
 ```
 
 Note that
@@ -138,25 +136,6 @@ import only what you need.
 ### Task 3
 
 ```fortran
-   ! TODO: Set Torchscript model path
-```
-
-#### Solution
-
-<details>
-
-```fortran
-   ! Set Torchscript model path (relative to the build directory)
-   character(len=128) :: model_torchscript_file = '../torchscript_simplenet_model_cpu.pt'
-```
-
-</details>
-
----
-
-### Task 4
-
-```fortran
    ! TODO: Create Torch input/output tensors from the above arrays
 ```
 
@@ -174,7 +153,7 @@ import only what you need.
 
 ---
 
-### Task 5
+### Task 4
 
 ```fortran
    ! TODO: Load ML model
@@ -193,7 +172,7 @@ import only what you need.
 
 ---
 
-### Task 6
+### Task 5
 
 ```fortran
    ! TODO: Run inference on the model using `torch_model_forward`

@@ -75,9 +75,7 @@ Then convert to TorchScript using the `pt2ts` command:
 pt2ts SimpleNet \
   --model_definition_file simplenet.py \
   --input_model_file pytorch_simplenet_model_cpu.pt \
-  --output_model_file torchscript_simplenet_model_cpu.pt \
-  --input_tensor_file pytorch_simplenet_input_tensor_cpu.pt \
-  --test
+  --output_model_file torchscript_simplenet_model_cpu.pt
 ```
 Now run
 ```sh
@@ -108,7 +106,7 @@ We will modify it to create the neccessary data structures and load and call the
 - Import the `ftorch` module.
 - Create `torch_tensors` and a `torch_model` to hold the data and net.
 - Map Fortran data from arrays to the `torch_tensors`.
-- Load the model and optionally print its parameters.
+- Load the model and print its parameters.
 - Call `torch_model_forward` to run the net.
 
 

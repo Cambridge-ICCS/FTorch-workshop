@@ -18,7 +18,8 @@ program inference
    ! TODO: Set up Torch data structures
    ! The net, a vector of input tensors (in this case we only have one), and the output tensor
 
-   ! TODO: Set Torchscript model path
+   ! Set Torchscript model path (relative to the build directory)
+   character(len=128) :: model_torchscript_file = '../torchscript_simplenet_model_cpu.pt'
 
    ! Initialise data
    in_data = [0.0, 1.0, 2.0, 3.0, 4.0]
@@ -27,13 +28,15 @@ program inference
 
    ! TODO: Load ML model
 
-   ! Print model weights to the console
-   call torch_model_print_parameters(model)
+   ! Print the parameters associated with the pre-trained model
+   write (*,*) "Model parameters:"
+   call torch_model_print_parameters(torch_net)
 
    ! TODO: Run inference on the model using `torch_model_forward`
 
    ! Write out the result of calling the net
    ! Note: data immediately available in Fortran - no need to 'map'
+   write (*,*) "Model output:"
    write (*,*) out_data(:)
 
 end program inference
