@@ -3,8 +3,9 @@ program inference
    ! Import precision info from iso
    use, intrinsic :: iso_fortran_env, only : sp => real32
 
-   ! TODO: Import our library for interfacing with PyTorch
-   ! use ftorch, only : ...
+   ! Import our library for interfacing with PyTorch
+   use ftorch, only : torch_model, torch_tensor, torch_tensor_from_array, &
+                      torch_kCPU, torch_model_load, torch_model_forward
 
    implicit none
 
@@ -24,13 +25,14 @@ program inference
    ! Initialise data
    in_data = [0.0, 1.0, 2.0, 3.0, 4.0]
 
-   ! TODO: Create Torch input/output tensors from the above arrays
+   ! TODO: Create Torch input/output tensors from the above arrays using
+   !       `torch_tensor_from_array`
 
-   ! TODO: Load ML model
+   ! TODO: Load ML model using `torch_model_load`
 
    ! Print the parameters associated with the pre-trained model
    write (*,*) "Model parameters:"
-   call torch_model_print_parameters(torch_net)
+   call torch_net%print_parameters()
 
    ! TODO: Run inference on the model using `torch_model_forward`
 

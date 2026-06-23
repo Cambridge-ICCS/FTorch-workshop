@@ -4,9 +4,8 @@ program inference
    use, intrinsic :: iso_fortran_env, only : sp => real32
 
    ! Import our library for interfacing with PyTorch
-   use ftorch, only : torch_model_print_parameters, torch_model, torch_tensor, &
-                      torch_kCPU, torch_tensor_from_array, torch_model_load, &
-                      torch_model_forward
+   use ftorch, only : torch_model, torch_tensor, torch_tensor_from_array, &
+                      torch_kCPU, torch_model_load, torch_model_forward
 
    implicit none
 

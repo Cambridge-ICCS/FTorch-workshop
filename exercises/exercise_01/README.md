@@ -81,38 +81,6 @@ SimpleNet example ran successfully
 ### Task 1
 
 ```fortran
-   ! TODO: Import our library for interfacing with PyTorch
-```
-
-#### Solution
-
-<details>
-
-```fortran
-   ! Import our library for interfacing with PyTorch
-   use ftorch, only : torch_model_print_parameters, torch_model, torch_tensor, &
-                      torch_kCPU, torch_tensor_from_array, torch_model_load, &
-                      torch_model_forward
-```
-
-Note that
-```fortran
-   use ftorch
-```
-would work, and may be useful for the purposes of getting familiar with the code in
-the exercise.
-However, this approach is the equivalent of `from module import *` in Python which is
-considered bad practice as it pulls everything from the module into the namespace.
-This can have unintended consequences and cause conflicts so it is better to explicitly
-import only what you need.
-
-</details>
-
----
-
-### Task 2
-
-```fortran
    ! TODO: Set up Torch data structures
    ! The net, a vector of input tensors (in this case we only have one), and the output tensor
 ```
@@ -133,10 +101,11 @@ import only what you need.
 
 ---
 
-### Task 3
+### Task 2
 
 ```fortran
-   ! TODO: Create Torch input/output tensors from the above arrays
+   ! TODO: Create Torch input/output tensors from the above arrays using
+   !       `torch_tensor_from_array`
 ```
 
 #### Solution
@@ -153,10 +122,10 @@ import only what you need.
 
 ---
 
-### Task 4
+### Task 3
 
 ```fortran
-   ! TODO: Load ML model
+   ! TODO: Load ML model using `torch_model_load`
 ```
 
 #### Solution
@@ -172,7 +141,7 @@ import only what you need.
 
 ---
 
-### Task 5
+### Task 4
 
 ```fortran
    ! TODO: Run inference on the model using `torch_model_forward`
