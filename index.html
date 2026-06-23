@@ -7,11 +7,13 @@
 <link href="ftorch_workshop_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="ftorch_workshop_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="ftorch_workshop_slides_files/libs/quarto-html/quarto-syntax-highlighting-dark-5a2acb6f4ed5aeb23a104ba421924b87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="ftorch_workshop_slides_files/libs/quarto-contrib/qrcodejs-v1.0.0/qrcode.js"></script><meta charset="utf-8">
+<script src="ftorch_workshop_slides_files/libs/quarto-contrib/qrcodejs-v1.0.0/qrcode.js"></script>
+<link href="ftorch_workshop_slides_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="ftorch_workshop_slides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2025-07-09">
-  <title>Coupling Machine Learning to Fortran using the FTorch Library</title>
+  <meta name="dcterms.date" content="2026-07-15">
+  <title>  Coupling Machine Learning to Fortran using the FTorch Library</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -192,13 +194,35 @@
       margin-right: 0; 
     }
   </style>
+  <style>
+  #title-slide .title {
+    font-size: 1em;
+    color: #ffffff;
+  }
+  #title-slide .authors {
+    font-size: 0.7em;
+    color: #ffffff;
+  }
+  #title-slide .date {
+    font-size: 0.65em;
+    color: #ffffff;
+  }
+  #title-slide .title::before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 220px;
+    height: 100px;
+    background: url('images/FTorch.svg') no-repeat center/contain;
+  }
+  </style>
 </head>
 <body class="quarto-dark">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Coupling Machine Learning to Fortran using the FTorch Library</h1>
+  <h1 class="title"><br> Coupling Machine Learning to Fortran using the FTorch Library</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -206,7 +230,7 @@
 Jack Atkinson <a href="https://orcid.org/0000-0001-5001-4812" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
 </div>
         <p class="quarto-title-affiliation">
-            Senior Research Software Engineer <br> ICCS - University of Cambridge
+            Principal Research Software Engineer <br> ICCS - University of Cambridge
           </p>
     </div>
 <div class="quarto-title-author">
@@ -219,20 +243,12 @@ Joe Wallwork <a href="https://orcid.org/0000-0002-3646-091X" class="quarto-title
     </div>
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Tom Meltzer <a href="https://orcid.org/0000-0003-1740-9550" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
-</div>
-        <p class="quarto-title-affiliation">
-            Senior Research Software Engineer <br> ICCS - University of Cambridge
-          </p>
-    </div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
 The ICCS Team and Collaborators 
 </div>
 </div>
 </div>
 
-  <p class="date">2025-07-09</p>
+  <p class="date">2026-07-15</p>
 </section>
 <section id="precursors" class="slide level2 smaller nostretch">
 <h2>Precursors</h2>
@@ -275,15 +291,12 @@ var qrcode = new QRCode("qr7dekity9", {"colorDark":"#000000","colorLight":"#ffff
 </ol>
 </div>
 <div class="fragment">
-<p>Note that we have set up the codespace to have a Python virtual environment set up and activated for you.</p>
-</div>
-<div class="fragment">
-<p>Execute the following to start the FTorch build process <strong>using source</strong>:</p>
+<p>Execute the following to start the FTorch build process:<sup>1</sup></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>source build_FTorch.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>NOTE</strong>: It’s insufficient to just run <code>./build_FTorch.sh</code> because this will not export the required environment variables to the current shell session.</p>
+<p>Note that after running this there will be a Python virtual environment set up and activated for you.</p>
 </div>
 <!-- =============================================================================== -->
-</section></section>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>NOTE: running <code>./build_FTorch.sh</code> is insufficcient as this will not export environment variables to the current shell session.</p></li></ol></aside></section></section>
 <section>
 <section id="motivation" class="title-slide slide level1 center">
 <h1>Motivation</h1>
@@ -306,7 +319,7 @@ a black box with an input and an output<sup>1</sup>.</p>
 <p>Neural Net by <a href="https://www.3blue1brown.com/topics/neural-networks">3Blue1Brown</a> under <a href="https://www.gov.uk/guidance/exceptions-to-copyright"><em>fair dealing</em></a>.<br>
 Pikachu © <em>The Pokemon Company</em>, used under <a href="https://www.gov.uk/guidance/exceptions-to-copyright"><em>fair dealing</em></a>.</p>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>And some models like GraphCast, FourCastNet, and Pangu operate on this principle</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>And some models like GraphCast, FourCastNet, and Pangu operate on this principle</p></li></ol></aside></section>
 <section id="machine-learning-in-science-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Machine Learning in Science</h2>
 <p><img data-src="images/Climate_Models.svg"></p>
@@ -338,7 +351,6 @@ Much machine learning is conducted in Python.</p>
 <p><img data-src="https://upload.wikimedia.org/wikipedia/commons/5/55/Mathematical_Bridge_tangents.jpg" class="absolute" style="border-radius: 50%;top: 27%; left: 30%; width: 40%; "></p>
 <p><img data-src="https://www.python.org/static/community_logos/python-logo-generic.svg" class="absolute" style="top: 40%; left: 0px; width: 30%; "></p>
 <p><img data-src="https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png" class="absolute" style="background-image: radial-gradient(gray 0%, #03334E 75%);top: 55%; left: 5%; width: 20%; "></p>
-<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/TensorFlowLogo.svg/696px-TensorFlowLogo.svg.png?20180105010857" class="absolute" style="top: 65%; left: 7.5%; width: 15%; "></p>
 <p><img data-src="https://raw.githubusercontent.com/fortran-lang/fortran-lang.org/bbdc33ec7bfc06fa6111093ae9712a7f7837b555/assets/img/fortran-logo.svg" class="absolute" style="top: 40%; right: 10%; width: 10%; "></p>
 <p><img data-src="https://www.metoffice.gov.uk/binaries/content/gallery/metofficegovuk/images/about-us/website/mo_master_for_dark_backg_rbg.png" class="absolute" style="top: 55%; right: 0%; height: 10%; "></p>
 <p><img data-src="https://climate.copernicus.eu/sites/default/files/custom-uploads/branding/ECMWF_Master_Logo_RGB_nostrap.png" class="absolute" style="top: 64.5%; left: 70%; height: 5%; "></p>
@@ -353,8 +365,7 @@ Much machine learning is conducted in Python.</p>
 -->
 <div class="attribution">
 <p><a href="https://en.wikipedia.org/wiki/Mathematical_Bridge">Mathematical Bridge</a> by <a href="https://commons.wikimedia.org/wiki/User:Cmglee">cmglee</a> used under <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.en">CC BY-SA 3.0</a><br>
-PyTorch, the PyTorch logo and any related marks are <a href="https://www.linuxfoundation.org/legal/trademark-usage">trademarks of The Linux Foundation</a>.”<br>
-TensorFlow, the TensorFlow logo and any related marks are trademarks of Google Inc.</p>
+PyTorch, the PyTorch logo and any related marks are <a href="https://www.linuxfoundation.org/legal/trademark-usage">trademarks of The Linux Foundation</a>.”</p>
 </div>
 </section>
 <section id="efficiency" class="slide level2 smaller" data-auto-animate="true,">
@@ -441,16 +452,25 @@ runtime</p>
 </section>
 <section id="further-information" class="slide level2 smaller">
 <h2>Further Information</h2>
-<p>For more details on the development see slides from our recent talk here: <a href="https://jackatkinson.net/slides/Oxford-FTorch/">jackatkinson.net/slides/Oxford-FTorch/</a></p>
+<p>For more details on the development see slides and recording from a recent talk here: <a href="https://jackatkinson.net/slides/Leeds-N8-FTorch">jackatkinson.net/slides/Oxford-FTorch/</a></p>
+<div class="columns">
+<div class="column" style="width:50%;">
 <div id="hslcvu57fy" class="qrcode"></div>
 <script type="text/javascript">
-var qrcode = new QRCode("hslcvu57fy", {"colorDark":"#000000","colorLight":"#ffffff","height":"200","text":"https://jackatkinson.net/slides/Oxford-FTorch/","width":"200"});
+var qrcode = new QRCode("hslcvu57fy", {"colorDark":"#000000","colorLight":"#ffffff","height":"200","text":"https://jackatkinson.net/slides/Leeds-N8-FTorch","width":"200"});
 </script>
     
-<p>Or join the upcoming (18th July) seminar here: <a href="https://www.eventbrite.co.uk/e/ftorch-a-library-for-coupling-pytorch-models-to-fortran-tickets-1468959069119">N8 Leeds Seminar</a></p>
+</div><div class="column" style="width:50%;">
+<div id="hfhskvhrtb" class="qrcode"></div>
+<script type="text/javascript">
+var qrcode = new QRCode("hfhskvhrtb", {"colorDark":"#000000","colorLight":"#ffffff","height":"200","text":"https://www.youtube.com/watch?v=je7St0t_W9Ah","width":"200"});
+</script>
+    
+</div></div>
+<p>Or, for the lastest on what’s new in FTorch, see <a href="https://jackatkinson.net/slides/CESM-Jun-26">jackatkinson.net/slides/CESM-Jun-26</a></p>
 <div id="vhtifowi38" class="qrcode"></div>
 <script type="text/javascript">
-var qrcode = new QRCode("vhtifowi38", {"colorDark":"#000000","colorLight":"#ffffff","height":"200","text":"https://www.eventbrite.co.uk/e/ftorch-a-library-for-coupling-pytorch-models-to-fortran-tickets-1468959069119","width":"200"});
+var qrcode = new QRCode("vhtifowi38", {"colorDark":"#000000","colorLight":"#ffffff","height":"200","text":"https://jackatkinson.net/slides/CESM-Jun-26","width":"200"});
 </script>
     
 <!-- =============================================================================== -->
@@ -646,7 +666,6 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <li>Set build type to <code>Debug</code> for debugging with <code>-g</code>.</li>
 <li>Prefix path is wherever libtorch is on your system.</li>
 <li>Install prefix can be set to anywhere. Defaults may require root/admin access.</li>
-<li>After building FTorch with <code>build_FTorch.sh</code>, the script also runs <code>pip install</code> to install the <code>pt2ts</code> command-line tool. This brings Python dependencies including <code>numpy</code> and <code>torch</code>.</li>
 </ul>
 </section>
 <section id="build-ftorch---details-1" class="slide level2">
@@ -662,7 +681,7 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 </p>
 <p>The above two commands can be combined into a single option using:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --build . --target install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make</code> command.</p></li><li id="fn3"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make install</code> command.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn3"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make</code> command.</p></li><li id="fn4"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make install</code> command.</p></li></ol></aside></section>
 <section id="build-ftorch---details-2" class="slide level2">
 <h2>Build FTorch - details</h2>
 <p>Installation will place files in <code>CMAKE_INSTALL_PREFIX/</code>:</p>
@@ -674,6 +693,12 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <li>UNIX will use <code>.so</code> files whilst Windows has <code>.dll</code> files.</li>
 </ul></li>
 </ul>
+</section>
+<section id="ftorch_utils" class="slide level2">
+<h2>FTorch_utils</h2>
+<p>FTorch includes a pip-installable Python library <code>ftorch_utils</code> that installs the handy <code>pt2ts</code> command-line utility for converting Python models to TorchScript.</p>
+<p>It also installs PyTorch and other dependencies as required by the FTorch examples suite.</p>
+<p>If installing in codespaces using <code>build_FTorch.sh</code> these will be installed into a Python virtual environment for you.</p>
 <!-- =============================================================================== -->
 </section></section>
 <section>
@@ -706,7 +731,7 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>python3 simplenet.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>Input:  tensor([0., 1., 2., 3., 4.])
 Output: tensor([0., 2., 4., 6., 8.])</code></pre>
-<aside><ol class="aside-footnotes"><li id="fn4"><p>This will run the <code>if __name__ == "__main__":</code> section at the bottom of the file.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>This will run the <code>if __name__ == "__main__":</code> section at the bottom of the file.</p></li></ol></aside></section>
 <section id="offline-training-with-ftorch" class="slide level2">
 <h2>Offline training with FTorch</h2>
 <p><img data-src="images/offline_dark.svg" class="absolute" style="top: 20%; left: 20%; width: 60%; "></p>
@@ -795,8 +820,84 @@ _fwd_seq.0.weight:
    0.00000000       2.00000000       4.00000000       6.00000000       8.00000000</code></pre>
 <!-- =============================================================================== -->
 </section>
-<section id="exercise-2-larger-code-considerations" class="slide level2">
-<h2>Exercise 2: Larger code considerations</h2>
+<section id="exercise-2-a-more-realistic-example" class="slide level2">
+<h2>Exercise 2: A more realistic example</h2>
+<p>In exercise 1 we used a contrived model, SimpleNet, with a 1-D input.</p>
+<p>In this exercise we take a step up using a real-world example: classifying images with a pre-trained ResNet-18 model from TorchVision.</p>
+<p>We will reinforce what we learnt in exercise 1 whilst using multidimensional data and briefly exploting batched data as an extension. As part of this we will also discuss data layout differences between Python (row-major) and Fortran (column-major).</p>
+</section>
+<section id="exercise-2" class="slide level2">
+<h2>Exercise 2</h2>
+<p>Navigate to <code>exercises/exercise_02/</code>.</p>
+<p>You will find:</p>
+<ul>
+<li><code>generate_input_batch.py</code> – preprocesses image(s) to a binary data file.</li>
+<li><code>resnet_infer_python.py</code> – Run resnet from Python.</li>
+<li><code>resnet_infer_fortran.f90</code> – template with <code>! TODO</code> comments.</li>
+<li><code>resnet_infer_fortran_sol.f90</code> – complete solution.</li>
+<li><code>data/</code> – example images and ImageNet labels.</li>
+</ul>
+</section>
+<section id="stage-1-basic-inference" class="slide level2">
+<h2>Stage 1: Basic inference</h2>
+<ol type="1">
+<li><p><strong>Generate input</strong>: <code>python generate_input_batch.py</code></p>
+<ul>
+<li>This takes images in <code>data/</code> and pre-processes them ready to be read as inputs to the ResNet model.</li>
+</ul></li>
+<li><p><strong>Convert to TorchScript</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">pt2ts</span> resnet18 <span class="at">--model_weights</span> IMAGENET1K_V1 <span class="at">--output_model_file</span> torchscript_resnet18_model_cpu.pt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>This downloads a model definition and weights from TorchVision and saves it to TorchScript.</li>
+</ul></li>
+<li><p><strong>Verify inference works in Python</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> resnet_infer_python.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Image 0: Samoyed, probability 0.8846</code></pre></li>
+<li><p><strong>Fortran</strong>: Build using CMake, completing the TODOs in <code>resnet_infer_fortran.f90</code>, then run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">./resnet_infer_fortran</span> torchscript_resnet18_model_cpu.pt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ol>
+</section>
+<section id="the-fortran-todos" class="slide level2">
+<h2>The Fortran TODOs</h2>
+<p>The Fortran arrays are already set up for you to read data from file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode fortran code-with-copy"><code class="sourceCode fortranfixed"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a>in_data(batch_size, <span class="dv">3</span>, <span class="dv">224</span>, <span class="dv">224</span>)</span>
+<span id="cb31-2"><a href="" aria-hidden="true" tabindex="-1"></a>out_data(batch_size, <span class="dv">1000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You need to:</p>
+<ol type="1">
+<li><strong>Declare</strong> <code>torch_model</code> and <code>torch_tensor</code> variables.</li>
+<li><strong>Create tensors</strong> from Fortran arrays with <code>torch_tensor_from_array</code>.</li>
+<li><strong>Load the model</strong> with <code>torch_model_load</code>.</li>
+<li><strong>Run inference</strong> with <code>torch_model_forward</code>.</li>
+<li><strong>Classify results</strong> for each image in the batch.</li>
+</ol>
+</section>
+<section id="stage-2-add-batching" class="slide level2">
+<h2>Stage 2: Add batching</h2>
+<p>Now extend from single-image to multi-image inference:</p>
+<ol type="1">
+<li><p><strong>Generate a larger batch</strong> by editing <code>generate_input_batch.py</code> to include <code>dog2.jpg</code> (and any other images you download). Re-run the script.</p></li>
+<li><p><strong>Run with batch_size 2</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">./resnet_infer_fortran</span> torchscript_resnet18_model_cpu.pt 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>Verify the results in Python</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> resnet_infer_python.py <span class="at">--batch_size</span> 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ol>
+</section>
+<section id="data-layout-discussion" class="slide level2">
+<h2>Data layout discussion</h2>
+<p>Python (C) and Fortran store arrays in opposite memory order:</p>
+<ul>
+<li><strong>Python</strong>: row-major, last index varies fastest.</li>
+<li><strong>Fortran</strong>: column-major, first index varies fastest.</li>
+</ul>
+<p>This is why we transpose the data in Python before saving when generating the batch input:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a>np_input <span class="op">=</span> np_input.transpose().flatten()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>transpose()</code> reverses axes from <code>[B, C, H, W]</code> to <code>[W, H, C, B]</code>.</p>
+<p>This means that when read into memory by Fortran they will appear structured as we expect. FTorch then uses Torch’s <code>stride</code>d memory access to account for differences in layout meaning the arrays can appear the same to the user in both Fortran and Python.</p>
+<p>See the <a href="https://cambridge-iccs.github.io/FTorch/page/usage/transposing.html">online docs</a> for more detail.</p>
+<!-- =============================================================================== -->
+</section>
+<section id="exercise-3-larger-code-considerations" class="slide level2">
+<h2>Exercise 3: Larger code considerations</h2>
 <p>What we have considered so far is a simple contrived example designed to teach the basics.</p>
 <p>However, in reality the codes we will be using are more complex, and full of terrors.</p>
 <ul>
@@ -807,18 +908,18 @@ _fwd_seq.0.weight:
 </ul></li>
 </ul>
 </section>
-<section id="exercise-2-larger-code-considerations-1" class="slide level2">
-<h2>Exercise 2: Larger code considerations</h2>
-<p>In exercise 2 we will look at an example of how to ideally structure a slightly more complex code setup. For those familiar with climate models this may be nothing new. We make use of the traditional separation into subroutines for:</p>
+<section id="exercise-3-larger-code-considerations-1" class="slide level2">
+<h2>Exercise 3: Larger code considerations</h2>
+<p>In exercise 3 we will look at an example of how to ideally structure a slightly more complex code setup. For those familiar with climate models this may be nothing new. We make use of the traditional separation into subroutines for:</p>
 <ol type="1">
 <li>Initialisation</li>
 <li>Updating</li>
 <li>Finalisation</li>
 </ol>
 </section>
-<section id="exercise-2" class="slide level2">
-<h2>Exercise 2</h2>
-<p>Navigate to the <code>exercises/exercise_02/</code> directory.</p>
+<section id="exercise-3" class="slide level2">
+<h2>Exercise 3</h2>
+<p>Navigate to the <code>exercises/exercise_03/</code> directory.</p>
 <p>Here you will see two code directories, <code>good/</code> and <code>bad/</code>.</p>
 <p>Both perform the same operation:</p>
 <ul>
@@ -827,8 +928,8 @@ _fwd_seq.0.weight:
 <li>Accumulate the sum of the output vector.</li>
 </ul>
 </section>
-<section id="exercise-2-1" class="slide level2">
-<h2>Exercise 2</h2>
+<section id="exercise-3-1" class="slide level2">
+<h2>Exercise 3</h2>
 <p>The exercise is the same for both folders:</p>
 <ul>
 <li>Run the <code>pt2ts</code> command to save the net (as in exercise 1).</li>
@@ -845,12 +946,12 @@ _fwd_seq.0.weight:
 <li>Time the codes and observe the difference.</li>
 </ul>
 </section>
-<section id="exercise-2---solution" class="slide level2">
-<h2>Exercise 2 - solution</h2>
+<section id="exercise-3---solution" class="slide level2">
+<h2>Exercise 3 - solution</h2>
 <p>For a complete version of the example, see the <a href="https://github.com/Cambridge-ICCS/FTorch/tree/main/examples/06_Looping">Looping example</a>.</p>
 </section>
-<section id="exercise-3-automatic-differentiation" class="slide level2">
-<h2>Exercise 3: automatic differentiation</h2>
+<section id="exercise-4-automatic-differentiation" class="slide level2">
+<h2>Exercise 4: automatic differentiation</h2>
 <p>PyTorch has a powerful automatic differentiation engine called <code>autograd</code> that can be used to compute derivatives of expressions involving tensors.</p>
 <p><br>
 </p>
@@ -890,27 +991,32 @@ _fwd_seq.0.weight:
 </ul>
 <!-- =============================================================================== -->
 <!-- {{< include _case_studies.qmd >}} -->
-<aside><ol class="aside-footnotes"><li id="fn5"><p>We can also use AMD HIP, Intel XPU and AppleSilicon MPS.</p></li></ol></aside></section>
-<section id="ongoing-and-future-work" class="slide level2 smaller">
-<h2>Ongoing and future Work</h2>
-<ul>
-<li>Online training
-<ul>
-<li>UKCA (United Kingdom Chemistry and Aerosols) case study.</li>
-</ul></li>
-<li>Better integration into CESM and other codes</li>
-<li>Benchmarking against other solutions
-<ul>
-<li>Benchmarking “ease of use” is hard</li>
-</ul></li>
-</ul>
 <!-- =============================================================================== -->
-</section>
+<aside><ol class="aside-footnotes"><li id="fn6"><p>We can also use AMD HIP, Intel XPU and AppleSilicon MPS.</p></li></ol></aside></section>
 <section id="thanks-for-listening" class="slide level2 smaller">
 <h2>Thanks for Listening</h2>
 <p>For more information please speak to us afterwards, or drop us a message.</p>
-<p><img data-src="https://iccs.cam.ac.uk/sites/default/files/logo2_2.png" class="absolute" style="width: 20%; height: 30%; object-fit: cover; object-position: 0 0;top: 25%; right: 0%; "></p>
-<p>The ICCS received support from <img data-src="images/schmidt_science.png" style="margin: 0; vertical-align: -2%;height:2.4em"></p>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><i class="fa-solid fa-pencil" aria-label="pencil"></i> &nbsp;Jack Atkinson</p>
+<p><i class="fa-solid fa-envelope" aria-label="envelope"></i> &nbsp;<a href="mailto:jwa34@cam.ac.uk">jwa34[AT]cam.ac.uk</a></p>
+<p><i class="fa-brands fa-github" aria-label="github"></i> &nbsp;<a href="https://github.com/jatkinson1000">jatkinson1000</a></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<p><i class="fa-solid fa-pencil" aria-label="pencil"></i> &nbsp;Joe Wallwork</p>
+<p><i class="fa-solid fa-envelope" aria-label="envelope"></i> &nbsp;<a href="mailto:joe.wallwork@damtp.cam.ac.uk">joe.wallwork[AT]damtp.cam.ac.uk</a></p>
+<p><i class="fa-brands fa-github" aria-label="github"></i> &nbsp;<a href="https://github.com/jwallwork23">jwallwork23</a></p>
+</div></div>
+<p><br>
+</p>
+<p><br>
+</p>
+<p>Thanks to the rest of the FTorch team and contributors.</p>
+<p>The ICCS received support from <img data-src="images/schmidt_science.png" style="margin: 0; vertical-align: -2%;height:2em"></p>
+<p>FTorch has been supported by <img data-src="images/c2d3_logo.png" style="margin: 0; vertical-align: -2%;height:1.4em"></p>
+<p><img data-src="images/ICCS_Cambridge_small.png" class="absolute" style="width: 18%;bottom: 24%; right: 11%; "></p>
+<p><img data-src="images/FTorch.svg" class="absolute" style="width: 30%;bottom: 12%; right: 5%; "></p>
 
 </section></section>
 

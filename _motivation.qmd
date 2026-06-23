@@ -61,8 +61,6 @@ Much machine learning is conducted in Python.
 
 ![]( https://raw.githubusercontent.com/pytorch/pytorch/main/docs/source/_static/img/pytorch-logo-dark.png ){style="background-image: radial-gradient(gray 0%, #03334E 75%);" .absolute top=55% left=5% width=20%}
 
-![]( https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/TensorFlowLogo.svg/696px-TensorFlowLogo.svg.png?20180105010857 ){.absolute top=65% left=7.5% width=15%}
-
 
 
 ![]( https://raw.githubusercontent.com/fortran-lang/fortran-lang.org/bbdc33ec7bfc06fa6111093ae9712a7f7837b555/assets/img/fortran-logo.svg ){.absolute top=40% right=10% width=10%}
@@ -90,7 +88,6 @@ Much machine learning is conducted in Python.
 by [cmglee](https://commons.wikimedia.org/wiki/User:Cmglee)
 used under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.en)  
 PyTorch, the PyTorch logo and any related marks are [trademarks of The Linux Foundation](https://www.linuxfoundation.org/legal/trademark-usage).”  
-TensorFlow, the TensorFlow logo and any related marks are trademarks of Google Inc.
 :::
 
 

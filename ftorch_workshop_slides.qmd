@@ -1,6 +1,6 @@
 ---
 output-file: index
-title: "Coupling Machine Learning to Fortran using the FTorch Library"
+title: "<br> Coupling Machine Learning to Fortran using the FTorch Library"
 format:
   revealjs:
     embed-resources: false
@@ -19,16 +19,37 @@ revealjs-plugins:
 authors:
   - name: Jack Atkinson
     orcid: 0000-0001-5001-4812
-    affiliations: Senior Research Software Engineer <br> ICCS - University of Cambridge
+    affiliations: Principal Research Software Engineer <br> ICCS - University of Cambridge
   - name: Joe Wallwork
     orcid: 0000-0002-3646-091X
     affiliations: Senior Research Software Engineer <br> ICCS - University of Cambridge
-  - name: Tom Meltzer
-    orcid: 0000-0003-1740-9550
-    affiliations: Senior Research Software Engineer <br> ICCS - University of Cambridge
   - name: The ICCS Team and Collaborators
-date: "2025-07-09"
+date: "2026-07-15"
 bibliography: references.bib
+include-in-header:
+  - text: |
+      <style>
+      #title-slide .title {
+        font-size: 1em;
+        color: #ffffff;
+      }
+      #title-slide .authors {
+        font-size: 0.7em;
+        color: #ffffff;
+      }
+      #title-slide .date {
+        font-size: 0.65em;
+        color: #ffffff;
+      }
+      #title-slide .title::before {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 220px;
+        height: 100px;
+        background: url('images/FTorch.svg') no-repeat center/contain;
+      }
+      </style>
 ---
 
 ## Precursors {.smaller .nostretch}
@@ -76,14 +97,22 @@ under [CC0(1.0)](https://creativecommons.org/publicdomain/zero/1.0/deed.en) or
 
 ## Further Information {.smaller}
 
-For more details on the development see slides from our recent talk here:
-[jackatkinson.net/slides/Oxford-FTorch/](https://jackatkinson.net/slides/Oxford-FTorch/)
+For more details on the development see slides and recording from a recent talk here:
+[jackatkinson.net/slides/Oxford-FTorch/](https://jackatkinson.net/slides/Leeds-N8-FTorch)
 
-{{< qrcode https://jackatkinson.net/slides/Oxford-FTorch/ hslcvu57fy width=200 height=200 >}}
+:::: {.columns}
+::: {.column width="50%"}
+{{< qrcode https://jackatkinson.net/slides/Leeds-N8-FTorch hslcvu57fy width=200 height=200 >}}
+:::
+::: {.column width="50%"}
+{{< qrcode https://www.youtube.com/watch?v=je7St0t_W9Ah hfhskvhrtb width=200 height=200 >}}
+:::
+::::
 
-Or join the upcoming (18th July) seminar here: [N8 Leeds Seminar](https://www.eventbrite.co.uk/e/ftorch-a-library-for-coupling-pytorch-models-to-fortran-tickets-1468959069119)
+Or, for the lastest on what's new in FTorch, see
+[jackatkinson.net/slides/CESM-Jun-26](https://jackatkinson.net/slides/CESM-Jun-26)
 
-{{< qrcode https://www.eventbrite.co.uk/e/ftorch-a-library-for-coupling-pytorch-models-to-fortran-tickets-1468959069119 vhtifowi38 width=200 height=200 >}}
+{{< qrcode https://jackatkinson.net/slides/CESM-Jun-26 vhtifowi38 width=200 height=200 >}}
 
 <!-- =============================================================================== -->
 
@@ -99,20 +128,15 @@ Or join the upcoming (18th July) seminar here: [N8 Leeds Seminar](https://www.ev
 
 <!-- =============================================================================== -->
 
+{{< include _resnet_exercise.qmd >}}
+
+<!-- =============================================================================== -->
+
 {{< include _further_details.qmd >}}
 
 <!-- =============================================================================== -->
 
 <!-- {{< include _case_studies.qmd >}} -->
-
-## Ongoing and future Work {.smaller}
-
-
-- Online training
-  - UKCA (United Kingdom Chemistry and Aerosols) case study.
-- Better integration into CESM and other codes
-- Benchmarking against other solutions
-  - Benchmarking "ease of use" is hard
 
 <!-- =============================================================================== -->
 
@@ -120,6 +144,35 @@ Or join the upcoming (18th July) seminar here: [N8 Leeds Seminar](https://www.ev
 
 For more information please speak to us afterwards, or drop us a message.
 
-![](https://iccs.cam.ac.uk/sites/default/files/logo2_2.png){style="width: 20%; height: 30%; object-fit: cover; object-position: 0 0;" .absolute top=25% right=0%}
+:::: {.columns}
+::: {.column width="45%"}
+{{< fa pencil >}} \ Jack Atkinson
 
-The ICCS received support from ![]( images/schmidt_science.png ){height=2.4em style="margin: 0; vertical-align: -2%"}
+{{< fa solid envelope >}} \ [jwa34[AT]cam.ac.uk](mailto:jwa34@cam.ac.uk)
+
+{{< fa brands github >}} \ [jatkinson1000](https://github.com/jatkinson1000)
+:::
+::: {.column width="10%"}
+:::
+::: {.column width="45%"}
+{{< fa pencil >}} \ Joe Wallwork
+
+{{< fa solid envelope >}} \ [joe.wallwork[AT]damtp.cam.ac.uk](mailto:joe.wallwork@damtp.cam.ac.uk)
+
+{{< fa brands github >}} \ [jwallwork23](https://github.com/jwallwork23)
+:::
+::::
+
+\
+
+\
+
+Thanks to the rest of the FTorch team and contributors.
+
+The ICCS received support from ![](images/schmidt_science.png){height=2em style="margin: 0; vertical-align: -2%"}
+
+FTorch has been supported by ![](images/c2d3_logo.png){height=1.4em style="margin: 0; vertical-align: -2%"}
+
+![](images/ICCS_Cambridge_small.png){style="width: 18%;" .absolute bottom=24% right=11%}
+
+![](images/FTorch.svg){style="width: 30%;" .absolute bottom=12% right=5%}

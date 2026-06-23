@@ -110,9 +110,6 @@ Notes:
 - Set build type to `Debug` for debugging with `-g`.
 - Prefix path is wherever libtorch is on your system.
 - Install prefix can be set to anywhere. Defaults may require root/admin access.
-- After building FTorch with `build_FTorch.sh`, the script also runs `pip install` to
-  install the `pt2ts` command-line tool. This brings Python dependencies including
-  `numpy` and `torch`.
 
 
 ## Build FTorch - details
@@ -147,3 +144,14 @@ Installation will place files in `CMAKE_INSTALL_PREFIX/`:
 - `lib/` contains cmake and library files.
   - This could be called `lib64/` on some systems.
   - UNIX will use `.so` files whilst Windows has `.dll` files.
+
+
+## FTorch_utils
+
+FTorch includes a pip-installable Python library `ftorch_utils` that installs the
+handy `pt2ts` command-line utility for converting Python models to TorchScript.
+
+It also installs PyTorch and other dependencies as required by the FTorch examples suite.
+
+If installing in codespaces using `build_FTorch.sh` these will be installed into a
+Python virtual environment for you.
