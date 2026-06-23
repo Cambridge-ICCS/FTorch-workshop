@@ -27,7 +27,8 @@ program autograd
   call torch_tensor_from_array(b, in_data2, torch_kCPU, requires_grad=.true.)
 
   ! TODO 1: Initialise the tensor Q from the first array used for output with
-  !         `torch_tensor_from_array`
+  !         `torch_tensor_from_array`. Recall:
+  !         https://cambridge-iccs.github.io/FTorch/interface/torch_tensor_from_array.html
 
   ! Scalar multiplication and division are not currently implemented in FTorch.
   ! However, you can achieve the same thing by defining a rank-1 tensor with a
@@ -45,13 +46,15 @@ program autograd
        Q%get_dtype(), Q%get_device_type())
 
   ! TODO 3: Run the back-propagation operator using `torch_tensor_backward`
-  !         with the external gradient
+  !         with the external gradient. See
+  !         https://cambridge-iccs.github.io/FTorch/interface/torch_tensor_backward.html
 
   ! TODO 4: Create tensors `dQda` and `dQdb` based off output arrays for the
   !         gradients with `torch_tensor_from_array`.
 
   ! TODO 5: Retrieve the gradient values with `torch_tensor_get_gradient` and
   !         print the corresponding arrays to screen. Do they give the expected
-  !         values?
+  !         values? See:
+  !         https://cambridge-iccs.github.io/FTorch/interface/torch_tensor_get_gradient.html
 
 end program autograd

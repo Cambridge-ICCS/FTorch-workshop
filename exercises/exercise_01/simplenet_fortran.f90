@@ -18,7 +18,9 @@ program inference
 
    ! TODO 1: Declare `torch_net` and `torch_tensor` variables - the net and
    !         vectors of input tensors (in this case we only have one), and
-   !         output tensors
+   !         output tensors. See:
+   !         https://cambridge-iccs.github.io/FTorch/type/torch_model.html
+   !         https://cambridge-iccs.github.io/FTorch/type/torch_tensor.html
 
    ! Set Torchscript model path (relative to the build directory)
    character(len=128) :: model_torchscript_file = '../torchscript_simplenet_model_cpu.pt'
@@ -27,15 +29,18 @@ program inference
    in_data = [0.0, 1.0, 2.0, 3.0, 4.0]
 
    ! TODO 2: Create Torch input/output tensors from the above arrays using
-   !         `torch_tensor_from_array`
+   !         `torch_tensor_from_array`. See:
+   !         https://cambridge-iccs.github.io/FTorch/interface/torch_tensor_from_array.html
 
-   ! TODO 3: Load ML model using `torch_model_load`
+   ! TODO 3: Load ML model using `torch_model_load`. See:
+   !         https://cambridge-iccs.github.io/FTorch/proc/torch_model_load.html
 
    ! Print the parameters associated with the pre-trained model
    write (*,*) "Model parameters:"
    call torch_net%print_parameters()
 
-   ! TODO 4: Run inference on the model using `torch_model_forward`
+   ! TODO 4: Run inference on the model using `torch_model_forward`. See:
+   !         https://cambridge-iccs.github.io/FTorch/proc/torch_model_forward.html
 
    ! Write out the result of calling the net
    ! Note: data immediately available in Fortran - no need to 'map'
