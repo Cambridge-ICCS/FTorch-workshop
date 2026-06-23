@@ -90,8 +90,11 @@ program resnet_infer_fortran
   ! TODO 4: Run inference using `torch_model_forward`. Recall:
   !         https://cambridge-iccs.github.io/FTorch/proc/torch_model_forward.html
 
-  ! TODO 5: Classify results for each image in the batch using the `classify`
-  !         subroutine defined below
+  ! Classify results for each image in the batch using the `classify`
+  ! subroutine defined below
+  do i = 1, batch_size
+    call classify(out_data(i, :), i)
+  end do
 
   deallocate(in_data)
   deallocate(out_data)

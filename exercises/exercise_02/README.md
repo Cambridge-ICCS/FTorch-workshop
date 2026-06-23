@@ -78,8 +78,6 @@ exercise 1 complete the following tasks labelled as `TODO` comments in
    and 2D (`out_data(batch_size,1000)`) with `batch_size = 1`.
 3. **Load the model** using `torch_model_load`.
 4. **Run inference** using `torch_model_forward`.
-5. **Classify results** for each image in the batch using the `classify`
-   subroutine.
 
 
 ## Stage 2: Add batching
