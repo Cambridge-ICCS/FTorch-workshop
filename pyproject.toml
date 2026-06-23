@@ -20,7 +20,7 @@ classifiers = [
 
 dependencies = [
     "torch>=2.0",
-    # "torchvision>=0.13",
+    "torchvision>=0.13",
     "numpy",
 ]
 

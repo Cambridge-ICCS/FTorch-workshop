@@ -1,199 +1,124 @@
-# Exercise 3 - Autograd
+# Exercise 3 - Looping
+
+So far many of the examples have been somewhat trivial, reading in a net and
+calling it once to demonstrate the inference process.
+
+In reality most applications that we use Fortran for will be performing many
+iterations of a process and calling the net multiple times.
+Loading in the net from file is computationally expensive, so we should do this
+only once, and then call the forward method on the loaded net as part of the
+iterative process.
+
+This example demonstrates the naive 'bad' approach and then the more efficient
+'good' approach.
+It shows the suggested way to break down the FTorch code into initialisation,
+forward, and finalisation subroutines, and allows users to time the different
+approaches to observe the significant performance difference.
 
 ## Description
 
-A Python demo is modified based on the one found in the PyTorch documentation as
-`autograd.py`, which shows how to compute the gradient of an arithmetic
-combination of Torch Tensors. There are several exercises to check that the
-values are computed correctly.
+We revisit SimpleNet from exercise 1 that takes an input tensor of length 5 and
+multiplies it by two.
+This time we start by passing it the tensor `[1.0, 2.0, 3.0, 4.0]`, but then
+iterate 10,000 times, each time incrementing each element by 1.0.
+We sum the results of each forward pass and print the final result.
 
-The demo is replicated in Fortran as `autograd.f90`, to show how to do the same
-thing using FTorch.
+There are two folders `bad/` and `good/` that show two different approaches.
+
+The same `pt2ts` command as in the previous exercise is used to save the
+network to TorchScript.
+A `simplenet_fortran.f90` file contains the main program that runs over the
+loop.
+A `fortran_ml_mod.f90` file contains a module with the FTorch code to load the
+TorchScript model, run it in inference mode, and clean up.
+
+### Bad
+
+We start with the 'bad' approach which takes the obvious approach, enclosing the
+code from exercise 1 in a loop.
+
+Examine the code in `bad/fortran_ml_mod.f90` to see how the subroutine
+`ml_routine()` creates a `torch_model` and `torch_tensor`s and reads in the net
+on every call before performing inference and then destroying them.
+
+### Good
+
+Now look at the 'good' approach.
+
+Examining the code in `good/fortran_ml_mod.f90` we see how there is an
+initialisation subroutine `ml_init()` that reads in the net from file, holding
+it as a module variable.
+There is then `ml_routine()` that maps the input and output data to
+`torch_tensor`s (also declared at module level) and performs the forward pass.
+Finally we have `ml_finalise()` that cleans up the net and tensors.
+
+Looking next at `good/simplenet_fortran.f90` we see how the initialisation and
+finalisation routines are called once, before and after the main loop
+respectively, with only `ml_routine()` running the forward pass called from
+inside the loop.
+
+The benefits of this approach can be seen by comparing the time taken to run
+each version the code as detailed below.
 
 ## Running
 
-Run the Python version of the demo with
+You can check everything is working by running `simplenet.py`:
 ```
-python3 autograd.py
+python3 simplenet.py
 ```
+This defines the network and runs it with input tensor [0.0, 1.0, 2.0, 3.0, 4.0]
+to produce the result:
+```
+Model output: tensor([[0., 2., 4., 6., 8.]])
+```
+A PyTorch model file `pytorch_simplenet_model_cpu.pt` and an input tensor file
+`pytorch_simplenet_input_tensor_cpu.pt` will also be created.
 
-To run the Fortran version of the demo we need to compile with (for example)
+To save the SimpleNet model to TorchScript, run the `pt2ts` command:
 ```
-mkdir build
+pt2ts SimpleNet \
+  --model_definition_file simplenet.py \
+  --input_model_file pytorch_simplenet_model_cpu.pt \
+  --output_model_file torchscript_simplenet_model_cpu.pt \
+  --input_tensor_file pytorch_simplenet_input_tensor_cpu.pt \
+  --test
+```
+which will generate `torchscript_simplenet_model_cpu.pt` - the TorchScript
+instance of the network and perform a quick sanity check that it can be read.
+
+Now we can build the Fortran codes.
+This is done from the root level of the exercise using CMake as follows:
+```
+cmake -B build -DCMAKE_BUILD_TYPE=Release .
 cd build
-cmake .. -DCMAKE_PREFIX_PATH=<path/to/your/installation/of/library/> -DCMAKE_BUILD_TYPE=Release
-cmake --build .
+make
 ```
 
-(Note that the Fortran compiler can be chosen explicitly with the `-DCMAKE_Fortran_COMPILER` flag,
-and should match the compiler that was used to locally build FTorch.)
+(Note that the Fortran compiler can be chosen explicitly with the
+`-DCMAKE_Fortran_COMPILER` flag, and should match the compiler that was used to
+locally build FTorch.)
 
-To run the compiled code, simply use
+This will generate two executables `simplenet_fortran_bad` and
+`simplenet_fortran_good`.
+
+These can be run and timed using:
 ```
-./autograd
+time ./simplenet_fortran_bad
+```
+and 
+```
+time ./simplenet_fortran_good
 ```
 
-## Python tasks
-
-### Task 1
-
-```python
-# TODO: Calculate the value of Q by hand to provide expected values
-# Q_expected =
+You should get output like:
 ```
-
-#### Solution
-
-<details>
-
-We have
-$$Q = 3 (a^3 - b^2/3) = 3a^3 - b^2$$
-Now
-$$a=[2, 3] \implies a^3 = [8, 27]$$
+   99985792.0       100005792.       100025792.       100045792.       100065800.
+./simplenet_fortran_bad  13.64s user 1.10s system 94% cpu 15.551 total
+```
 and
-$$b=[6, 4] \implies b^2 = [36, 16]$$
-so
-$$Q = 3 [8, 27] - [36, 16] = [24, 81] - [36, 16] = [-12, 65]$$
-
-```python
-# Calculate the value of Q by hand to provide expected values
-Q_expected = torch.tensor([-12.0, 65.0])
+```
+   99985792.0       100005792.       100025792.       100045792.       100065800.
+./simplenet_fortran_good  0.34s user 0.02s system 98% cpu 0.369 total
 ```
 
-</details>
-
-### Task 2
-
-```python
-# TODO: Calculate the directional derivatives of Q with respect to a and b by hand to
-#       provide expected values
-# dQda_expected =
-# dQdb_expected =
-```
-
-#### Solution
-
-<details>
-
-We have
-$$Q = 3 (a^3 - b^2/3) = 3a^3 - b^2$$
-so
-$$\frac{\partial Q}{\partial a} = 9a^2$$
-and
-$$\frac{\partial Q}{\partial b} = -2b$$
-
-In code:
-```python
-# Calculate the directional derivatives of Q with respect to a and b by hand to
-# provide expected values
-dQda_expected = 9 * a**2
-dQdb_expected = -2 * b
-```
-
-</details>
-
-## Fortran tasks
-
-### Task 1
-
-```fortran
-  ! TODO: Initialise the tensor Q from the first array used for output with torch_tensor_from_array
-```
-
-#### Solution
-
-<details>
-
-```fortran
-  ! Initialise Q from the first array used for output
-  call torch_tensor_from_array(Q, out_data1, torch_kCPU)
-```
-
-</details>
-
-### Task 2
-
-```fortran
-  ! TODO: Compute the same mathematical expression as in the Python example and print it to screen.
-  !       Does it give the expected value?
-```
-
-#### Solution
-
-<details>
-
-```fortran
-  ! Compute the same mathematical expression as in the Python example and print it to screen.
-  Q = multiplier * (a**3 - b * b / divisor)
-  write (*,*) "Q = 3 * (a^3 - b*b/3) = 3*a^3 - b^2 = ", out_data1(:)
-```
-
-The output should be
-```
-Q = 3 * (a^3 - b*b/3) = 3*a^3 - b^2 =   -12.0000000       65.0000000
-```
-
-</details>
-
-### Task 3
-
-```fortran
-  ! TODO: Run the back-propagation operator using torch_tensor_backward with the external gradient
-```
-
-#### Solution
-
-<details>
-
-```fortran
-  ! Run the back-propagation operator with the external gradient
-  call torch_tensor_backward(Q, external_gradient)
-```
-
-</details>
-
-### Task 4
-
-```fortran
-  ! TODO: Create tensors dQda and dQdb based off output arrays for the gradients with
-  !       torch_tensor_from_array.
-```
-
-#### Solution
-
-<details>
-
-```fortran
-  ! Create tensors dQda and dQdb based off output arrays for the gradients
-  call torch_tensor_from_array(dQda, out_data2, torch_kCPU)
-  call torch_tensor_from_array(dQdb, out_data3, torch_kCPU)
-```
-
-</details>
-
-### Task 5
-
-```fortran
-  ! TODO: Retrieve the gradient values with torch_tensor_get_gradient and print the corresponding
-  !       arrays to screen. Do they give the expected values?
-```
-
-#### Solution
-
-<details>
-
-```fortran
-  ! Retrieve the gradient values and print the corresponding arrays to screen
-  call torch_tensor_get_gradient(dQda, a)
-  call torch_tensor_get_gradient(dQdb, b)
-  write(*,*) "dQda = 9*a^2 = ", out_data2
-  write(*,*) "dQdb = - 2*b = ", out_data3
-```
-
-The output should be
-```
-dQda = 9*a^2 =    36.0000000       81.0000000
-dQdb = - 2*b =   -12.0000000      -8.00000000
-```
-
-</details>
+We see that the 'good' approach is of the order of 40 times faster.

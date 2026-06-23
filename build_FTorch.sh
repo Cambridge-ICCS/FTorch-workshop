@@ -16,7 +16,7 @@ cd FTorch
 
 # Install the ftorch_utils Python package, which provides the pt2ts CLI tool
 # This has PyTorch as a dependency, for which we force the cpu version as follows
-pip install . --extra-index-url https://download.pytorch.org/whl/cpu
+pip install .[examples] --extra-index-url https://download.pytorch.org/whl/cpu
 
 # Create a build directory to build FTorch in using CMake
 mkdir build
@@ -36,18 +36,29 @@ cmake .. \
 cmake --build . --target install
 
 # Add LibTorch libraries to the paths to be searched for dynamic linking at runtime
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PYTHON_PATH/torch/lib
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+${LD_LIBRARY_PATH}:}$PYTHON_PATH/torch/lib"
 
 # Add FTorch install dir to CMAKE_PREFIX_PATH so that cmake can locate the project
-export CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:/workspaces/FTorch-workshop/FTorch_bin"
+export CMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH:+${CMAKE_PREFIX_PATH}:}/workspaces/FTorch-workshop/FTorch_bin"
 
 # Add these commands to the .bashrc for future use
-echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$PYTHON_PATH/torch/lib" >> $HOME/.bashrc
-echo "export CMAKE_PREFIX_PATH=\$CMAKE_PREFIX_PATH:/workspaces/FTorch-workshop/FTorch_bin" >> $HOME/.bashrc
+echo "export LD_LIBRARY_PATH=\${LD_LIBRARY_PATH:+\${LD_LIBRARY_PATH}:}$PYTHON_PATH/torch/lib" >> $HOME/.bashrc
+echo "export CMAKE_PREFIX_PATH=\${CMAKE_PREFIX_PATH:+\${CMAKE_PREFIX_PATH}:}/workspaces/FTorch-workshop/FTorch_bin" >> $HOME/.bashrc
 
 
-echo "run the following command to setup your environment:"
-echo "source \$HOME/.bashrc"
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+echo ""
+echo -e "${YELLOW}======================================================${NC}"
+echo -e "${YELLOW}  FTorch build complete!${NC}"
+echo -e "${YELLOW}======================================================${NC}"
+echo ""
+echo -e "${GREEN}Run the following command to set up your environment:${NC}"
+echo ""
+echo -e "  ${GREEN}source \$HOME/.bashrc${NC}"
+echo ""
+echo -e "${YELLOW}======================================================${NC}"
 
 # Return user to the root of the workshop, leaving the venv activated
 cd /workspaces/FTorch-workshop

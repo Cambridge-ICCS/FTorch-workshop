@@ -3,14 +3,14 @@ cmake_minimum_required(VERSION 3.18...3.31)
 # target_sources is run
 cmake_policy(SET CMP0076 NEW)
 
-set(PROJECT_NAME ResNetExample)
+set(PROJECT_NAME AutogradExample)
 
 project(${PROJECT_NAME} LANGUAGES Fortran)
 
-# Build in Release mode if not specified
+# Build in Debug mode if not specified
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE
-      Release
+      Debug
       CACHE STRING "" FORCE)
 endif()
 
@@ -18,5 +18,5 @@ find_package(FTorch)
 message(STATUS "Building with Fortran PyTorch coupling")
 
 # Fortran example
-add_executable(resnet_infer_fortran resnet_infer_fortran.f90)
-target_link_libraries(resnet_infer_fortran PRIVATE FTorch::ftorch)
+add_executable(autograd autograd.f90)
+target_link_libraries(autograd PRIVATE FTorch::ftorch)
