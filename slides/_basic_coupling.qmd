@@ -109,31 +109,29 @@ We will modify it to create the neccessary data structures and load and call the
 - Load the model and print its parameters.
 - Call `torch_model_forward` to run the net.
 
-
-## Calling from Fortran
-
-Notes:
-
-- See the solution file `simplenet_fortran_sol.f90` for an ideal code.
-- for more information on the subroutines and API see the
+::: aside
+See the solution file `simplenet_fortran_sol.f90` for an ideal code.\
+For more information on the subroutines and API see the
   [online API documentation](https://cambridge-iccs.github.io/FTorch/lists/procedures.html)
+:::
 
-
-## Building the code
+## Build and run the code
 
 Once we have modified the Fortran we need to compile the code and link it to FTorch.
 
-For convenience, this can be done in the codespace from the `exercise_01/` subdirectory as follows:
+This can be done from the `exercise_01/` subdirectory using CMake as follows:
 ```sh
 mkdir build
 cd build
 cmake ..
 cmake --build .
 ```
-The path to the FTorch installation will be picked up automatically so doesn't need to be specified.
 
-
-## Running the code
+::: aside
+The path to the FTorch installation will be picked up automatically in Codespaces so
+doesn't need to be specified. If building locally you may need to add FTorch to the
+[`LD_LIBRARY_PATH`](https://cambridge-iccs.github.io/FTorch/page/installation/hpc.html).
+:::
 
 To run the code we can use the generated executable:
 ```default

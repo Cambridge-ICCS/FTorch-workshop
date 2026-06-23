@@ -36,14 +36,16 @@ Output is tensor([0., 2., 4., 6., 8.]).
 
 ## Compilers and CMake
 
-First we will check that we have Fortran, C and C++ compilers installed:
+First we will check that we have a Fortran compiler and CMake installed:
 
 Running:
 ```default
 gfortran --version
-gcc --version
-g++ --version
+cmake --version
 ```
+
+\
+
 ::::{.columns}
 :::{.column width=60%}
 Should produce output similar to:
@@ -53,35 +55,22 @@ Copyright (C) 2024 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.
 There is NO warranty; not even for MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.
+
+cmake version 3.31.0
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
 ```
 :::
 :::{.column width=40%}
 and not:
 ```default
 bash: command not found: gfortran
+bash: command not found: cmake
 ```
 :::
 ::::
-
-\
-
-:::{.fragment}
-::::{.columns}
-:::{.column width=60%}
-Later on we will also need CMake.
-:::
-:::{.column width=40%}
-To check this is installed run:
-```default
-cmake --version
-```
-and verify it is >= 3.18.
-:::
-::::
-:::
 
 :::{.aside}
-Check that gcc version is >= 9
+Check that CMake version >= 3.18 and gcc >= 9 as required for FTorch.
 :::
 
 ## Fortran
@@ -91,22 +80,29 @@ subroutine to multiply it by two before printing the result.
 
 The subroutine is contained in a separate module `math_mod.f90`, however.
 
+
+## Fortran
+
+Now we will compile the code using CMake.
+
 :::{.fragment}
-We can compile both of these to produce `.o` object files and a `.mod` module files using:
+First create a build directory and generate build scripts using CMake:
 ```default
-gfortran -c math_mod.f90 hello_fortran.f90
+mkdir build
+cd build
+cmake ..
 ```
 :::
 
 :::{.fragment}
-We then link these together into an executable `ftn_prog` using:
+We then use CMake again to build the executable:
 ```default
-gfortran -o ftn_prog hello_fortran.o math_mod.o
+cmake --build .
 ```
 :::
 
 :::{.fragment}
-Running this as:
+Run the compiled executable:
 ```default
 ./ftn_prog
 ```
@@ -119,5 +115,5 @@ should produce the output
 :::
 
 :::{.aside}
-object files contain code run by the machine, and module files contain interfaces to modules.
+CMake handles the compilation and linking of both Fortran files.
 :::
