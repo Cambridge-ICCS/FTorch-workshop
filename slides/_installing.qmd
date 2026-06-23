@@ -1,4 +1,4 @@
-# Installing FTorch
+# The FTorch library
 
 <!--
 
@@ -67,6 +67,7 @@ These are compiled, linked together, and installed using CMake.
 - Configured in the `CMakeLists.txt` file.
 
 
+<!--
 ## Build FTorch
 
 This is all handled by the `build_FTorch.sh` script in the Codespace.
@@ -144,6 +145,7 @@ Installation will place files in `CMAKE_INSTALL_PREFIX/`:
 - `lib/` contains cmake and library files.
   - This could be called `lib64/` on some systems.
   - UNIX will use `.so` files whilst Windows has `.dll` files.
+-->
 
 
 ## FTorch_utils
