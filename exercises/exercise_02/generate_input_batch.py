@@ -53,7 +53,8 @@ if __name__ == "__main__":
     data_dir = parsed_args.data_dir
     np_precision = np.float32
 
-    # Add images here. The batch size matches the list length.
+    # TODO Part 2 - Add images from data/ here.
+    # The batch size used in the code matches the list length.
     image_files = [
         "dog.jpg",
     ]
