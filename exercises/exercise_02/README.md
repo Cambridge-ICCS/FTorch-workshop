@@ -72,12 +72,14 @@ data to tensors, load a model, and run inference. Building on what you learnt in
 exercise 1 complete the following tasks labelled as `TODO` comments in
 `resnet_infer_fortran.f90`:
 
-1. **Declare** `torch_model` and `torch_tensor` variables.
-2. **Create tensors** from the Fortran arrays using
+1. Declare `torch_model` and `torch_tensor` variables.
+2. Create tensors from the Fortran arrays using
    `torch_tensor_from_array`. The arrays are 4D (`in_data(batch_size,3,224,224)`)
    and 2D (`out_data(batch_size,1000)`) with `batch_size = 1`.
-3. **Load the model** using `torch_model_load`.
-4. **Run inference** using `torch_model_forward`.
+3. Load the model using `torch_model_load`.
+   - Note that the input filename string is already available as
+     the variable `model_file`.
+4. Run inference using `torch_model_forward`.
 
 
 ## Stage 2: Add batching

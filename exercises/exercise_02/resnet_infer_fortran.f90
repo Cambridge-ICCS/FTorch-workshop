@@ -86,6 +86,7 @@ program resnet_infer_fortran
 
   ! TODO 3: Load the TorchScript model using `torch_model_load`. Recall:
   !         https://cambridge-iccs.github.io/FTorch/proc/torch_model_load.html
+  !         Note that the model filename is already available as model_file
 
   ! TODO 4: Run inference using `torch_model_forward`. Recall:
   !         https://cambridge-iccs.github.io/FTorch/proc/torch_model_forward.html
