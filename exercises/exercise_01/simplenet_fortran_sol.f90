@@ -16,8 +16,9 @@ program inference
    real(wp), dimension(5), target :: in_data
    real(wp), dimension(5), target :: out_data
 
-   ! Set up Torch data structures
-   ! The net, a vector of input tensors, and a vector of output tensors
+   ! Declare `torch_net` and `torch_tensor` variables - the net and
+   ! vectors of input tensors (in this case we only have one), and
+   ! output tensors
    type(torch_tensor), dimension(1) :: input_tensors
    type(torch_tensor), dimension(1) :: output_tensors
    type(torch_model) :: torch_net
@@ -28,11 +29,12 @@ program inference
    ! Initialise data
    in_data = [0.0, 1.0, 2.0, 3.0, 4.0]
 
-   ! Create Torch input/output tensors from the above arrays
+   ! Create Torch input/output tensors from the above arrays using
+   ! `torch_tensor_from_array`
    call torch_tensor_from_array(input_tensors(1), in_data, torch_kCPU)
    call torch_tensor_from_array(output_tensors(1), out_data, torch_kCPU)
 
-   ! Load ML model
+   ! Load ML model using `torch_model_load`
    call torch_model_load(torch_net, model_torchscript_file, torch_kCPU)
 
    ! Print the parameters associated with the pre-trained model

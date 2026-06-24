@@ -81,8 +81,11 @@ SimpleNet example ran successfully
 ### Task 1
 
 ```fortran
-   ! TODO: Set up Torch data structures
-   ! The net, a vector of input tensors (in this case we only have one), and the output tensor
+   ! TODO 1: Declare `torch_net` and `torch_tensor` variables - the net and
+   !         vectors of input tensors (in this case we only have one), and
+   !         output tensors. See:
+   !         https://cambridge-iccs.github.io/FTorch/type/torch_model.html
+   !         https://cambridge-iccs.github.io/FTorch/type/torch_tensor.html
 ```
 
 #### Solution
@@ -90,8 +93,9 @@ SimpleNet example ran successfully
 <details>
 
 ```fortran
-   ! Set up Torch data structures
-   ! The net, a vector of input tensors, and a vector of output tensors
+   ! Declare `torch_net` and `torch_tensor` variables - the net and
+   ! vectors of input tensors (in this case we only have one), and
+   ! output tensors
    type(torch_tensor), dimension(1) :: input_tensors
    type(torch_tensor), dimension(1) :: output_tensors
    type(torch_model) :: torch_net
@@ -104,8 +108,9 @@ SimpleNet example ran successfully
 ### Task 2
 
 ```fortran
-   ! TODO: Create Torch input/output tensors from the above arrays using
-   !       `torch_tensor_from_array`
+   ! TODO 2: Create Torch input/output tensors from the above arrays using
+   !         `torch_tensor_from_array`. See:
+   !         https://cambridge-iccs.github.io/FTorch/interface/torch_tensor_from_array.html
 ```
 
 #### Solution
@@ -113,7 +118,8 @@ SimpleNet example ran successfully
 <details>
 
 ```fortran
-   ! Create Torch input/output tensors from the above arrays
+   ! Create Torch input/output tensors from the above arrays using
+   ! `torch_tensor_from_array`
    call torch_tensor_from_array(input_tensors(1), in_data, torch_kCPU)
    call torch_tensor_from_array(output_tensors(1), out_data, torch_kCPU)
 ```
@@ -125,7 +131,8 @@ SimpleNet example ran successfully
 ### Task 3
 
 ```fortran
-   ! TODO: Load ML model using `torch_model_load`
+   ! TODO 3: Load ML model using `torch_model_load`. See:
+   !         https://cambridge-iccs.github.io/FTorch/proc/torch_model_load.html
 ```
 
 #### Solution
@@ -133,7 +140,7 @@ SimpleNet example ran successfully
 <details>
 
 ```fortran
-   ! Load ML model
+   ! Load ML model using `torch_model_load`
    call torch_model_load(torch_net, model_torchscript_file, torch_kCPU)
 ```
 
@@ -144,7 +151,8 @@ SimpleNet example ran successfully
 ### Task 4
 
 ```fortran
-   ! TODO: Run inference on the model using `torch_model_forward`
+   ! TODO 4: Run inference on the model using `torch_model_forward`. See:
+   !         https://cambridge-iccs.github.io/FTorch/proc/torch_model_forward.html
 ```
 
 #### Solution
