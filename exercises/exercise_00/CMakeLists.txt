@@ -12,4 +12,4 @@ if(NOT CMAKE_BUILD_TYPE)
       CACHE STRING "" FORCE)
 endif()
 
-add_executable(ftn_prog hello_fortran.f90 math_mod.f90)
+add_executable(hello_fortran hello_fortran.f90 math_mod.f90)

@@ -115,7 +115,7 @@ For more information on the subroutines and API see the
   [online API documentation](https://cambridge-iccs.github.io/FTorch/lists/procedures.html)
 :::
 
-## Build and run the code
+## Building the code
 
 Once we have modified the Fortran we need to compile the code and link it to FTorch.
 

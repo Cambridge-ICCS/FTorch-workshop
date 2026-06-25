@@ -73,7 +73,7 @@ With supporting documentation at:\
 ::::
 
 For the purposes of this workshop using GitHub codespaces FTorch is 
-built by running the `build_FTorch.sh` script.
+built when sourcing the `build_FTorch.sh` script.
 
 This downloads the FTorch source from GitHub, installs libtorch through
 PyTorch, and then uses CMake to build FTorch and link it to libtorch.

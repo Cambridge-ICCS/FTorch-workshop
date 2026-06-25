@@ -104,7 +104,7 @@ cmake --build .
 :::{.fragment}
 Run the compiled executable:
 ```default
-./ftn_prog
+./hello_fortran
 ```
 should produce the output
 ```default

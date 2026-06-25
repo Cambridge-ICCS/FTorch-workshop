@@ -34,10 +34,10 @@ cmake --build .
 
 Note that `hello_fortran.f90` uses a module called `math_mod`, which is defined
 in `math_mod.f90`. Both files are listed in `CMakeLists.txt` and built together
-into an executable `ftn_prog`.
+into an executable `hello_fortran`.
 
 Run the executable with:
 ```sh
-./ftn_prog
+./hello_fortran
 ```
 Check that the output that it prints to screen is what you expect.
