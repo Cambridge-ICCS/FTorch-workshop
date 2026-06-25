@@ -35,7 +35,9 @@ program resnet_infer_fortran
   real(wp), dimension(:,:,:,:), allocatable, target :: in_data
   real(wp), dimension(:,:), allocatable, target :: out_data
 
-  ! TODO 1: Declare torch_model and torch_tensor variables
+  ! TODO 1: Declare `torch_model` and `torch_tensor` variables. Recall:
+  !         https://cambridge-iccs.github.io/FTorch/type/torch_model.html
+  !         https://cambridge-iccs.github.io/FTorch/type/torch_tensor.html
 
   ! File paths
   character(len=256) :: in_file
@@ -78,13 +80,22 @@ program resnet_infer_fortran
   call load_data(trim(in_file), in_data)
   write(*, *) "Loaded input data from ", trim(in_file)
 
-  ! TODO 2: Create input and output torch tensors from Fortran arrays
+  ! TODO 2: Create input and output torch tensors from Fortran arrays using
+  !         `torch_tensor_from_array`. Recall:
+  !         https://cambridge-iccs.github.io/FTorch/interface/torch_tensor_from_array.html
 
-  ! TODO 3: Load the TorchScript model using torch_model_load
+  ! TODO 3: Load the TorchScript model using `torch_model_load`. Recall:
+  !         https://cambridge-iccs.github.io/FTorch/proc/torch_model_load.html
+  !         Note that the model filename is already available as model_file
 
-  ! TODO 4: Run inference using torch_model_forward
+  ! TODO 4: Run inference using `torch_model_forward`. Recall:
+  !         https://cambridge-iccs.github.io/FTorch/proc/torch_model_forward.html
 
-  ! TODO 5: Classify results for each image in the batch
+  ! Classify results for each image in the batch using the `classify`
+  ! subroutine defined below
+  do i = 1, batch_size
+    call classify(out_data(i, :), i)
+  end do
 
   deallocate(in_data)
   deallocate(out_data)

@@ -20,6 +20,14 @@
         "openFiles": [
           "README.md"
         ]
+      },
+      // Auto-install VS Code extensions when a codespace is created
+      "vscode": {
+        "extensions": [
+          "fortran-lang.linter-gfortran",
+          "davidanson.vscode-markdownlint",
+          "ms-python.python"
+        ]
       }
   }
 

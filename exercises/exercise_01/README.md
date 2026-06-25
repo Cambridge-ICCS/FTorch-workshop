@@ -32,9 +32,7 @@ comes with FTorch:
 pt2ts SimpleNet \
   --model_definition_file simplenet.py \
   --input_model_file pytorch_simplenet_model_cpu.pt \
-  --output_model_file torchscript_simplenet_model_cpu.pt \
-  --input_tensor_file pytorch_simplenet_input_tensor_cpu.pt \
-  --test
+  --output_model_file torchscript_simplenet_model_cpu.pt
 ```
 This should produce `torchscript_simplenet_model_cpu.pt` - the TorchScript
 instance of the net.
@@ -83,7 +81,11 @@ SimpleNet example ran successfully
 ### Task 1
 
 ```fortran
-   ! TODO: Import our library for interfacing with PyTorch
+   ! TODO 1: Declare `torch_net` and `torch_tensor` variables - the net and
+   !         vectors of input tensors (in this case we only have one), and
+   !         output tensors. See:
+   !         https://cambridge-iccs.github.io/FTorch/type/torch_model.html
+   !         https://cambridge-iccs.github.io/FTorch/type/torch_tensor.html
 ```
 
 #### Solution
@@ -91,41 +93,9 @@ SimpleNet example ran successfully
 <details>
 
 ```fortran
-   ! Import our library for interfacing with PyTorch
-   use ftorch, only : torch_model, torch_tensor, torch_kCPU, &
-                      torch_tensor_from_array, torch_model_load, &
-                      torch_model_forward, torch_model_print_parameters
-```
-
-Note that
-```fortran
-   use ftorch
-```
-would work, and may be useful for the purposes of getting familiar with the code in
-the exercise.
-However, this approach is the equivalent of `from module import *` in Python which is
-considered bad practice as it pulls everything from the module into the namespace.
-This can have unintended consequences and cause conflicts so it is better to explicitly
-import only what you need.
-
-</details>
-
----
-
-### Task 2
-
-```fortran
-   ! TODO: Set up Torch data structures
-   ! The net, a vector of input tensors (in this case we only have one), and the output tensor
-```
-
-#### Solution
-
-<details>
-
-```fortran
-   ! Set up Torch data structures
-   ! The net, a vector of input tensors, and a vector of output tensors
+   ! Declare `torch_net` and `torch_tensor` variables - the net and
+   ! vectors of input tensors (in this case we only have one), and
+   ! output tensors
    type(torch_tensor), dimension(1) :: input_tensors
    type(torch_tensor), dimension(1) :: output_tensors
    type(torch_model) :: torch_net
@@ -135,10 +105,12 @@ import only what you need.
 
 ---
 
-### Task 3
+### Task 2
 
 ```fortran
-   ! TODO: Set Torchscript model path
+   ! TODO 2: Create Torch input/output tensors from the above arrays using
+   !         `torch_tensor_from_array`. See:
+   !         https://cambridge-iccs.github.io/FTorch/interface/torch_tensor_from_array.html
 ```
 
 #### Solution
@@ -146,8 +118,30 @@ import only what you need.
 <details>
 
 ```fortran
-   ! Set Torchscript model path (relative to the build directory)
-   character(len=128) :: model_torchscript_file = '../torchscript_simplenet_model_cpu.pt'
+   ! Create Torch input/output tensors from the above arrays using
+   ! `torch_tensor_from_array`
+   call torch_tensor_from_array(input_tensors(1), in_data, torch_kCPU)
+   call torch_tensor_from_array(output_tensors(1), out_data, torch_kCPU)
+```
+
+</details>
+
+---
+
+### Task 3
+
+```fortran
+   ! TODO 3: Load ML model using `torch_model_load`. See:
+   !         https://cambridge-iccs.github.io/FTorch/proc/torch_model_load.html
+```
+
+#### Solution
+
+<details>
+
+```fortran
+   ! Load ML model using `torch_model_load`
+   call torch_model_load(torch_net, model_torchscript_file, torch_kCPU)
 ```
 
 </details>
@@ -157,46 +151,8 @@ import only what you need.
 ### Task 4
 
 ```fortran
-   ! TODO: Create Torch input/output tensors from the above arrays
-```
-
-#### Solution
-
-<details>
-
-```fortran
-   ! Create Torch input/output tensors from the above arrays
-   call torch_tensor_from_array(input_tensors(1), in_data, torch_kCPU)
-   call torch_tensor_from_array(output_tensors(1), out_data, torch_kCPU)
-```
-
-</details>
-
----
-
-### Task 5
-
-```fortran
-   ! TODO: Load ML model
-```
-
-#### Solution
-
-<details>
-
-```fortran
-   ! Load ML model
-   call torch_model_load(torch_net, model_torchscript_file, torch_kCPU)
-```
-
-</details>
-
----
-
-### Task 6
-
-```fortran
-   ! TODO: Run inference on the model using `torch_model_forward`
+   ! TODO 4: Run inference on the model using `torch_model_forward`. See:
+   !         https://cambridge-iccs.github.io/FTorch/proc/torch_model_forward.html
 ```
 
 #### Solution
