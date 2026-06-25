@@ -116,11 +116,15 @@ Or, for the lastest on what's new in FTorch, see
 
 <!-- =============================================================================== -->
 
-{{< include _exercise_0.qmd >}}
+{{< include _learning_objectives.qmd >}}
 
 <!-- =============================================================================== -->
 
 {{< include _installing.qmd >}}
+
+<!-- =============================================================================== -->
+
+{{< include _exercise_0.qmd >}}
 
 <!-- =============================================================================== -->
 
@@ -157,7 +161,7 @@ For more information please speak to us afterwards, or drop us a message.
 ::: {.column width="45%"}
 {{< fa pencil >}} \ Joe Wallwork
 
-{{< fa solid envelope >}} \ [joe.wallwork[AT]damtp.cam.ac.uk](mailto:joe.wallwork@damtp.cam.ac.uk)
+{{< fa solid envelope >}} \ [jw2423[AT]cam.ac.uk](mailto:jw2423@cam.ac.uk)
 
 {{< fa brands github >}} \ [jwallwork23](https://github.com/jwallwork23)
 :::

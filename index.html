@@ -379,17 +379,14 @@ PyTorch, the PyTorch logo and any related marks are <a href="https://www.linuxfo
 <p>Developer</p>
 <p><img data-src="https://www.svgrepo.com/show/308093/software-developer-work-on-computer-programmer-coder.svg" style="filter: invert(100%);width:15.0%"> <img data-src="https://www.svgrepo.com/show/67720/brain-speech-bubble.svg" style="filter: invert(100%);width:15.0%"> <img data-src="https://www.svgrepo.com/show/490654/coffee-maker.svg" style="filter: invert(100%);width:15.0%"> <img data-src="https://www.svgrepo.com/show/479706/stopwatch.svg" style="filter: invert(100%);width:15.0%"></p>
 </div></div>
-<p>Both affect ‘time-to-science’.</p>
-<ul>
-<li>Don’t rewrite nets after you have already trained them.</li>
-<li>Not all scientists are computer scientists.
-<ul>
-<li>Software should be simple to learn and deploy.</li>
-<li>May not have access to extensive software support.</li>
-</ul></li>
-<li>HPC environments want minimal additional dependencies.</li>
-<li>Needs to be as efficient as possible.</li>
-</ul>
+<p>Both affect ‘time-to-science’. <!--
+- Don't rewrite nets after you have already trained them.
+- Not all scientists are computer scientists.
+  - Software should be simple to learn and deploy.
+  - May not have access to extensive software support.
+- HPC environments want minimal additional dependencies.
+- Needs to be as efficient as possible.
+--></p>
 <!-- =============================================================================== -->
 </section></section>
 <section>
@@ -474,100 +471,24 @@ var qrcode = new QRCode("vhtifowi38", {"colorDark":"#000000","colorLight":"#ffff
 </script>
     
 <!-- =============================================================================== -->
+</section>
+<section id="learning-objectives" class="slide level2">
+<h2>Learning Objectives</h2>
+<p>The key learning objective from this workshop could be simply summarised as:<br>
+<em>Provide the ability to couple PyTorch models to Fortran using FTorch</em>.</p>
+<p>However, more specifically we aim to:</p>
+<ul>
+<li>discuss Torch and introduce the libtorch library,</li>
+<li>introduce FTorch and its aims and benefits,</li>
+<li>teach users the full pipeline of taking a PyTorch model and coupling it to a Fortran code,</li>
+<li>highlight best practices and efficient use when doing the above, and</li>
+<li>(if time allows) introduce the automatic differentiation aspects of FTorch.</li>
+</ul>
+<!-- =============================================================================== -->
 </section></section>
 <section>
-<section id="time-for-the-practical" class="title-slide slide level1 center">
-<h1>Time for the practical</h1>
-
-</section>
-<section id="exercise-0-hello-fortran-and-pytorch" class="slide level2">
-<h2>Exercise 0 – Hello Fortran and PyTorch!</h2>
-<div class="fragment">
-<p><strong>Question:</strong> What are people’s experience levels with and use cases of Fortran and PyTorch?</p>
-</div>
-<p><br>
-</p>
-<div class="fragment">
-<p>Navigate to <code>exercises/exercise_00/</code> where you will see both Python and Fortran files.</p>
-</div>
-</section>
-<section id="python" class="slide level2">
-<h2>Python</h2>
-<p><code>hello_pytorch.py</code> defines a net <code>SimpleNet</code> that takes an input vector of length 5 and multiplies it by 2.</p>
-<p>Note:</p>
-<ul>
-<li>the <code>nn.Module</code> class</li>
-<li>the <code>forward()</code> method</li>
-</ul>
-<p>Running:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>python hello_pytorch.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>should produce the output:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>Input is  tensor([0., 1., 2., 3., 4.]).</span>
-<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>Output is tensor([0., 2., 4., 6., 8.]).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="compilers-and-cmake" class="slide level2">
-<h2>Compilers and CMake</h2>
-<p>First we will check that we have Fortran, C and C++ compilers installed:</p>
-<p>Running:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>gfortran --version</span>
-<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>gcc --version</span>
-<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>g++ --version</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p>Should produce output similar to:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a>GNU Fortran (Homebrew GCC 14.1.0_1) 14.1.0</span>
-<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a>Copyright (C) 2024 Free Software Foundation, Inc.</span>
-<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a>This is free software; see the source for copying conditions.</span>
-<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a>There is NO warranty; not even for MERCHANTABILITY or</span>
-<span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a>FITNESS FOR A PARTICULAR PURPOSE.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column" style="width:40%;">
-<p>and not:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>bash: command not found: gfortran</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div></div>
-<p><br>
-</p>
-<div class="fragment">
-<div class="columns">
-<div class="column" style="width:60%;">
-<p>Later on we will also need CMake.</p>
-</div><div class="column" style="width:40%;">
-<p>To check this is installed run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --version</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>and verify it is &gt;= 3.18.</p>
-</div></div>
-</div>
-
-<aside><div>
-<p>Check that gcc version is &gt;= 9</p>
-</div></aside></section>
-<section id="fortran" class="slide level2">
-<h2>Fortran</h2>
-<p>The file <code>hello_fortran.f90</code> contains a program to take an input array and call a subroutine to multiply it by two before printing the result.</p>
-<p>The subroutine is contained in a separate module <code>math_mod.f90</code>, however.</p>
-<div class="fragment">
-<p>We can compile both of these to produce <code>.o</code> object files and a <code>.mod</code> module files using:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>gfortran -c math_mod.f90 hello_fortran.f90</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="fragment">
-<p>We then link these together into an executable <code>ftn_prog</code> using:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a>gfortran -o ftn_prog hello_fortran.o math_mod.o</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="fragment">
-<p>Running this as:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>./ftn_prog</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>should produce the output</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a> Hello, World!</span>
-<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a> Input:     0.00000000        1.00000000        2.00000000        3.00000000        4.00000000</span>
-<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a> Output:    0.00000000        2.00000000        4.00000000        6.00000000        8.00000000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-
-<!-- =============================================================================== -->
-<aside><div>
-<p>object files contain code run by the machine, and module files contain interfaces to modules.</p>
-</div></aside></section></section>
-<section>
-<section id="installing-ftorch" class="title-slide slide level1 center">
-<h1>Installing FTorch</h1>
+<section id="the-ftorch-library" class="title-slide slide level1 center">
+<h1>The FTorch library</h1>
 <!--
 
 ## Clone the git repository
@@ -617,6 +538,34 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 
 -->
 </section>
+<section id="obtaining-ftorch" class="slide level2">
+<h2>Obtaining FTorch</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>FTorch is available from GitHub:<br>
+<a href="https://github.com/Cambridge-ICCS/FTorch">github.com/Cambridge-ICCS/FTorch</a></p>
+<div style="text-align: center">
+<div id="qrjeyf6490" class="qrcode"></div>
+<script type="text/javascript">
+var qrcode = new QRCode("qrjeyf6490", {"colorDark":"#000000","colorLight":"#ffffff","height":"200","text":"https://github.com/Cambridge-ICCS/FTorch","width":"200"});
+</script>
+    
+</div>
+</div><div class="column" style="width:50%;">
+<p>With supporting documentation at:<br>
+<a href="https://cambridge-iccs.github.io/FTorch/">cambridge-iccs.github.io/FTorch/</a></p>
+<div style="text-align: center">
+<div id="qrr6f94nhd" class="qrcode"></div>
+<script type="text/javascript">
+var qrcode = new QRCode("qrr6f94nhd", {"colorDark":"#000000","colorLight":"#ffffff","height":"200","text":"https://cambridge-iccs.github.io/FTorch/","width":"200"});
+</script>
+    
+</div>
+</div></div>
+<p>For the purposes of this workshop using GitHub codespaces FTorch is built when sourcing the <code>build_FTorch.sh</code> script.</p>
+<p>This downloads the FTorch source from GitHub, installs libtorch through PyTorch, and then uses CMake to build FTorch and link it to libtorch.</p>
+<p>If you want to build locally you can inspect this script for more details and consult the comprehensive <a href="https://cambridge-iccs.github.io/FTorch/page/installation/general.html">online documentation</a>.</p>
+</section>
 <section id="ftorch-source-code" class="slide level2">
 <h2>FTorch source code</h2>
 <p>The source code for FTorch is contained in the <code>src/</code> directory. This contains:</p>
@@ -633,66 +582,85 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <li>Accomodate different machines and setups.</li>
 <li>Configured in the <code>CMakeLists.txt</code> file.</li>
 </ul>
-</section>
-<section id="build-ftorch" class="slide level2">
-<h2>Build FTorch</h2>
-<p>This is all handled by the <code>build_FTorch.sh</code> script in the Codespace.</p>
-<p><br>
-</p>
-<p>To keep things clean we will do all of our building from a self-contained <code>build/</code> directory.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>cd FTorch/src/</span>
-<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>mkdir build</span>
-<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>cd build</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We can now execute CMake to build here using the code in the above directory:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake .. -DCMAKE_BUILD_TYPE=Release</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="build-ftorch---details" class="slide level2">
-<h2>Build FTorch - details</h2>
-<p>In reality we often need to specify a number of additional options:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake .. -DCMAKE_BUILD_TYPE=Release \</span>
-<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_Fortran_COMPILER=gfortran \</span>
-<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_C_COMPILER=gcc \</span>
-<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_CXX_COMPILER=g++ \</span>
-<span id="cb14-5"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_PREFIX_PATH=&lt;path/to/libtorch/&gt; \</span>
-<span id="cb14-6"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_INSTALL_PREFIX=&lt;path/to/install/ftorch/&gt; \</span>
-<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        -DCMAKE_GPU_DEVICE=&lt;NONE|CUDA|XPU|MPS&gt; \</span>
-<span id="cb14-8"><a href="" aria-hidden="true" tabindex="-1"></a>&gt;        ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><br>
-</p>
-<p>Notes:</p>
-<ul>
-<li>The Fortran compiler should match that being used to build your code.</li>
-<li>We need gcc &gt;= 9.</li>
-<li>Set build type to <code>Debug</code> for debugging with <code>-g</code>.</li>
-<li>Prefix path is wherever libtorch is on your system.</li>
-<li>Install prefix can be set to anywhere. Defaults may require root/admin access.</li>
-</ul>
-</section>
-<section id="build-ftorch---details-1" class="slide level2">
-<h2>Build FTorch - details</h2>
-<p>Assuming everything proceeds successfully CMake will generate a <code>Makefile</code> for us.</p>
-<p><br>
-</p>
-<p>We can run this locally using<sup>1</sup>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --build .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If we specified a particular location to install FTorch we can do this by running<sup>2</sup>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --install .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><br>
-</p>
-<p>The above two commands can be combined into a single option using:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --build . --target install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make</code> command.</p></li><li id="fn4"><p>Alternatively, or for CMake&lt;3.15 we can use the system <code>make install</code> command.</p></li></ol></aside></section>
-<section id="build-ftorch---details-2" class="slide level2">
-<h2>Build FTorch - details</h2>
-<p>Installation will place files in <code>CMAKE_INSTALL_PREFIX/</code>:</p>
-<ul>
-<li><code>include/</code> contains header and mod files.</li>
-<li><code>lib/</code> contains cmake and library files.
-<ul>
-<li>This could be called <code>lib64/</code> on some systems.</li>
-<li>UNIX will use <code>.so</code> files whilst Windows has <code>.dll</code> files.</li>
-</ul></li>
-</ul>
+<!--
+## Build FTorch
+
+This is all handled by the `build_FTorch.sh` script in the Codespace.
+
+\
+
+To keep things clean we will do all of our building from a self-contained `build/` directory.
+```default
+cd FTorch/src/
+mkdir build
+cd build
+```
+
+We can now execute CMake to build here using the code in the above directory:
+```default
+cmake .. -DCMAKE_BUILD_TYPE=Release
+```
+
+
+## Build FTorch - details
+
+In reality we often need to specify a number of additional options:
+
+```default
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+>        -DCMAKE_Fortran_COMPILER=gfortran \
+>        -DCMAKE_C_COMPILER=gcc \
+>        -DCMAKE_CXX_COMPILER=g++ \
+>        -DCMAKE_PREFIX_PATH=<path/to/libtorch/> \
+>        -DCMAKE_INSTALL_PREFIX=<path/to/install/ftorch/> \
+>        -DCMAKE_GPU_DEVICE=<NONE|CUDA|XPU|MPS> \
+>        ...
+```
+
+\
+
+Notes:
+
+- The Fortran compiler should match that being used to build your code.
+- We need gcc >= 9.
+- Set build type to `Debug` for debugging with `-g`.
+- Prefix path is wherever libtorch is on your system.
+- Install prefix can be set to anywhere. Defaults may require root/admin access.
+
+
+## Build FTorch - details
+
+Assuming everything proceeds successfully CMake will generate a `Makefile` for us.
+
+\
+
+We can run this locally using^[Alternatively, or for CMake<3.15 we can use the system `make` command.]:
+```default
+cmake --build .
+```
+If we specified a particular location to install FTorch we can do this
+by running^[Alternatively, or for CMake<3.15 we can use the system `make install` command.]:
+```default
+cmake --install .
+```
+
+\
+
+The above two commands can be combined into a single option using:
+```default
+cmake --build . --target install
+```
+
+
+## Build FTorch - details
+
+Installation will place files in `CMAKE_INSTALL_PREFIX/`:
+
+- `include/` contains header and mod files.
+- `lib/` contains cmake and library files.
+  - This could be called `lib64/` on some systems.
+  - UNIX will use `.so` files whilst Windows has `.dll` files.
+-->
 </section>
 <section id="ftorch_utils" class="slide level2">
 <h2>FTorch_utils</h2>
@@ -701,6 +669,95 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <p>If installing in codespaces using <code>build_FTorch.sh</code> these will be installed into a Python virtual environment for you.</p>
 <!-- =============================================================================== -->
 </section></section>
+<section>
+<section id="time-for-the-practical" class="title-slide slide level1 center">
+<h1>Time for the practical</h1>
+
+</section>
+<section id="exercise-0-hello-fortran-and-pytorch" class="slide level2">
+<h2>Exercise 0 – Hello Fortran and PyTorch!</h2>
+<div class="fragment">
+<p><strong>Question:</strong> What are people’s experience levels with and use cases of Fortran and PyTorch?</p>
+</div>
+<p><br>
+</p>
+<div class="fragment">
+<p>Navigate to <code>exercises/exercise_00/</code> where you will see both Python and Fortran files.</p>
+</div>
+</section>
+<section id="python" class="slide level2">
+<h2>Python</h2>
+<p><code>hello_pytorch.py</code> defines a net <code>SimpleNet</code> that takes an input vector of length 5 and multiplies it by 2.</p>
+<p>Note:</p>
+<ul>
+<li>the <code>nn.Module</code> class</li>
+<li>the <code>forward()</code> method</li>
+</ul>
+<p>Running:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>python hello_pytorch.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>should produce the output:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>Input is  tensor([0., 1., 2., 3., 4.]).</span>
+<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>Output is tensor([0., 2., 4., 6., 8.]).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="compilers-and-cmake" class="slide level2">
+<h2>Compilers and CMake</h2>
+<p>First we will check that we have a Fortran compiler and CMake installed:</p>
+<p>Running:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>gfortran --version</span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --version</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br>
+</p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>Should produce output similar to:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a>GNU Fortran (Homebrew GCC 14.1.0_1) 14.1.0</span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a>Copyright (C) 2024 Free Software Foundation, Inc.</span>
+<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a>This is free software; see the source for copying conditions.</span>
+<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a>There is NO warranty; not even for MERCHANTABILITY or</span>
+<span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a>FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span id="cb5-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="" aria-hidden="true" tabindex="-1"></a>cmake version 3.31.0</span>
+<span id="cb5-8"><a href="" aria-hidden="true" tabindex="-1"></a>CMake suite maintained and supported by Kitware (kitware.com/cmake).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:40%;">
+<p>and not:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>bash: command not found: gfortran</span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>bash: command not found: cmake</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+
+<aside><div>
+<p>Check that CMake version &gt;= 3.18 and gcc &gt;= 9 as required for FTorch.</p>
+</div></aside></section>
+<section id="fortran" class="slide level2">
+<h2>Fortran</h2>
+<p>The file <code>hello_fortran.f90</code> contains a program to take an input array and call a subroutine to multiply it by two before printing the result.</p>
+<p>The subroutine is contained in a separate module <code>math_mod.f90</code>, however.</p>
+</section>
+<section id="fortran-1" class="slide level2">
+<h2>Fortran</h2>
+<p>Now we will compile the code using CMake.</p>
+<div class="fragment">
+<p>First create a build directory and generate build scripts using CMake:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a>mkdir build</span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a>cd build</span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a>cmake ..</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment">
+<p>We then use CMake again to build the executable:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>cmake --build .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment">
+<p>Run the compiled executable:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a>./hello_fortran</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>should produce the output</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a> Hello, World!</span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a> Input:     0.00000000        1.00000000        2.00000000        3.00000000        4.00000000</span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a> Output:    0.00000000        2.00000000        4.00000000        6.00000000        8.00000000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+
+<!-- =============================================================================== -->
+<aside><div>
+<p>CMake handles the compilation and linking of both Fortran files.</p>
+</div></aside></section></section>
 <section>
 <section id="exercises" class="title-slide slide level1 center">
 <h1>Exercises</h1>
@@ -728,10 +785,10 @@ Whilst most features should be compatible between PyTorch and libtorch versions,
 <p><br>
 </p>
 <p>With our virtual environment active we can test this by running the code with<sup>1</sup>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>python3 simplenet.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a>python3 simplenet.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>Input:  tensor([0., 1., 2., 3., 4.])
 Output: tensor([0., 2., 4., 6., 8.])</code></pre>
-<aside><ol class="aside-footnotes"><li id="fn5"><p>This will run the <code>if __name__ == "__main__":</code> section at the bottom of the file.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn3"><p>This will run the <code>if __name__ == "__main__":</code> section at the bottom of the file.</p></li></ol></aside></section>
 <section id="offline-training-with-ftorch" class="slide level2">
 <h2>Offline training with FTorch</h2>
 <p><img data-src="images/offline_dark.svg" class="absolute" style="top: 20%; left: 20%; width: 60%; "></p>
@@ -749,19 +806,17 @@ Output: tensor([0., 2., 4., 6., 8.])</code></pre>
 <section id="saving-to-torchscript-1" class="slide level2">
 <h2>Saving to TorchScript</h2>
 <p>We already ran</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> simplenet.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> simplenet.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>to check that the <code>pytorch_simplenet_input_tensor_cpu.pt</code> file was created.</p>
 <p>Then convert to TorchScript using the <code>pt2ts</code> command:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">pt2ts</span> SimpleNet <span class="dt">\</span></span>
-<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model_definition_file</span> simplenet.py <span class="dt">\</span></span>
-<span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input_model_file</span> pytorch_simplenet_model_cpu.pt <span class="dt">\</span></span>
-<span id="cb22-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output_model_file</span> torchscript_simplenet_model_cpu.pt <span class="dt">\</span></span>
-<span id="cb22-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input_tensor_file</span> pytorch_simplenet_input_tensor_cpu.pt <span class="dt">\</span></span>
-<span id="cb22-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">pt2ts</span> SimpleNet <span class="dt">\</span></span>
+<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model_definition_file</span> simplenet.py <span class="dt">\</span></span>
+<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input_model_file</span> pytorch_simplenet_model_cpu.pt <span class="dt">\</span></span>
+<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output_model_file</span> torchscript_simplenet_model_cpu.pt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now run</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>to check that the <code>torchscript_simplenet_input_tensor_cpu.pt</code> file was created.</p>
 
 <aside><div>
@@ -782,32 +837,25 @@ Output: tensor([0., 2., 4., 6., 8.])</code></pre>
 <li>Import the <code>ftorch</code> module.</li>
 <li>Create <code>torch_tensors</code> and a <code>torch_model</code> to hold the data and net.</li>
 <li>Map Fortran data from arrays to the <code>torch_tensors</code>.</li>
-<li>Load the model and optionally print its parameters.</li>
+<li>Load the model and print its parameters.</li>
 <li>Call <code>torch_model_forward</code> to run the net.</li>
 </ul>
-</section>
-<section id="calling-from-fortran-1" class="slide level2">
-<h2>Calling from Fortran</h2>
-<p>Notes:</p>
-<ul>
-<li>See the solution file <code>simplenet_fortran_sol.f90</code> for an ideal code.</li>
-<li>for more information on the subroutines and API see the <a href="https://cambridge-iccs.github.io/FTorch/lists/procedures.html">online API documentation</a></li>
-</ul>
-</section>
+
+<aside><div>
+<p>See the solution file <code>simplenet_fortran_sol.f90</code> for an ideal code.<br>
+For more information on the subroutines and API see the <a href="https://cambridge-iccs.github.io/FTorch/lists/procedures.html">online API documentation</a></p>
+</div></aside></section>
 <section id="building-the-code" class="slide level2">
 <h2>Building the code</h2>
 <p>Once we have modified the Fortran we need to compile the code and link it to FTorch.</p>
-<p>For convenience, this can be done in the codespace from the <code>exercise_01/</code> subdirectory as follows:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
-<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span>
-<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> ..</span>
-<span id="cb24-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The path to the FTorch installation will be picked up automatically so doesn’t need to be specified.</p>
-</section>
-<section id="running-the-code" class="slide level2">
-<h2>Running the code</h2>
+<p>This can be done from the <code>exercise_01/</code> subdirectory using CMake as follows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
+<span id="cb17-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span>
+<span id="cb17-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> ..</span>
+<span id="cb17-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
 <p>To run the code we can use the generated executable:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a>./simplenet_fortran</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>./simplenet_fortran</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> Model parameters:
 _fwd_seq.0.weight:
   2  0  0  0  0
@@ -819,7 +867,9 @@ _fwd_seq.0.weight:
  Model output:
    0.00000000       2.00000000       4.00000000       6.00000000       8.00000000</code></pre>
 <!-- =============================================================================== -->
-</section>
+<aside><div>
+<p>The path to the FTorch installation will be picked up automatically in Codespaces so doesn’t need to be specified. If building locally you may need to add FTorch to the <a href="https://cambridge-iccs.github.io/FTorch/page/installation/hpc.html"><code>LD_LIBRARY_PATH</code></a>.</p>
+</div></aside></section>
 <section id="exercise-2-a-more-realistic-example" class="slide level2">
 <h2>Exercise 2: A more realistic example</h2>
 <p>In exercise 1 we used a contrived model, SimpleNet, with a 1-D input.</p>
@@ -841,45 +891,44 @@ _fwd_seq.0.weight:
 <section id="stage-1-basic-inference" class="slide level2">
 <h2>Stage 1: Basic inference</h2>
 <ol type="1">
-<li><p><strong>Generate input</strong>: <code>python generate_input_batch.py</code></p>
-<ul>
-<li>This takes images in <code>data/</code> and pre-processes them ready to be read as inputs to the ResNet model.</li>
-</ul></li>
-<li><p><strong>Convert to TorchScript</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">pt2ts</span> resnet18 <span class="at">--model_weights</span> IMAGENET1K_V1 <span class="at">--output_model_file</span> torchscript_resnet18_model_cpu.pt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ul>
-<li>This downloads a model definition and weights from TorchVision and saves it to TorchScript.</li>
-</ul></li>
-<li><p><strong>Verify inference works in Python</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> resnet_infer_python.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<li><p>Generate input:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> generate_input_batch.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>takes images in <code>data/</code>, and pre-processes them ready for input to the ResNet model.</p></li>
+<li><p>Convert to TorchScript:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">pt2ts</span> resnet18 <span class="at">--model_weights</span> IMAGENET1K_V1 <span class="at">--output_model_file</span> torchscript_resnet18_model_cpu.pt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>downloads a model definition and weights from TorchVision and saves it to TorchScript.</p></li>
+<li><p>Verify inference works in Python:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> resnet_infer_python.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>Image 0: Samoyed, probability 0.8846</code></pre></li>
-<li><p><strong>Fortran</strong>: Build using CMake, completing the TODOs in <code>resnet_infer_fortran.f90</code>, then run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">./resnet_infer_fortran</span> torchscript_resnet18_model_cpu.pt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Fortran: Build using CMake, completing the TODOs in <code>resnet_infer_fortran.f90</code>, then run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">./resnet_infer_fortran</span> torchscript_resnet18_model_cpu.pt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ol>
 </section>
 <section id="the-fortran-todos" class="slide level2">
 <h2>The Fortran TODOs</h2>
 <p>The Fortran arrays are already set up for you to read data from file:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode fortran code-with-copy"><code class="sourceCode fortranfixed"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a>in_data(batch_size, <span class="dv">3</span>, <span class="dv">224</span>, <span class="dv">224</span>)</span>
-<span id="cb31-2"><a href="" aria-hidden="true" tabindex="-1"></a>out_data(batch_size, <span class="dv">1000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode fortran code-with-copy"><code class="sourceCode fortranfixed"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a>in_data(batch_size, <span class="dv">3</span>, <span class="dv">224</span>, <span class="dv">224</span>)</span>
+<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a>out_data(batch_size, <span class="dv">1000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You need to:</p>
 <ol type="1">
-<li><strong>Declare</strong> <code>torch_model</code> and <code>torch_tensor</code> variables.</li>
-<li><strong>Create tensors</strong> from Fortran arrays with <code>torch_tensor_from_array</code>.</li>
-<li><strong>Load the model</strong> with <code>torch_model_load</code>.</li>
-<li><strong>Run inference</strong> with <code>torch_model_forward</code>.</li>
-<li><strong>Classify results</strong> for each image in the batch.</li>
+<li>Declare <code>torch_model</code> and <code>torch_tensor</code> variables.</li>
+<li>Create tensors from Fortran arrays with <code>torch_tensor_from_array</code>.</li>
+<li>Load the model with <code>torch_model_load</code>.
+<ul>
+<li>Note that the input filename string is already available as the variable <code>model_file</code>.</li>
+</ul></li>
+<li>Run inference with <code>torch_model_forward</code>.</li>
 </ol>
 </section>
 <section id="stage-2-add-batching" class="slide level2">
 <h2>Stage 2: Add batching</h2>
 <p>Now extend from single-image to multi-image inference:</p>
 <ol type="1">
-<li><p><strong>Generate a larger batch</strong> by editing <code>generate_input_batch.py</code> to include <code>dog2.jpg</code> (and any other images you download). Re-run the script.</p></li>
-<li><p><strong>Run with batch_size 2</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">./resnet_infer_fortran</span> torchscript_resnet18_model_cpu.pt 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p><strong>Verify the results in Python</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> resnet_infer_python.py <span class="at">--batch_size</span> 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Generate a larger batch by editing <code>generate_input_batch.py</code> to include <code>dog2.jpg</code> (and any other images you download). Re-run the script.</p></li>
+<li><p>Run with batch_size 2:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">./resnet_infer_fortran</span> torchscript_resnet18_model_cpu.pt 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Verify the results in Python:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> resnet_infer_python.py <span class="at">--batch_size</span> 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ol>
 </section>
 <section id="data-layout-discussion" class="slide level2">
@@ -890,7 +939,7 @@ _fwd_seq.0.weight:
 <li><strong>Fortran</strong>: column-major, first index varies fastest.</li>
 </ul>
 <p>This is why we transpose the data in Python before saving when generating the batch input:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a>np_input <span class="op">=</span> np_input.transpose().flatten()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a>np_input <span class="op">=</span> np_input.transpose().flatten()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>transpose()</code> reverses axes from <code>[B, C, H, W]</code> to <code>[W, H, C, B]</code>.</p>
 <p>This means that when read into memory by Fortran they will appear structured as we expect. FTorch then uses Torch’s <code>stride</code>d memory access to account for differences in layout meaning the arrays can appear the same to the user in both Fortran and Python.</p>
 <p>See the <a href="https://cambridge-iccs.github.io/FTorch/page/usage/transposing.html">online docs</a> for more detail.</p>
@@ -992,7 +1041,7 @@ _fwd_seq.0.weight:
 <!-- =============================================================================== -->
 <!-- {{< include _case_studies.qmd >}} -->
 <!-- =============================================================================== -->
-<aside><ol class="aside-footnotes"><li id="fn6"><p>We can also use AMD HIP, Intel XPU and AppleSilicon MPS.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>We can also use AMD HIP, Intel XPU and AppleSilicon MPS.</p></li></ol></aside></section>
 <section id="thanks-for-listening" class="slide level2 smaller">
 <h2>Thanks for Listening</h2>
 <p>For more information please speak to us afterwards, or drop us a message.</p>
@@ -1005,7 +1054,7 @@ _fwd_seq.0.weight:
 
 </div><div class="column" style="width:45%;">
 <p><i class="fa-solid fa-pencil" aria-label="pencil"></i> &nbsp;Joe Wallwork</p>
-<p><i class="fa-solid fa-envelope" aria-label="envelope"></i> &nbsp;<a href="mailto:joe.wallwork@damtp.cam.ac.uk">joe.wallwork[AT]damtp.cam.ac.uk</a></p>
+<p><i class="fa-solid fa-envelope" aria-label="envelope"></i> &nbsp;<a href="mailto:jw2423@cam.ac.uk">jw2423[AT]cam.ac.uk</a></p>
 <p><i class="fa-brands fa-github" aria-label="github"></i> &nbsp;<a href="https://github.com/jwallwork23">jwallwork23</a></p>
 </div></div>
 <p><br>
