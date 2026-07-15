@@ -13,7 +13,7 @@ for coupling PyTorch models to Fortran code.
 The session has been designed and delivered by
 [Jack Atkinson](https://jackatkinson.net/)
 ([**@jatkinson1000**](https://github.com/jatkinson1000)), 
-Joe Wallwork ([**@jwallwork23**](https://joewallwork.com)) and Tom Meltzer
+Joe Wallwork ([**@joewallwork**](https://joewallwork.com)) and Tom Meltzer
 ([**@tommelt**](https://github.com/TomMelt))
 and has been taught at the following workshops/summer schools 
 [ICCS '24](https://iccs.cam.ac.uk/events/institute-computing-climate-science-annual-summer-school-2024), 
