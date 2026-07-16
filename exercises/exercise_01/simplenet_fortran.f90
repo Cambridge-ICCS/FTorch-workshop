@@ -16,9 +16,10 @@ program inference
    real(wp), dimension(5), target :: in_data
    real(wp), dimension(5), target :: out_data
 
-   ! TODO 1: Declare `torch_net` and `torch_tensor` variables - the net and
-   !         vectors of input tensors (in this case we only have one), and
-   !         output tensors. See:
+   ! TODO 1: Declare variables of types `torch_model` and `torch_tensor` variables
+   !         - the net and vectors of input tensors (in this case we only have one),
+   !         and output tensors. The model should be called `torch_net` in this
+   !         example but you can choose names for the tensors. See:
    !         https://cambridge-iccs.github.io/FTorch/type/torch_model.html
    !         https://cambridge-iccs.github.io/FTorch/type/torch_tensor.html
 
