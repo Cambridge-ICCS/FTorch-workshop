@@ -163,7 +163,7 @@ For more information please speak to us afterwards, or drop us a message.
 
 {{< fa solid envelope >}} \ [jw2423[AT]cam.ac.uk](mailto:jw2423@cam.ac.uk)
 
-{{< fa brands github >}} \ [jwallwork23](https://github.com/jwallwork23)
+{{< fa brands github >}} \ [joewallwork](https://github.com/joewallwork)
 :::
 ::::
 
